@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Waves from '../components/ui/Waves'
-import SelectDanger from '../components/ui/SelectDanger'
+import Waves from '../shared/components/Waves'
+import SelectDanger from '../modules/complaints/components/SelectDanger'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft } from '@phosphor-icons/react'
 

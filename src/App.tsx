@@ -3,11 +3,11 @@ import MainPage from './pages/MainPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import CreateComplaintPage from './pages/CreateComplaintPage'
-import CommunityContent from './components/content/CommunityContent'
-import ArticleContent from './components/content/ArticleContent'
-import ComplaintContent from './components/content/ComplaintContent'
-import ProfileContent from './components/content/ProfileContent'
-import DetailedArticleContent from './components/content/DetailedArticleContent'
+import CommunityPage from './pages/CommunityPage'
+import ArticlesPage from './pages/ArticlesPage'
+import ComplaintsPage from './pages/ComplaintsPage'
+import ProfilePage from './pages/ProfilePage'
+import ArticleDetailPage from './pages/ArticleDetailPage'
 
 const App = () => {
   return (
@@ -15,11 +15,11 @@ const App = () => {
         <Route path="/" element={ <MainPage />}>
 
         <Route index element={<Navigate to="community" replace />} />
-            <Route path="community" element={<CommunityContent />} />
-            <Route path="articles" element={<ArticleContent />} />
-            <Route path="articles/:slug" element={<DetailedArticleContent />} />
-            <Route path="complaint" element={<ComplaintContent />} />
-            <Route path="profile" element={<ProfileContent />} />           
+            <Route path="community" element={<CommunityPage />} />
+            <Route path="articles" element={<ArticlesPage />} />
+            <Route path="articles/:slug" element={<ArticleDetailPage />} />
+            <Route path="complaint" element={<ComplaintsPage />} />
+            <Route path="profile" element={<ProfilePage />} />           
         </Route>
 
         <Route path="/login" element={ <LoginPage />} />

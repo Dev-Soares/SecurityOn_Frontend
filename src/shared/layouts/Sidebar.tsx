@@ -1,9 +1,9 @@
 import type { FunctionComponent } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
-import SidebarButton from "../ui/SidebarButton"
-import ProfileCard from "../ui/ProfileCard"
+import SidebarButton from "../components/SidebarButton"
+import ProfileCard from "../components/ProfileCard"
 import { UsersIcon, FileTextIcon, SignInIcon, FlagIcon } from "@phosphor-icons/react"
-import LogoIcon from "../ui/LogoIcon"
+import LogoIcon from "../components/LogoIcon"
 
 
 const Sidebar: FunctionComponent = () => {

@@ -1,7 +1,7 @@
 import React from "react"
 import logoLight from "/OnSecurityLight.png"
 import logoDark from "/OnSecurityDark.png"
-import { useTheme } from "../../contexts/themeContext"
+import { useTheme } from "../contexts/themeContext"
 import  { useState, useEffect } from "react";
 
 type LogoIconProps = {

@@ -1,10 +1,10 @@
 import React from 'react'
-import ProfileBanner from '../ui/ProfileBanner'
+import ProfileBanner from '../modules/profile/components/ProfileBanner'
 import { PencilSimpleIcon } from '@phosphor-icons/react'
-import ProfileInfo from '../ui/ProfileInfo'
+import ProfileInfo from '../modules/profile/components/ProfileInfo'
 import {useState} from 'react'
 
-const ProfileContent: React.FC = () => {
+const ProfilePage: React.FC = () => {
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   
@@ -53,4 +53,4 @@ const ProfileContent: React.FC = () => {
   )
 }
 
-export default ProfileContent
+export default ProfilePage

@@ -1,6 +1,6 @@
 import React from 'react'
-import LoginForm from '../components/forms/LoginForm'
-import Waves from '../components/ui/Waves'
+import LoginForm from '../modules/auth/components/LoginForm'
+import Waves from '../shared/components/Waves'
 
 const LoginPage: React.FC = () => {
   return (

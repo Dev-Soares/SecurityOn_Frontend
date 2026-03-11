@@ -1,8 +1,8 @@
 import React from 'react'
-import ArticleCard from '../ui/ArticleCard'
-import SearchBar from '../ui/SearchBar'
+import ArticleCard from '../modules/articles/components/ArticleCard'
+import SearchBar from '../shared/components/SearchBar'
 
-const ArticleContent: React.FC = () => {
+const ArticlesPage: React.FC = () => {
   return (
     <main className='pb-16 pt-4'>
       <div className='p-2 flex justify-center items-center'>
@@ -59,4 +59,4 @@ const ArticleContent: React.FC = () => {
   )
 }
 
-export default ArticleContent
+export default ArticlesPage

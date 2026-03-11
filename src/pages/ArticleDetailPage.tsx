@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeftIcon } from '@phosphor-icons/react'
 
-const DetailedArticleContent: React.FC = () => {
+const ArticleDetailPage: React.FC = () => {
   const navigate = useNavigate()
 
   //TODAS essas variaveis devem ser buscadas via API, deixando o componente limpo e simplificado
@@ -51,4 +51,4 @@ const DetailedArticleContent: React.FC = () => {
   )
 }
 
-export default DetailedArticleContent;
+export default ArticleDetailPage;

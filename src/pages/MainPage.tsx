@@ -1,5 +1,5 @@
-import Sidebar from "../components/elements/Sidebar.tsx"
-import Content from "../components/elements/Content.tsx"
+import Sidebar from "../shared/layouts/Sidebar"
+import Content from "../shared/layouts/Content"
 
 const MainPage = () => {
   return (
