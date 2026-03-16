@@ -9,6 +9,11 @@ const ArticlesPage: React.FC = () => {
         <SearchBar />
       </div>
 
+      <div className='px-4 xl:px-8 mt-6 max-w-6xl mx-auto'>
+        <h1 className='text-2xl font-bold text-gray-900 dark:text-white'>Artigos</h1>
+        <p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>Leia sobre segurança e proteção</p>
+      </div>
+
       <div className='p-2 px-4 xl:px-8 flex flex-wrap justify-center gap-6 mt-4 max-w-6xl mx-auto'>
         <ArticleCard
           title="Dicas de Segurança Residencial"

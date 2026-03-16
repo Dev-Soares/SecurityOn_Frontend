@@ -8,7 +8,12 @@ const CommunityPage: React.FC = () => {
 
   return (
     <main className='py-3 px-2 min-h-screen pb-28 md:pb-16 lg:pb-0 lg:py-8 lg:px-8 flex flex-col gap-6 bg-white dark:bg-gray-950'>
-        
+
+      <div className='w-full md:w-[70%] xl:w-[50%] mx-auto'>
+        <h1 className='text-2xl font-bold text-gray-900 dark:text-white'>Comunidade</h1>
+        <p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>Compartilhe e conecte-se com outros usuários</p>
+      </div>
+
       <div className='bg-gray-100 dark:bg-gray-900 rounded-2xl p-4 border border-gray-200 dark:border-gray-800 w-full md:w-[70%] xl:w-[50%] mx-auto hover:border-gray-300 dark:hover:border-gray-700 transition-colors duration-200'>
         <div className='flex flex-row items-center gap-3'>
           <button
