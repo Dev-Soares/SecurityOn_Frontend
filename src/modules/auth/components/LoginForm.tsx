@@ -11,14 +11,20 @@ const LoginForm: React.FC = () => {
   const [password, setPassword] = useState('');
 
   return (
-    <form className="py-8 md:py-16 lg:p-0 lg:h-full w-full max-w-md  px-7 lg:flex lg:justify-center lg:items-center lg:w-[80%]">
-      <div className='flex flex-col gap-4 w-full'>
-        <h2 className='text-blue-500 dark:text-white self-center font-bold text-4xl hidden lg:flex xl:text-5xl mb-16'>
-          Fazer Login
+    <form className="w-full max-w-md px-6 lg:px-8 flex flex-col gap-6 lg:gap-8">
+      <div className='flex flex-col gap-1 lg:gap-2'>
+        <h2 className='text-2xl lg:text-4xl font-bold text-gray-900 dark:text-white'>
+          Bem-vindo de volta
         </h2>
-        <div className='flex flex-col gap-1'>
+        <p className='text-sm lg:text-lg text-gray-500 dark:text-gray-400'>
+          Entre na sua conta para continuar
+        </p>
+      </div>
+
+      <div className='flex flex-col gap-4 lg:gap-5'>
+        <div className='flex flex-col gap-1.5 lg:gap-2'>
           <label htmlFor="email"
-            className='text-blue-500 font-semibold text-lg xl:text-xl dark:text-white'>Email</label>
+            className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Email</label>
           <Input
             type="email"
             value={email}
@@ -27,9 +33,9 @@ const LoginForm: React.FC = () => {
           />
         </div>
 
-        <div className='flex flex-col gap-1'>
+        <div className='flex flex-col gap-1.5 lg:gap-2'>
           <label htmlFor="password"
-            className='text-blue-500 font-semibold text-lg xl:text-xl dark:text-white'>Senha</label>
+            className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Senha</label>
           <Input
             type="password"
             value={password}
@@ -37,23 +43,32 @@ const LoginForm: React.FC = () => {
             placeholder="Digite sua senha"
             password={true}
           />
-          <p className='text-sm text-blue-500 cursor-pointer hover:underline self-end mt-2 font-medium dark:text-white'>Esqueceu a senha?</p>
-        </div>
-        <div className='flex flex-col my-4 gap-2'>
-          <button
-            className='w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-700 transition-all duration-300 mb-2 font-semibold cursor-pointer hover:translate-y-[-2px] lg:text-lg'>
-            Entrar
-          </button>
-          <p className='self-center text-lg font-semibold text-blue-500 dark:text-white'>Ou</p>
-          <button 
-            onClick={() => navigateTo('/signup')}
-            className='w-full border-2 border-blue-500 text-blue-500 py-3 rounded-md hover:bg-blue-700 hover:text-white transition-all duration-300 mt-2 font-semibold dark:text-white dark:border-white dark:hover:border-blue-500 cursor-pointer hover:translate-y-[-2px] lg:text-lg'>
-            Criar Conta
+          <button type="button" className='text-sm lg:text-base text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 cursor-pointer self-end mt-1 font-medium transition-colors duration-200'>
+            Esqueceu a senha?
           </button>
         </div>
-
       </div>
 
+      <div className='flex flex-col gap-3 lg:gap-4 mt-2'>
+        <button
+          type="submit"
+          className='w-full bg-blue-500 hover:bg-blue-600 text-white py-3 lg:py-3.5 rounded-full font-semibold cursor-pointer transition-all duration-200 active:scale-[0.98] text-base lg:text-lg'>
+          Entrar
+        </button>
+
+        <div className='flex items-center gap-3 my-1'>
+          <div className='flex-1 h-px bg-gray-200 dark:bg-gray-800' />
+          <span className='text-sm lg:text-base text-gray-400 dark:text-gray-500'>ou</span>
+          <div className='flex-1 h-px bg-gray-200 dark:bg-gray-800' />
+        </div>
+
+        <button
+          type="button"
+          onClick={() => navigateTo('/signup')}
+          className='w-full border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 py-3 lg:py-3.5 rounded-full font-semibold cursor-pointer transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800/50 active:scale-[0.98] text-base lg:text-lg'>
+          Criar Conta
+        </button>
+      </div>
     </form>
   )
 }

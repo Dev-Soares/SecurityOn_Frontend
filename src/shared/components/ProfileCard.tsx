@@ -1,27 +1,33 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { DotsThree } from '@phosphor-icons/react'
 
 type ProfileCardProps = {
     username?: string
-    avatarUrl?: string 
+    handle?: string
+    avatarUrl?: string
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ 
+const ProfileCard: React.FC<ProfileCardProps> = ({
     username = "Convidado",
+    handle = "@convidado",
     avatarUrl= "/avatar.png"}) => {
 
   const navigate = useNavigate();
 
   return (
-    <div className='flex gap-2 justify-start items-center p-2  w-full pt-4'>
-      <button onClick={() => navigate('/profile')} className='hover:scale-105 transition-transform duration-300 cursor-pointer'>
-        <img src={avatarUrl} alt={`${username}'s avatar`} className='w-15 h-15 rounded-full border-2 border-gray-300 dark:border-gray-700' />
+    <div className='flex items-center gap-3 p-3 w-full rounded-full hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors duration-200 cursor-pointer'
+      onClick={() => navigate('/profile')}>
+      <img src={avatarUrl} alt={`${username}'s avatar`} className='w-11 h-11 rounded-full object-cover shrink-0' />
+      <div className='flex flex-col min-w-0 flex-1'>
+        <span className='font-bold text-sm text-gray-900 dark:text-white truncate'>{username}</span>
+        <span className='text-sm text-gray-500 dark:text-gray-400 truncate'>{handle}</span>
+      </div>
+      <button
+        onClick={(e) => { e.stopPropagation(); }}
+        className='p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer shrink-0'>
+        <DotsThree size={20} weight="bold" className="text-gray-500 dark:text-gray-400" />
       </button>
-        
-        <div className='mt-2 flex flex-col justify-center items-start'>
-            <p className='font-semibold text-lg'>{username}</p>
-            <button onClick={() => navigate('/profile')} className='cursor-pointer text-md text-blue-500 dark:text-blue-400 hover:underline ml-1'>Ver Perfil</button>
-        </div>     
     </div>
   )
 }

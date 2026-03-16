@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find c:UsersUserDocumentstesteSecurityOn_Frontend -type f -name *ommunity* -o -name *ost*)"
+    ]
+  }
+}

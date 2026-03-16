@@ -16,10 +16,13 @@ const SidebarButton: FunctionComponent<SidebarButtonProps> = ({ text, iconOutlin
 
   return (
     <button onClick={() => navigate(route)}
-    className=
-    {`w-full h-auto p-3 text-blue-500 dark:text-white hover:bg-gray-300 hover:dark:bg-gray-800 hover:translate-y-[-2px] transition-all duration-300 flex justify-start items-center gap-3 rounded-md text-xl xl:text-2xl cursor-pointer`}>
+    className={`w-full p-3 px-4 flex items-center gap-4 rounded-full text-xl cursor-pointer transition-all duration-200
+      ${isSelected
+        ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-bold'
+        : 'text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-800/60'
+      }`}>
         {isSelected ? iconFilled : iconOutline}
-        <p className={isSelected ? 'font-semibold' : 'font-normal'}>{text}</p>
+        <span>{text}</span>
     </button>
   )
 }

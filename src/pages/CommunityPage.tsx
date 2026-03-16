@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Post from '../modules/community/components/Post'
-import { ImageIcon } from '@phosphor-icons/react'
+import { Image } from '@phosphor-icons/react'
 import ModalPost from '../modules/community/components/ModalPost'
 
 const CommunityPage: React.FC = () => {
@@ -9,25 +9,25 @@ const CommunityPage: React.FC = () => {
   return (
     <main className='py-3 px-2 min-h-screen pb-28 md:pb-16 lg:pb-0 lg:py-8 lg:px-8 flex flex-col gap-6 bg-white dark:bg-gray-950'>
         
-      <div className='bg-gray-100 dark:bg-gray-900 rounded-2xl p-4 shadow-md border border-gray-300 dark:border-gray-700 w-full md:w-[70%] xl:w-[50%] mx-auto'>
+      <div className='bg-gray-100 dark:bg-gray-900 rounded-2xl p-4 border border-gray-200 dark:border-gray-800 w-full md:w-[70%] xl:w-[50%] mx-auto hover:border-gray-300 dark:hover:border-gray-700 transition-colors duration-200'>
         <div className='flex flex-row items-center gap-3'>
-          <button 
-            onClick={() => setIsModalOpen(true)} 
-            className='flex-1 flex items-center cursor-pointer rounded-3xl transition-all duration-300 hover:scale-[1.01]'
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className='group flex-1 flex items-center cursor-pointer rounded-full transition-all duration-200'
           >
-            <input 
-              type="text" 
-              readOnly 
-              className='w-full h-12 bg-white dark:bg-gray-700 rounded-3xl px-4 text-gray-950 dark:text-white border-2 border-gray-300 dark:border-gray-600 pointer-events-none cursor-pointer transition-all duration-500' 
-              placeholder="O que você está pensando?" 
+            <input
+              type="text"
+              readOnly
+              className='w-full h-11 bg-white dark:bg-gray-800 rounded-full px-4 text-gray-950 dark:text-white border border-gray-200 dark:border-gray-700 pointer-events-none cursor-pointer placeholder:text-gray-400 dark:placeholder:text-gray-500 text-sm group-hover:border-gray-300 dark:group-hover:border-gray-600 transition-colors duration-200'
+              placeholder="O que você está pensando?"
             />
           </button>
-          <button 
+          <button
             onClick={() => setIsModalOpen(true)}
-            className='p-3 cursor-pointer rounded-full hover:bg-blue-700 dark:hover:bg-blue-500 transition-all duration-500 bg-blue-500 dark:bg-blue-600 hover:scale-110 shadow-md'
+            className='p-2.5 cursor-pointer rounded-full transition-colors duration-200 text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 hover:bg-gray-200/70 dark:hover:bg-gray-800/70'
           >
-            <ImageIcon size={24} weight="regular" className='text-white' />
-          </button>     
+            <Image size={22} weight="bold" />
+          </button>
         </div>
       </div>
       <ModalPost isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

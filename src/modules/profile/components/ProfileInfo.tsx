@@ -4,50 +4,35 @@ const ProfileInfo: React.FC = () => {
 
     const [activeTab, setActiveTab] = useState<'posts' | 'alerts' | 'articles'>('posts');
 
+    const tabs = [
+        { key: 'posts' as const, label: 'Posts' },
+        { key: 'alerts' as const, label: 'Denúncias' },
+        { key: 'articles' as const, label: 'Artigos' },
+    ]
+
     return (
-        <>
-            <nav className='flex  mt-2 border-b w-full border-gray-200 dark:border-gray-800'>
+        <nav className='flex border-b w-full border-gray-200 dark:border-gray-800'>
+            {tabs.map(tab => (
                 <button
-                    className={` cursor-pointer relative px-2 pb-2 w-[33.33%] text-lg lg:text-xl lg:pb-4 font-medium transition-colors duration-200 ${activeTab === 'alerts' ? 'text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'}`}
-                    onClick={() => setActiveTab('posts')}
+                    key={tab.key}
+                    className={`cursor-pointer relative px-2 pb-3 w-[33.33%] text-base lg:text-lg font-medium transition-colors duration-200 ${
+                        activeTab === tab.key
+                            ? 'text-blue-600 dark:text-blue-400'
+                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'
+                    }`}
+                    onClick={() => setActiveTab(tab.key)}
                 >
                     <span
                         className={`
-                      absolute left-0 bottom-0 h-[2px] bg-blue-600 dark:bg-blue-500
-                      transition-all duration-300 rounded-t-sm 
-                      ${activeTab === 'posts' ? 'w-full' : 'w-0'}
-                    `}
+                            absolute left-0 bottom-0 h-[2px] bg-blue-500 dark:bg-blue-400
+                            transition-all duration-300 rounded-t-sm
+                            ${activeTab === tab.key ? 'w-full' : 'w-0'}
+                        `}
                     />
-                    Posts
+                    {tab.label}
                 </button>
-                <button
-                    className={` cursor-pointer relative px-2 pb-2 w-[33.33%] text-lg lg:text-xl lg:pb-4 font-medium transition-colors duration-200 ${activeTab === 'alerts' ? 'text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'}`}
-                    onClick={() => setActiveTab('alerts')}
-                >
-                    <span
-                        className={`
-                      absolute left-0 bottom-0 h-[2px] bg-blue-600 dark:bg-blue-500
-                      transition-all duration-300 rounded-t-sm 
-                      ${activeTab === 'alerts' ? 'w-full' : 'w-0'}
-                    `}
-                    />
-                    Denúncias
-                </button>
-                <button
-                    className={`cursor-pointer relative px-2 pb-2 w-[33.33%] text-lg lg:text-xl lg:pb-4 font-medium transition-colors duration-200 ${activeTab === 'articles' ? 'text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'}`}
-                    onClick={() => setActiveTab('articles')}
-                >
-                    <span
-                        className={`
-                      absolute left-0 bottom-0 h-[2px] bg-blue-600 dark:bg-blue-500
-                      transition-all duration-300 rounded-t-sm 
-                      ${activeTab === 'articles' ? 'w-full' : 'w-0'}
-                    `}
-                    />
-                    Artigos
-                </button>
-            </nav>
-        </>
+            ))}
+        </nav>
     )
 }
 

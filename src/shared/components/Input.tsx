@@ -22,19 +22,19 @@ const Input: React.FC<InputProps> = ({ value, onChange, placeholder, type = "tex
      maxLength={password ? 16 : 60}
      onChange={onChange}
      placeholder={placeholder}
-     className='w-full p-3 bg-transparent border-b-2 border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 transition-all duration-300 text-gray-950 dark:text-gray-100'
+     className='w-full p-3 bg-transparent border-b border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 transition-all duration-200 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 text-sm lg:text-base'
      />
      {
         password && (
-        <button type="button" className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-300'
+        <button type="button" className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 cursor-pointer'
         onClick={() => setShowPassword((prev) => !prev)}
         tabIndex={-1}
         >
-            {showPassword ? <EyeSlashIcon size={24} weight="regular" className="text-blue-500 dark:text-white" /> : <EyeIcon size={24} weight="regular" className="text-blue-500 dark:text-white cursor-pointer" />}
+            {showPassword ? <EyeSlashIcon size={20} weight="regular" /> : <EyeIcon size={20} weight="regular" />}
         </button>
         )
      }
-    
+
      </div>
   )
 }

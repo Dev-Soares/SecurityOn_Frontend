@@ -2,36 +2,62 @@ import type { FunctionComponent } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import SidebarButton from "../components/SidebarButton"
 import ProfileCard from "../components/ProfileCard"
-import { UsersIcon, FileTextIcon, SignInIcon, FlagIcon } from "@phosphor-icons/react"
+import { UsersThree, Article, Flag, SignIn, Sun, Moon } from "@phosphor-icons/react"
 import LogoIcon from "../components/LogoIcon"
+import { useTheme } from "../contexts/themeContext"
 
 
 const Sidebar: FunctionComponent = () => {
 
   const navigateTo = useNavigate();
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   return (
 
-    <aside className='hidden lg:flex sticky top-0  overflow-none h-screen lg:w-[40%] xl:w-[32%] px-8 py-10   bg-white text-blue-500 dark:bg-gray-950 dark:text-white dark:border-gray-900 border-r border-gray-200  overflow-hidden self-start
-    justify-between flex-col'>
-      <div className="flex justify-start items-center">
-        <LogoIcon size={80}/>
-        <h1 className="text-2xl font-medium">SecurityOn</h1>
+    <aside className='hidden lg:flex sticky top-0 h-screen w-[32%] min-w-64 max-w-80 shrink-0 px-6 py-8 bg-white dark:bg-gray-950 dark:border-gray-800 border-r border-gray-100 overflow-hidden self-start justify-between flex-col'>
+
+      {/* Logo */}
+      <div className="flex items-center gap-1 px-2">
+        <LogoIcon size={56}/>
+        <h1 className="text-xl font-bold tracking-tight text-blue-600 dark:text-white">SecurityOn</h1>
       </div>
-      <div className="flex flex-col justify-start items-start  gap-4">
-        <SidebarButton text="Comunidade" route="/community" iconOutline={<UsersIcon size={32} weight="regular" />} iconFilled={<UsersIcon size={32} weight="fill" />} isSelected={location.pathname === '/community'} />
-        <SidebarButton text="Artigos" route="/articles" iconOutline={<FileTextIcon size={32} weight="regular" />} iconFilled={<FileTextIcon size={32} weight="fill" />} isSelected={location.pathname === '/articles'} />
-        <SidebarButton text="Denúncias" route="/complaint" iconOutline={<FlagIcon size={32} weight="regular" />} iconFilled={<FlagIcon size={32} weight="fill" />} isSelected={location.pathname === '/complaint'} />
-        
-      </div>
-      <div className="flex flex-col gap-6 justify-center items-center w-full">
-        <button onClick={() => navigateTo('/login')}
-        className="flex justify-center items-center gap-3 w-full font-semibold  p-3 text-white bg-blue-500 border-blue-500 border-2 hover:bg-white hover:text-blue-500 hover:dark:bg-gray-900 hover:translate-y-[-2px] transition-all duration-300 rounded-4xl text-xl! font-normal cursor-pointer ">
-          <SignInIcon size={32} weight="regular" />
-          <p>Fazer Login</p>
+
+      {/* Navigation */}
+      <nav className="flex flex-col gap-1 -mx-2 mt-16 mb-auto ">
+        <SidebarButton text="Comunidade" route="/community" iconOutline={<UsersThree size={28} weight="regular" />} iconFilled={<UsersThree size={28} weight="fill" />} isSelected={location.pathname === '/community'} />
+        <SidebarButton text="Artigos" route="/articles" iconOutline={<Article size={28} weight="regular" />} iconFilled={<Article size={28} weight="fill" />} isSelected={location.pathname === '/articles'} />
+        <SidebarButton text="Denúncias" route="/complaint" iconOutline={<Flag size={28} weight="regular" />} iconFilled={<Flag size={28} weight="fill" />} isSelected={location.pathname === '/complaint'} />
+      </nav>
+
+      {/* Bottom section */}
+      <div className="flex flex-col gap-4 w-full">
+        <button
+          onClick={toggleTheme}
+          aria-label="Alternar tema"
+          className="
+            flex items-center gap-2.5
+            w-full px-4 py-2 rounded-xl cursor-pointer
+            text-gray-500 dark:text-gray-400
+            hover:text-gray-700 dark:hover:text-gray-200
+            hover:bg-gray-100 dark:hover:bg-gray-800/50
+            transition-all duration-200
+            text-sm font-medium
+          "
+        >
+          {theme === 'dark' ? (
+            <Moon size={18} weight="bold" />
+          ) : (
+            <Sun size={18} weight="bold" className="text-amber-400" />
+          )}
+          <span>{theme === 'dark' ? 'Modo Escuro' : 'Modo Claro'}</span>
         </button>
-        <ProfileCard />      
+        <button onClick={() => navigateTo('/login')}
+        className="flex justify-center items-center gap-3 w-full py-3.5 text-white bg-blue-500 hover:bg-blue-600 active:scale-[0.98] transition-all duration-200 rounded-full text-lg font-bold cursor-pointer shadow-sm hover:shadow-md">
+          <SignIn size={24} weight="bold" />
+          <span>Entrar</span>
+        </button>
+        <ProfileCard />
       </div>
     </aside>
   )

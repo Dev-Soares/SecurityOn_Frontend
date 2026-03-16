@@ -1,30 +1,50 @@
 import React from 'react'
-import { BellIcon } from '@phosphor-icons/react'
+import { Sun, Moon } from '@phosphor-icons/react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import LogoIcon from '../components/LogoIcon'
+import { useTheme } from '../contexts/themeContext'
 
 type headerProps = {
     userImg: string | null;
 }
 
 const Header: React.FC<headerProps> = ({ userImg }) => {
-
-    
-
   const navigate = useNavigate();
-  
-    const imgURL = userImg ? userImg : "avatar.png";
-    const location = useLocation();
+  const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
+  const imgURL = userImg ? userImg : "avatar.png";
 
   return (
-    <header className='flex lg:hidden p-3 px-5 w-full justify-between items-center gap-4 border-b border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950'>
-      <button onClick={() => navigate('profile')}
-      className={`w-full h-full justify-center items-center ${location.pathname === '/profile' ? 'hidden' : ''}`}>
-        <img src={imgURL} alt="User avatar" className='rounded-full w-12 h-12 object-cover border-gray-300 border-2' />
-      </button>
-              
-        <button className='relative p-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors duration-200 ml-auto cursor-pointer'>
-            <BellIcon size={32} weight="regular" className='text-gray-700 dark:text-gray-200' />
+    <header className='flex lg:hidden py-3 px-5 w-full justify-between items-center gap-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950'>
+
+      {/* Logo + Brand */}
+      <div className="flex items-center gap-1">
+        <LogoIcon size={40} />
+        <span className="text-lg font-bold tracking-tight text-blue-600 dark:text-white">SecurityOn</span>
+      </div>
+
+      {/* Actions */}
+      <div className="flex items-center gap-1">
+        <button
+          onClick={toggleTheme}
+          aria-label="Alternar tema"
+          className="p-2.5 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors duration-200 cursor-pointer"
+        >
+          {theme === 'dark' ? (
+            <Moon size={22} weight="bold" />
+          ) : (
+            <Sun size={22} weight="bold" className="text-amber-400" />
+          )}
         </button>
+
+        <button
+          onClick={() => navigate('profile')}
+          className={`shrink-0 cursor-pointer ml-1 ${location.pathname === '/profile' ? 'hidden' : ''}`}
+        >
+          <img src={imgURL} alt="User avatar" className="rounded-full w-9 h-9 object-cover border border-gray-200 dark:border-gray-700" />
+        </button>
+      </div>
+
     </header>
   )
 }

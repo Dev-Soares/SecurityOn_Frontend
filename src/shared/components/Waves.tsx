@@ -1,5 +1,5 @@
 import React from 'react'
-import { CaretLeftIcon } from "@phosphor-icons/react"
+import { ArrowLeft } from "@phosphor-icons/react"
 import { useNavigate } from 'react-router-dom'
 import LogoIcon from './LogoIcon'
 
@@ -12,7 +12,16 @@ const Waves: React.FC<WavesProps> = ({ title }) => {
 
   return (
     <div className='lg:h-screen lg:w-[50%] w-full p-1 flex flex-col relative overflow-hidden'>
-      {/* Waves animadas no bottom */}
+      {/* Botão voltar */}
+      <button
+        onClick={() => navigate('/')}
+        className='flex items-center gap-2 m-3 lg:m-5 cursor-pointer z-50 w-fit px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-200 active:scale-95'
+      >
+        <ArrowLeft size={18} weight="bold" />
+        <span className='text-sm font-medium'>Voltar</span>
+      </button>
+
+      {/* Waves animadas */}
       <svg
         className="absolute -bottom-1 left-0 w-[calc(100%+2px)] -ml-px hidden lg:block"
         xmlns="http://www.w3.org/2000/svg"
@@ -58,34 +67,13 @@ const Waves: React.FC<WavesProps> = ({ title }) => {
         </path>
       </svg>
 
-      {/* Botão voltar - mobile */}
-      <button
-        onClick={() => navigate('/')}
-        className='flex flex-row text-white justify-start items-center m-1 my-4 cursor-pointer z-50 w-fit lg:hidden hover:opacity-80 transition-opacity'
-      >
-        <CaretLeftIcon size={40} weight="bold" className="text-white cursor-pointer" />
-        <p className='text-xl lg:text-2xl font-medium'>Voltar</p>
-      </button>
-
-      <div className='flex flex-col lg:justify-center lg:items-center gap-2 relative z-10 lg:h-full'>
-        {/* Logo mobile */}
-        <div className='w-full h-auto text-white flex flex-row items-center justify-center my-3 lg:hidden'>
-          <LogoIcon color='light' size={80} />
-          <h2 className='font-semibold text-3xl'>SecurityOn</h2>
-        </div>
-
-        {/* Logo desktop */}
-        <div className='w-full h-auto text-white hidden lg:flex flex-row items-center justify-center'>
+      <div className='flex flex-col justify-center items-center gap-2 relative z-10 flex-1'>
+        {/* Logo */}
+        <div className='flex flex-row items-center justify-center mb-16'>
           <LogoIcon color='light' size={140} />
           <h2 className='font-semibold text-4xl text-white'>SecurityOn</h2>
         </div>
 
-        {/* Título mobile */}
-        <div className='w-full h-auto text-white flex flex-row items-center justify-center lg:hidden my-4 mb-8'>
-          <h1 className='text-4xl font-bold text-white z-10 flex justify-center items-center m-8 w-[70%]'>
-            {title}
-          </h1>
-        </div>
       </div>
     </div>
   )

@@ -1,5 +1,5 @@
 import type { FunctionComponent } from "react"
-import { UsersIcon, FileTextIcon, FlagIcon } from "@phosphor-icons/react"
+import { UsersThree, Article, Flag } from "@phosphor-icons/react"
 import { useNavigate, useLocation } from "react-router-dom"
 
 type NavItemProps = {
@@ -9,28 +9,31 @@ type NavItemProps = {
 }
 
 const NavItem: FunctionComponent<NavItemProps> = ({ icon, route, label }) => {
-
   const navigate = useNavigate();
   const location = useLocation();
-
   const isActive = location.pathname === route;
 
   return (
     <button
       onClick={() => navigate(route)}
-      className="relative flex flex-1 flex-col items-center justify-center px-3 py-1 transition-colors duration-200 cursor-pointer gap-1 bg-transparent"
-      style={{ outline: "none" }}
+      className={`
+        relative flex flex-1 flex-col items-center justify-center gap-1 py-2 cursor-pointer
+        transition-all duration-200
+        ${isActive
+          ? "text-gray-900 dark:text-white font-bold"
+          : "text-gray-500 dark:text-gray-400 font-medium"
+        }
+      `}
     >
       <span
         className={`
-          absolute left-0 top-0 h-[3px] bg-blue-500
-          transition-all duration-300 rounded-4xl 
+          absolute left-0 -top-2.5 h-[3px] rounded-full bg-gray-900 dark:bg-white
+          transition-all duration-300
           ${isActive ? "w-full" : "w-0"}
         `}
-        style={{ top: "-13px" }}
       />
       {icon(isActive)}
-      <p className={`font-semibold text-sm ${isActive ? "text-blue-500" : "text-gray-400 dark:text-gray-200"} mt-0.5`}>{label}</p>
+      <span className="text-xs">{label}</span>
     </button>
   )
 }
@@ -38,31 +41,30 @@ const NavItem: FunctionComponent<NavItemProps> = ({ icon, route, label }) => {
 const BottomNav: FunctionComponent = () => {
   return (
     <nav
-      className="lg:hidden fixed left-0 right-0 bottom-0 z-50 bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-700 flex justify-around items-center py-3"
-      style={{ margin: 0, paddingBottom: 'calc(12px + env(safe-area-inset-bottom))' }}
+      className="lg:hidden fixed left-0 right-0 bottom-0 z-50 bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800 flex justify-around items-center px-2 py-2"
+      style={{ paddingBottom: 'calc(8px + env(safe-area-inset-bottom))' }}
     >
       <NavItem
         icon={active => (
-          <UsersIcon size={28} weight={active ? "fill" : "regular"} className={`${active ? "text-blue-500" : "text-gray-400 dark:text-gray-200"}`} />
+          <UsersThree size={26} weight={active ? "fill" : "regular"} />
         )}
         route="/community"
         label="Comunidade"
       />
       <NavItem
         icon={active => (
-          <FileTextIcon size={28} weight={active ? "fill" : "regular"} className={`${active ? "text-blue-500" : "text-gray-400 dark:text-gray-200"}`} />
+          <Article size={26} weight={active ? "fill" : "regular"} />
         )}
         route="/articles"
         label="Artigos"
       />
       <NavItem
         icon={active => (
-          <FlagIcon size={28} weight={active ? "fill" : "regular"} className={`${active ? "text-blue-500" : "text-gray-400 dark:text-gray-200"}`} />
+          <Flag size={26} weight={active ? "fill" : "regular"} />
         )}
         route="/complaint"
         label="Denúncias"
       />
-      
     </nav>
   )
 }

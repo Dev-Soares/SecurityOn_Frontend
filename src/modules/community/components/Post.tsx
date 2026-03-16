@@ -1,5 +1,5 @@
 import React from 'react'
-import { HeartIcon, ChatCircleIcon, ShareNetworkIcon } from '@phosphor-icons/react'
+import { Heart, ChatCircle, ShareNetwork } from '@phosphor-icons/react'
 
 
 type PostProps = {
@@ -13,30 +13,46 @@ type PostProps = {
 const Post: React.FC<PostProps> = ({ username, content, timestamp, userAvatarUrl, imgUrl }) => {
 
   return (
-    <div className='bg-gray-100 dark:bg-gray-900 dark:border-gray-700 border-2 border-gray-300 h-auto px-6 flex flex-col rounded-md gap-2 w-full pt-8 md:w-[70%] xl:w-[50%] shadow-md'>
-        <div className='flex flex-row gap-2 justify-start items-center border-t border-t-gray-300 dark:border-t-gray-700 py-4'>
-            <div className='rounded-full w-[13%] 2xl:w-[10%] border-2 border-gray-200'>{userAvatarUrl ? <img src={userAvatarUrl} alt="User avatar" className='rounded-full' /> : <img src="avatar.png" alt="Default avatar" className='rounded-full' />}</div>
+    <div className='bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 h-auto px-6 flex flex-col rounded-2xl gap-4 w-full pt-6 pb-2 md:w-[70%] xl:w-[50%]'>
+        {/* Header */}
+        <div className='flex flex-row gap-3 items-center'>
+            <div className='w-12 h-12 rounded-full overflow-hidden shrink-0 bg-gray-200 dark:bg-gray-800'>
+                <img
+                    src={userAvatarUrl || "avatar.png"}
+                    alt={`${username} avatar`}
+                    className='w-full h-full object-cover'
+                />
+            </div>
             <div className='flex flex-col'>
-                <p className='font-semibold text-lg text-blue-500 dark:text-white'>{username}</p>
-                <p className='text-sm text-gray-500 dark:text-gray-300'>{timestamp}</p>
+                <p className='font-semibold text-base text-gray-900 dark:text-white'>{username}</p>
+                <p className='text-sm text-gray-500 dark:text-gray-400'>{timestamp}</p>
             </div>
         </div>
-        <div className='flex flex-col gap-4'>
-            <p className='text-md font-medium text-gray-900 dark:text-gray-100'>{content}</p>
-            {imgUrl && <img src={imgUrl} alt="Post image" className='w-full h-auto rounded-md' />}
+
+        {/* Content */}
+        <div className='flex flex-col gap-3 mt-1'>
+            <p className='text-base leading-relaxed text-gray-800 dark:text-gray-200 mb-2'>{content}</p>
+            {imgUrl && (
+                <img
+                    src={imgUrl}
+                    alt="Post image"
+                    className='w-full h-auto rounded-xl object-cover'
+                />
+            )}
         </div>
-        <div className='flex flex-row gap-2 justify-around items-center border-t border-t-gray-300 dark:border-t-gray-700 py-2.5 mt-2'>
-            <button className='flex items-center gap-2 px-4 py-2 rounded-md cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200'>
-                <HeartIcon size={24} weight="regular" className='text-gray-600 dark:text-gray-300' />
+
+        {/* Actions */}
+        <div className='flex flex-row items-center justify-around border-t border-gray-200 dark:border-gray-800 py-1.5 mt-2 -mx-2'>
+            <button className='flex items-center gap-2 px-5 py-2 rounded-lg cursor-pointer hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-colors duration-200 group'>
+                <Heart size={22} weight="regular" className='text-gray-500 dark:text-gray-400 group-hover:text-red-500 transition-colors duration-200' />
             </button>
-            <button className='flex items-center gap-2 px-4 py-2 rounded-md cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200'>
-                <ChatCircleIcon size={24} weight="regular" className='text-gray-600 dark:text-gray-300' />
+            <button className='flex items-center gap-2 px-5 py-2 rounded-lg cursor-pointer hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-colors duration-200 group'>
+                <ChatCircle size={22} weight="regular" className='text-gray-500 dark:text-gray-400 group-hover:text-blue-500 transition-colors duration-200' />
             </button>
-            <button className='flex items-center gap-2 px-4 py-2 rounded-md cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200'>
-                <ShareNetworkIcon size={24} weight="regular" className='text-gray-600 dark:text-gray-300' />
+            <button className='flex items-center gap-2 px-5 py-2 rounded-lg cursor-pointer hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-colors duration-200 group'>
+                <ShareNetwork size={22} weight="regular" className='text-gray-500 dark:text-gray-400 group-hover:text-blue-500 transition-colors duration-200' />
             </button>
         </div>
-      
     </div>
   )
 }
