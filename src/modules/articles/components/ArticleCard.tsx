@@ -25,7 +25,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
             onClick={() => navigate(`/articles/${slug}`)}
             className="
                 group relative flex flex-col
-                w-full sm:w-80 lg:w-88
+                w-full sm:w-[calc(50%-16px)] xl:w-[calc(33.333%-20px)]
                 bg-gray-200 dark:bg-gray-800/60
                 rounded-2xl overflow-hidden cursor-pointer
                 border border-gray-300/60 dark:border-gray-700/40

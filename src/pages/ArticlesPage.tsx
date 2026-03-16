@@ -9,7 +9,7 @@ const ArticlesPage: React.FC = () => {
         <SearchBar />
       </div>
 
-      <div className='p-2 px-4 xl:px-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mt-4 max-w-6xl mx-auto'>
+      <div className='p-2 px-4 xl:px-8 flex flex-wrap justify-center gap-6 mt-4 max-w-6xl mx-auto'>
         <ArticleCard
           title="Dicas de Segurança Residencial"
           description="Aprenda as melhores práticas para proteger sua casa contra invasões e furtos. Sistemas de alarme, câmeras e vigilância."

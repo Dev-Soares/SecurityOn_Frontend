@@ -19,21 +19,21 @@ const Header: React.FC<headerProps> = ({ userImg }) => {
 
       {/* Logo + Brand */}
       <div className="flex items-center gap-1">
-        <LogoIcon size={40} />
-        <span className="text-lg font-bold tracking-tight text-blue-600 dark:text-white">SecurityOn</span>
+        <LogoIcon size={48} className="md:w-14 md:h-14" />
+        <span className="text-xl md:text-2xl font-bold tracking-tight text-blue-600 dark:text-white">SecurityOn</span>
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 md:gap-2">
         <button
           onClick={toggleTheme}
           aria-label="Alternar tema"
-          className="p-2.5 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors duration-200 cursor-pointer"
+          className="p-2.5 md:p-3 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors duration-200 cursor-pointer"
         >
           {theme === 'dark' ? (
-            <Moon size={22} weight="bold" />
+            <Moon size={22} weight="bold" className="md:w-7! md:h-7!" />
           ) : (
-            <Sun size={22} weight="bold" className="text-amber-400" />
+            <Sun size={22} weight="bold" className="text-amber-400 md:w-7! md:h-7!" />
           )}
         </button>
 
@@ -41,7 +41,7 @@ const Header: React.FC<headerProps> = ({ userImg }) => {
           onClick={() => navigate('profile')}
           className={`shrink-0 cursor-pointer ml-1 ${location.pathname === '/profile' ? 'hidden' : ''}`}
         >
-          <img src={imgURL} alt="User avatar" className="rounded-full w-9 h-9 object-cover border border-gray-200 dark:border-gray-700" />
+          <img src={imgURL} alt="User avatar" className="rounded-full w-9 h-9 md:w-11 md:h-11 object-cover border border-gray-200 dark:border-gray-700" />
         </button>
       </div>
 
