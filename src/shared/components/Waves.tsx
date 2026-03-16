@@ -7,7 +7,7 @@ interface WavesProps {
   title: string
 }
 
-const Waves: React.FC<WavesProps> = ({ title }) => {
+const Waves: React.FC<WavesProps> = ({}) => {
   const navigate = useNavigate()
 
   return (

@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(find c:UsersUserDocumentstesteSecurityOn_Frontend -type f -name *ommunity* -o -name *ost*)"
+      "Bash(find c:UsersUserDocumentstesteSecurityOn_Frontend -type f -name *ommunity* -o -name *ost*)",
+      "Bash(npx tsc:*)"
     ]
   }
 }
