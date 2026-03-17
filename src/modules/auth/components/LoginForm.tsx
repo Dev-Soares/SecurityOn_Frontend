@@ -11,7 +11,7 @@ const LoginForm: React.FC = () => {
   const [password, setPassword] = useState('');
 
   return (
-    <form className="w-full max-w-md px-6 lg:px-8 flex flex-col gap-6 lg:gap-8">
+    <form className="w-full max-w-md px-6 lg:px-8 flex flex-col gap-6 lg:gap-8 my-4">
       <div className='flex flex-col gap-1 lg:gap-2'>
         <h2 className='text-2xl lg:text-4xl font-bold text-gray-900 dark:text-white'>
           Bem-vindo de volta

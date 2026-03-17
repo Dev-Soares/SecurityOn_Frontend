@@ -24,6 +24,7 @@ body,
 body {
   position: relative;
   min-height: 100vh;
+  overscroll-behavior-y: contain;
 }
 
 /* Scrollbar personalizado - Design Premium */
