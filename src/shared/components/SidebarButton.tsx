@@ -15,7 +15,7 @@ const SidebarButton: FunctionComponent<SidebarButtonProps> = ({ text, iconOutlin
   const navigate = useNavigate();
 
   return (
-    <button onClick={() => navigate(route)}
+    <button onClick={() => { navigate(route); window.scrollTo(0, 0); }}
     className={`w-full p-3 px-4 flex items-center gap-4 rounded-full text-xl cursor-pointer transition-all duration-200
       ${isSelected
         ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-bold'
