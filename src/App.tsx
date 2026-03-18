@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import MainPage from './pages/MainPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
@@ -9,8 +10,18 @@ import ComplaintsPage from './pages/ComplaintsPage'
 import ProfilePage from './pages/ProfilePage'
 import ArticleDetailPage from './pages/ArticleDetailPage'
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    document.getElementById('root')?.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
+
 const App = () => {
   return (
+    <>
+    <ScrollToTop />
     <Routes>
         <Route path="/" element={ <MainPage />}>
 
@@ -27,6 +38,7 @@ const App = () => {
         <Route path="/create-complaint" element={ <CreateComplaintPage />} />
 
     </Routes>
+    </>
   )
 }
 

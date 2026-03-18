@@ -15,7 +15,7 @@ const NavItem: FunctionComponent<NavItemProps> = ({ icon, route, label }) => {
 
   return (
     <button
-      onClick={() => { navigate(route); window.scrollTo(0, 0); }}
+      onClick={() => navigate(route)}
       className={`
         relative flex flex-1 flex-col items-center justify-center gap-1 py-2 cursor-pointer
         transition-all duration-200
