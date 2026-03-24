@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heart, ChatCircle, ShareNetwork } from '@phosphor-icons/react'
+import { Heart, ChatCircle } from '@phosphor-icons/react'
 import useGetUser from '@/modules/profile/hooks/useGetUser'
 import PostSkeleton from './PostSkeleton'
 import { useNavigate } from 'react-router-dom'
