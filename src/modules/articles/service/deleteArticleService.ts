@@ -1,5 +1,5 @@
 import { api } from "@/api/axios";
 
-export const deleteArticleService = async (id: number) => {
-    await api.delete(`/articles/${id}`);
+export const deleteArticleService = async (id: string) => {
+    await api.delete(`/article/${id}`);
 }
