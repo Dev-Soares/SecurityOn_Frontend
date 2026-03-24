@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import { Plus } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
 import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
+import ComplaintCardSkeleton from '@/modules/complaints/skeletons/ComplaintCardSkeleton'
+import ErrorMessage from '@/shared/utils/ErrorMessage'
+import useFindAllComplaints from '@/modules/complaints/hooks/useFindAllComplaints'
+import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
 
 
 type DangerFilter = 'todos' | 'aviso' | 'cuidado' | 'perigo' | 'critico'
@@ -14,18 +18,25 @@ const filters: { value: DangerFilter; label: string }[] = [
   { value: 'critico', label: 'Crítico' },
 ]
 
-const complaints = [
-  { title: 'Tentativa de Golpe em Loja Online', content: 'Recebi e-mail suspeito oferecendo desconto de 90% em produtos conhecidos. O site é muito parecido com o original mas tem alguns erros de português.', date: '2024/01/10', link: 'https://www.loja-falsa-exemplo.com/', store: 'Loja Online X', danger: 'aviso' as const },
-  { title: 'Cobrança Indevida no Cartão', content: 'Apareceu uma cobrança que não reconheço na fatura do cartão. Empresa com nome estranho e valor alto. Já entrei em contato com o banco para contestar.', date: '2024/01/09', store: 'Empresa Desconhecida LTDA', danger: 'cuidado' as const },
-  { title: 'Golpe do Falso Suporte Técnico', content: 'Recebi ligação de alguém se passando por suporte técnico do banco pedindo dados pessoais e senha. Quase caí no golpe mas desconfiei a tempo.', date: '2024/01/08', link: 'https://www.site-falso-banco.com/', store: 'Falso Banco Digital', danger: 'perigo' as const },
-  { title: 'Sequestro Virtual e Extorsão', content: 'Golpistas ligaram fingindo ter sequestrado familiar e exigiram transferência imediata. Usaram inteligência artificial para imitar a voz. Situação extremamente perigosa!', date: '2024/01/07', danger: 'critico' as const },
-]
 
 const ComplaintsPage: React.FC = () => {
 
   const navigate = useNavigate()
   const [activeFilter, setActiveFilter] = useState<DangerFilter>('todos')
 
+  const {
+    data,
+    isLoading,
+    isError,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+    refetch,
+  } = useFindAllComplaints()
+
+  const observerRef = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage })
+
+  const complaints = data?.pages.flatMap((page) => page.data) ?? []
   const filtered = activeFilter === 'todos' ? complaints : complaints.filter(c => c.danger === activeFilter)
 
   return (
@@ -62,7 +73,9 @@ const ComplaintsPage: React.FC = () => {
             </button>
           ))}
         </div>
-        <span className='text-xs text-gray-400 dark:text-gray-500'>{filtered.length} denúncia{filtered.length !== 1 ? 's' : ''}</span>
+        {!isLoading && !isError && (
+          <span className='text-xs text-gray-400 dark:text-gray-500'>{filtered.length} denúncia{filtered.length !== 1 ? 's' : ''}</span>
+        )}
       </div>
 
       {/* FAB mobile */}
@@ -72,11 +85,43 @@ const ComplaintsPage: React.FC = () => {
       </button>
 
         <div className='flex flex-col gap-4 w-full max-w-2xl px-4 mt-8'>
-          {filtered.map((c, i) => (
-            <ComplaintCard key={i} {...c} />
+          {isLoading && (
+            <>
+              <ComplaintCardSkeleton />
+              <ComplaintCardSkeleton />
+              <ComplaintCardSkeleton />
+              <ComplaintCardSkeleton />
+              <ComplaintCardSkeleton />
+              <ComplaintCardSkeleton />
+            </>
+          )}
+
+          {isError && (
+            <ErrorMessage
+              message="Não foi possível carregar as denúncias."
+              onRetry={() => refetch()}
+            />
+          )}
+
+          {filtered.map((c) => (
+            <ComplaintCard
+              key={c.id}
+              title={c.title}
+              content={c.content}
+              date={c.createdAt}
+              danger={c.danger}
+              store={c.store}
+              link={c.link}
+            />
           ))}
         </div>
-        
+
+        <div ref={observerRef} className='flex justify-center py-8'>
+          {isFetchingNextPage && (
+            <p className='text-gray-500 dark:text-gray-400'>Carregando mais denúncias...</p>
+          )}
+        </div>
+
     </main>
   )
 }
