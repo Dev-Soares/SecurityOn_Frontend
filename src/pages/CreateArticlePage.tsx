@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Waves from '../shared/components/Waves'
+import Waves from '@/shared/components/Waves'
 import { useNavigate } from 'react-router-dom'
 import { useCreateArticle } from '@/modules/articles/hooks/useCreateArticle'
 

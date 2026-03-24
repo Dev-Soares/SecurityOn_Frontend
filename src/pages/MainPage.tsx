@@ -1,5 +1,5 @@
-import Sidebar from "../shared/layouts/Sidebar"
-import Content from "../shared/layouts/Content"
+import Sidebar from "@/shared/layouts/Sidebar"
+import Content from "@/shared/layouts/Content"
 
 const MainPage = () => {
   return (

@@ -1,7 +1,7 @@
 import React from 'react'
-import ProfileBanner from '../ui/ProfileBanner'
-import { PencilSimpleIcon } from '@phosphor-icons/react'
-import ProfileInfo from '../ui/ProfileInfo'
+import ProfileBanner from '@/modules/profile/components/ProfileBanner'
+import { PencilSimple } from '@phosphor-icons/react'
+import ProfileInfo from '@/modules/profile/components/ProfileInfo'
 import {useState} from 'react'
 
 const ProfileContent: React.FC = () => {
@@ -29,7 +29,7 @@ const ProfileContent: React.FC = () => {
                     : 'bg-gray-100 dark:bg-gray-900 hover:bg-blue-600 dark:hover:bg-blue-600'
                 }`}
               >
-                <PencilSimpleIcon 
+                <PencilSimple 
                   size={20} 
                   weight="regular" 
                   className={`transition-colors duration-300 ${

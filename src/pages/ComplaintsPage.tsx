@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Plus } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
-import ComplaintCard from '../modules/complaints/components/ComplaintCard'
+import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
 
 
 type DangerFilter = 'todos' | 'aviso' | 'cuidado' | 'perigo' | 'critico'

@@ -1,10 +1,10 @@
 import type { FunctionComponent } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
-import SidebarButton from "../components/SidebarButton"
-import ProfileCard from "../components/ProfileCard"
+import SidebarButton from "@/shared/components/SidebarButton"
+import ProfileCard from "@/shared/components/ProfileCard"
 import { UsersThree, Article, Flag, SignIn, Sun, Moon } from "@phosphor-icons/react"
-import LogoIcon from "../components/LogoIcon"
-import { useTheme } from "../contexts/themeContext"
+import LogoIcon from "@/shared/components/LogoIcon"
+import { useTheme } from "@/shared/contexts/themeContext"
 
 
 const Sidebar: FunctionComponent = () => {

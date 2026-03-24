@@ -1,7 +1,7 @@
 import React from 'react'
 import { Plus } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
-import ComplaintCard from '../ui/ComplaintCard'
+import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
 
 
 const ComplaintContent: React.FC = () => {

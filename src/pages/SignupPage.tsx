@@ -1,6 +1,6 @@
 import React from 'react'
-import SignupForm from '../modules/auth/components/SignupForm'
-import Waves from '../shared/components/Waves'
+import SignupForm from '@/modules/auth/components/SignupForm'
+import Waves from '@/shared/components/Waves'
 
 const SignupPage: React.FC = () => {
   return (

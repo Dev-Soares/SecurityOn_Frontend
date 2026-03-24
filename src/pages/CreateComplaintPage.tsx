@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Waves from '../shared/components/Waves'
-import SelectDanger from '../modules/complaints/components/SelectDanger'
+import Waves from '@/shared/components/Waves'
+import SelectDanger from '@/modules/complaints/components/SelectDanger'
 import { useNavigate } from 'react-router-dom'
 
 type DangerType = 'aviso' | 'cuidado' | 'perigo' | 'critico'

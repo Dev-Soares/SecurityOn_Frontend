@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback } from 'react'
-import ArticleCard from '../modules/articles/components/ArticleCard'
-import SearchBar from '../shared/components/SearchBar'
+import ArticleCard from '@/modules/articles/components/ArticleCard'
+import SearchBar from '@/shared/components/SearchBar'
 import useFindAllArticles from '@/modules/articles/hooks/useFindAllArticles'
 import ArticleCardSkeleton from '@/modules/articles/skeletons/ArticleCardSkeleton'
 import ErrorMessage from '@/shared/utils/ErrorMessage'
