@@ -38,15 +38,19 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
         >
             {/* Image container */}
             <div className="w-full h-48 overflow-hidden">
-                <img
-                    src={bgUrl}
-                    alt={title}
-                    className="
-                        w-full h-full object-cover
-                        transition-transform duration-500 ease-out
-                        group-hover:scale-105
-                    "
-                />
+                {bgUrl ? (
+                    <img
+                        src={bgUrl}
+                        alt={title}
+                        className="
+                            w-full h-full object-cover
+                            transition-transform duration-500 ease-out
+                            group-hover:scale-105
+                        "
+                    />
+                ) : (
+                    <div className="w-full h-full bg-blue-500" />
+                )}
             </div>
 
             {/* Content */}
