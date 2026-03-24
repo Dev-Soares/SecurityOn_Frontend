@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import ProfileBanner from '../modules/profile/components/ProfileBanner'
+import ProfileBanner from '@/modules/profile/components/ProfileBanner'
 import { PencilSimple } from '@phosphor-icons/react'
-import ProfileInfo from '../modules/profile/components/ProfileInfo'
+import ProfileInfo from '@/modules/profile/components/ProfileInfo'
 
 const ProfilePage: React.FC = () => {
 

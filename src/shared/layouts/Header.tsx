@@ -1,8 +1,8 @@
 import React from 'react'
 import { Sun, Moon } from '@phosphor-icons/react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import LogoIcon from '../components/LogoIcon'
-import { useTheme } from '../contexts/themeContext'
+import LogoIcon from '@/shared/components/LogoIcon'
+import { useTheme } from '@/shared/contexts/themeContext'
 
 type headerProps = {
     userImg: string | null;

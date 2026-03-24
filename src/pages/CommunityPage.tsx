@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Post from '../modules/community/components/Post'
+import Post from '@/modules/community/components/Post'
 import { Image } from '@phosphor-icons/react'
-import ModalPost from '../modules/community/components/ModalPost'
+import ModalPost from '@/modules/community/components/ModalPost'
 
 const CommunityPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

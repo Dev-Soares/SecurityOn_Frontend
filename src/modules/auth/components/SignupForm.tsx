@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Input from '../../../shared/components/Input';
+import Input from '@/shared/components/Input';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from '@phosphor-icons/react';
 
@@ -45,9 +45,9 @@ const SignupForm: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-md px-6 lg:px-8 flex flex-col gap-8 lg:gap-10">
-      {/* Progress bar */}
-      <div className='flex items-center gap-2'>
+    <form onSubmit={handleSubmit} className="w-full max-w-md px-6 lg:px-8 flex flex-col gap-8 lg:gap-10 my-4">
+      {/* Progress bar - sticky */}
+      <div className='flex items-center gap-2 sticky top-0 z-20 bg-white dark:bg-gray-950 py-3 -mt-4'>
         {steps.map((_, i) => (
           <div
             key={i}

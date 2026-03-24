@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(find c:UsersUserDocumentstesteSecurityOn_Frontend -type f -name *ommunity* -o -name *ost*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(grep -r \"style.*width\\\\|style.*height\" '/c/Users/berna/OneDrive/Documentos/Projetos/SecurityOn/SecurityOn - Frontend/src' --include=*.tsx --include=*.ts)",
+      "Bash(grep -r \"top-\\\\|bottom-\\\\|left-\\\\|right-\" '/c/Users/berna/OneDrive/Documentos/Projetos/SecurityOn/SecurityOn - Frontend/src' --include=*.tsx --include=*.ts)",
+      "Bash(grep -r \"w-\\\\|h-\" '/c/Users/berna/OneDrive/Documentos/Projetos/SecurityOn/SecurityOn - Frontend/src' --include=*.tsx --include=*.ts)",
+      "Bash(grep -r \"pb-\\\\|pt-\\\\|min-h-\\\\|max-w-\\\\|overflow\" '/c/Users/berna/OneDrive/Documentos/Projetos/SecurityOn/SecurityOn - Frontend/src' --include=*.tsx --include=*.ts)"
     ]
   }
 }
