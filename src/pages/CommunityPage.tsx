@@ -2,9 +2,27 @@ import React, { useState } from 'react'
 import Post from '@/modules/community/components/Post'
 import { Image } from '@phosphor-icons/react'
 import ModalPost from '@/modules/community/components/ModalPost'
+import useFindAllPosts from '@/modules/community/hooks/useFindAllPosts'
+import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
+import PostSkeleton from '@/modules/community/skeletons/PostSkeleton'
+import ErrorMessage from '@/shared/utils/ErrorMessage'
 
 const CommunityPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+   const {
+    data,
+    isLoading,
+    isError,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+    refetch,
+  } = useFindAllPosts()
+
+  const observerRef = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage })
+
+  const posts = data?.pages.flatMap((page) => page.data) ?? []
 
   return (
     <main className='py-3 px-2 min-h-screen pb-28 md:pb-16 lg:pb-0 lg:py-8 lg:px-8 flex flex-col gap-6 bg-white dark:bg-gray-950'>
@@ -36,12 +54,35 @@ const CommunityPage: React.FC = () => {
         </div>
       </div>
       <ModalPost isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-        <div className='flex flex-col gap-3 justify-center items-center md:gap-5'>
-            <Post username='Bernardo Soares' content='O desenvolvimento de novas tecnologias exige criatividade e lógica. Em um mundo cada vez mais conectado, a interface do usuário desempenha um papel fundamental na experiência digital. É necessário testar cores, tipografia e responsividade para garantir que a mensagem chegue de forma clara e eficiente. Este é apenas um texto simulado para preencher espaços vazios no seu projeto de design ou código.' timestamp='16/12/2025' imgUrl='imgTeste.jpg' />
-            <Post username='Ana Clara' content='A segurança digital é um tema cada vez mais relevante na sociedade atual. Com o avanço da tecnologia, é fundamental estar atento às práticas de proteção de dados e privacidade online. Utilizar senhas fortes, manter softwares atualizados e evitar clicar em links suspeitos são algumas das medidas essenciais para garantir a segurança na internet.' timestamp='10/11/2025' imgUrl='imgTeste.jpg' />
-        </div>
-        
 
+        <div className='flex flex-col gap-3 justify-center items-center md:gap-5'>
+          {isLoading && <PostSkeleton />}
+
+          {isError && (
+            <div className="w-full md:w-[70%] xl:w-[50%] mx-auto">
+              <ErrorMessage
+                message="Não foi possível carregar os posts."
+                onRetry={() => refetch()}
+              />
+            </div>
+          )}
+
+          {posts.map((post) => (
+            <Post
+              key={post.id}
+              userId={post.userId}
+              content={post.content}
+              timestamp={post.createdAt}
+              imgUrl={post.imgUrl}
+            />
+          ))}
+        </div>
+
+        <div ref={observerRef} className='flex justify-center py-8'>
+          {isFetchingNextPage && (
+            <p className='text-gray-500 dark:text-gray-400'>Carregando mais posts...</p>
+          )}
+        </div>
 
     </main>
   )

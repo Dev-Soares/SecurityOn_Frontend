@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useCallback } from 'react'
+import React from 'react'
 import ArticleCard from '@/modules/articles/components/ArticleCard'
 import SearchBar from '@/shared/components/SearchBar'
 import useFindAllArticles from '@/modules/articles/hooks/useFindAllArticles'
 import ArticleCardSkeleton from '@/modules/articles/skeletons/ArticleCardSkeleton'
 import ErrorMessage from '@/shared/utils/ErrorMessage'
+import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
 
 const ArticlesPage: React.FC = () => {
   const {
@@ -16,29 +17,7 @@ const ArticlesPage: React.FC = () => {
     refetch,
   } = useFindAllArticles()
 
-  const observerRef = useRef<HTMLDivElement>(null)
-
-  const handleObserver = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      const [entry] = entries
-      if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
-        fetchNextPage()
-      }
-    },
-    [hasNextPage, isFetchingNextPage, fetchNextPage]
-  )
-
-  useEffect(() => {
-    const element = observerRef.current
-    if (!element) return
-
-    const observer = new IntersectionObserver(handleObserver, {
-      threshold: 0.1,
-    })
-    observer.observe(element)
-
-    return () => observer.disconnect()
-  }, [handleObserver])
+  const observerRef = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage })
 
   const articles = data?.pages.flatMap((page) => page.data) ?? []
 

@@ -2,10 +2,21 @@ import React, { useState } from 'react'
 import ProfileBanner from '@/modules/profile/components/ProfileBanner'
 import { PencilSimple } from '@phosphor-icons/react'
 import ProfileInfo from '@/modules/profile/components/ProfileInfo'
+import { useParams } from 'react-router-dom'
+import useGetUser from '@/modules/profile/hooks/useGetUser'
+import ProfileSkeleton from '@/modules/profile/skeletons/ProfileSkeleton'
 
 const ProfilePage: React.FC = () => {
 
+  const { id } = useParams<{ id: string }>()
+
+  const { data: user} = useGetUser(id!)
+
   const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  if (!user) return <ProfileSkeleton />
+
+  const userName = user.name.toLowerCase().replace(/\s/g, '')
 
   return (
     <main className='min-h-screen pb-32 md:pb-24 lg:pb-16 flex flex-col bg-white dark:bg-gray-950'>
@@ -16,8 +27,8 @@ const ProfilePage: React.FC = () => {
         <div className='px-6 sm:px-8 pt-20 lg:pt-24 flex flex-col gap-5'>
           <div className='flex items-start justify-between'>
             <div className='flex flex-col gap-0.5'>
-              <h1 className='text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mt-1'>UserName</h1>
-              <p className='text-base text-gray-500 dark:text-gray-400'>@UserName</p>
+              <h1 className='text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mt-1'>{user.name}</h1>
+              <p className='text-base text-gray-500 dark:text-gray-400'>@{userName}</p>
             </div>
 
             <button

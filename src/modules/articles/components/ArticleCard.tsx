@@ -37,8 +37,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
             "
         >
             {/* Image container */}
-            <div className="w-full h-48 overflow-hidden">
-                {bgUrl ? (
+            {bgUrl && (
+                <div className="w-full h-48 overflow-hidden">
                     <img
                         src={bgUrl}
                         alt={title}
@@ -48,10 +48,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
                             group-hover:scale-105
                         "
                     />
-                ) : (
-                    <div className="w-full h-full bg-blue-500" />
-                )}
-            </div>
+                </div>
+            )}
 
             {/* Content */}
             <div className="flex flex-col flex-1 p-5 gap-3">
