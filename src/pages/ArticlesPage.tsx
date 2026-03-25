@@ -51,6 +51,7 @@ const ArticlesPage: React.FC = () => {
             title={article.title}
             description={article.content.substring(0, 150) + '...'}
             bgUrl={article.bgUrl ?? ''}
+            imgUrl={article.imgUrl}
             id={String(article.id)}
             slug={String(article.id)}
           />

@@ -1,6 +1,6 @@
 import React from 'react'
 import type { FunctionComponent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import useNavigateTo from '../hooks/useNavigateTo'
 
 type SidebarButtonProps = {
     text: string;
@@ -12,10 +12,10 @@ type SidebarButtonProps = {
 
 const SidebarButton: FunctionComponent<SidebarButtonProps> = ({ text, iconOutline, iconFilled, isSelected, route}) => {
 
-  const navigate = useNavigate();
+  const navigateTo = useNavigateTo();
 
   return (
-    <button onClick={() => navigate(route)}
+    <button onClick={() => navigateTo(route)}
     className={`w-full p-3 px-4 flex items-center gap-4 rounded-full text-xl cursor-pointer transition-all duration-200
       ${isSelected
         ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-bold'

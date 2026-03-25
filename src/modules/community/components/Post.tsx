@@ -2,7 +2,7 @@ import React from 'react'
 import { Heart, ChatCircle } from '@phosphor-icons/react'
 import useGetUser from '@/modules/profile/hooks/useGetUser'
 import PostSkeleton from '../skeletons/PostSkeleton'
-import { useNavigate } from 'react-router-dom'
+import useNavigateTo from '@/shared/hooks/useNavigateTo'
 
 
 type PostProps = {
@@ -17,7 +17,7 @@ const Post: React.FC<PostProps> = ({ userId, content, timestamp, userAvatarUrl, 
 
     const {data: user } = useGetUser(userId)
 
-    const navigate = useNavigate()
+    const navigateTo = useNavigateTo()
 
     if (!user) return <PostSkeleton />
 
@@ -32,7 +32,7 @@ const Post: React.FC<PostProps> = ({ userId, content, timestamp, userAvatarUrl, 
   return (
     <div className='bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 h-auto px-6 flex flex-col rounded-2xl gap-4 w-full pt-6 pb-2 md:w-[70%] xl:w-[50%]'>
         <button
-        onClick={ () => navigate(`/profile/${userId}`)}
+        onClick={ () => navigateTo(`/profile/${userId}`)}
         className='flex flex-row gap-3 items-center cursor-pointer rounded-xl px-3 py-2 -mx-3 hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-colors duration-200'>
             <div className='w-12 h-12 rounded-full overflow-hidden shrink-0 bg-gray-200 dark:bg-gray-800'>
                 <img

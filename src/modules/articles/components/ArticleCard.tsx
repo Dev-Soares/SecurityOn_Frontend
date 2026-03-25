@@ -1,11 +1,12 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import useNavigateTo from '@/shared/hooks/useNavigateTo'
 import { ArrowRight, Clock } from '@phosphor-icons/react'
 
 interface ArticleCardProps {
     title: string
     description: string
     bgUrl: string
+    imgUrl?: string
     id: string
     slug: string
     readTime?: string
@@ -15,14 +16,15 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
     title,
     description,
     bgUrl,
+    imgUrl,
     slug,
     readTime = '5 min',
 }) => {
-    const navigate = useNavigate()
+    const navigateTo = useNavigateTo()
 
     return (
         <article
-            onClick={() => navigate(`/articles/${slug}`)}
+            onClick={() => navigateTo(`/articles/${slug}`)}
             className="
                 group relative flex flex-col
                 w-full sm:w-[calc(50%-16px)] xl:w-[calc(33.333%-20px)]
@@ -37,10 +39,10 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
             "
         >
             {/* Image container */}
-            {bgUrl && (
+            {(bgUrl || imgUrl) && (
                 <div className="w-full h-48 overflow-hidden">
                     <img
-                        src={bgUrl}
+                        src={bgUrl || imgUrl}
                         alt={title}
                         className="
                             w-full h-full object-cover

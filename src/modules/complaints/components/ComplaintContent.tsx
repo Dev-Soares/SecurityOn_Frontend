@@ -1,17 +1,17 @@
 import React from 'react'
 import { Plus } from '@phosphor-icons/react'
-import { useNavigate } from 'react-router-dom'
+import useNavigateTo from '@/shared/hooks/useNavigateTo'
 import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
 
 
 const ComplaintContent: React.FC = () => {
 
-  const navigate = useNavigate()
+  const navigateTo = useNavigateTo()
 
   return (
     <main className='min-h-screen pb-28 md:pb-16 lg:pb-0 lg:py-8 lg:px-8 flex flex-col items-center gap-6 bg-white dark:bg-gray-950'>
       <div className='p-2 flex justify-end items-end w-full'>
-        <button onClick={() => navigate('/create-complaint')} className=' fixed bottom-6 right-2 lg:right-6 flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-400 hover:scale-105 shadow-md cursor-pointer lg:text-lg mb-18 lg:mb-0'>
+        <button onClick={() => navigateTo('/create-complaint')} className=' fixed bottom-6 right-2 lg:right-6 flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-400 hover:scale-105 shadow-md cursor-pointer lg:text-lg mb-18 lg:mb-0'>
           <Plus size={24} weight="bold" />
           Fazer Denúncia
         </button>

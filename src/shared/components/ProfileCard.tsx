@@ -1,27 +1,22 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import useNavigateTo from '../hooks/useNavigateTo'
 import { DotsThree } from '@phosphor-icons/react'
+import { useUser } from '../contexts/userContext'
 
-type ProfileCardProps = {
-    username?: string
-    handle?: string
-    avatarUrl?: string
-}
+const ProfileCard: React.FC = ({}) => {
 
-const ProfileCard: React.FC<ProfileCardProps> = ({
-    username = "Convidado",
-    handle = "@convidado",
-    avatarUrl= "/avatar.png"}) => {
+  const { user, isLogged } = useUser()
 
-  const navigate = useNavigate();
+  const navigateTo = useNavigateTo();
 
   return (
     <div className='flex items-center gap-3 p-3 w-full rounded-full hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors duration-200 cursor-pointer'
-      onClick={() => navigate('/profile')}>
-      <img src={avatarUrl} alt={`${username}'s avatar`} className='w-11 h-11 rounded-full object-cover shrink-0' />
+      onClick={ isLogged? () => navigateTo('/profile') : ()=> navigateTo('/login')}>
+      <img src={user? user.avatarUrl : '/avatar.png'} alt={`${user?.name} avatar`} className='w-11 h-11 rounded-full object-cover shrink-0' />
       <div className='flex flex-col min-w-0 flex-1'>
-        <span className='font-bold text-sm text-gray-900 dark:text-white truncate'>{username}</span>
-        <span className='text-sm text-gray-500 dark:text-gray-400 truncate'>{handle}</span>
+        <span className='font-bold text-sm text-gray-900 dark:text-white truncate'>{user ? user.name : 'Convidado'}</span>
+        <span className='text-xs text-gray-500 dark:text-gray-400 truncate'>@{user ? user.name.toLowerCase().replace(/\s+/g, '') : 'convidado'}</span>
+
       </div>
       <button
         onClick={(e) => { e.stopPropagation(); }}

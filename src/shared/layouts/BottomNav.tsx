@@ -1,6 +1,7 @@
 import type { FunctionComponent } from "react"
 import { UsersThree, Article, Flag } from "@phosphor-icons/react"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
+import useNavigateTo from "../hooks/useNavigateTo"
 
 type NavItemProps = {
   icon: (active: boolean) => React.ReactNode
@@ -9,13 +10,13 @@ type NavItemProps = {
 }
 
 const NavItem: FunctionComponent<NavItemProps> = ({ icon, route, label }) => {
-  const navigate = useNavigate();
+  const navigateTo = useNavigateTo();
   const location = useLocation();
   const isActive = location.pathname === route;
 
   return (
     <button
-      onClick={() => navigate(route)}
+      onClick={() => navigateTo(route)}
       className={`
         relative flex flex-1 flex-col items-center justify-center gap-1 py-2 cursor-pointer
         transition-all duration-200

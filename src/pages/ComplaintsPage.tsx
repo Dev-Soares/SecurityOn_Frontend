@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Plus } from '@phosphor-icons/react'
-import { useNavigate } from 'react-router-dom'
+import useNavigateTo from '@/shared/hooks/useNavigateTo'
 import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
 import ComplaintCardSkeleton from '@/modules/complaints/skeletons/ComplaintCardSkeleton'
 import ErrorMessage from '@/shared/utils/ErrorMessage'
@@ -22,7 +22,7 @@ const filters: { value: DangerFilter; label: string }[] = [
 
 const ComplaintsPage: React.FC = () => {
 
-  const navigate = useNavigate()
+  const navigateTo = useNavigateTo()
   const [activeFilter, setActiveFilter] = useState<DangerFilter>('todos')
 
   const {
@@ -50,7 +50,7 @@ const ComplaintsPage: React.FC = () => {
             <h1 className='text-2xl font-bold text-gray-900 dark:text-white'>Denúncias da Comunidade</h1>
             <p className='text-sm text-gray-500 dark:text-gray-400 mt-0.5'>Ajude a proteger outros usuários reportando golpes e fraudes</p>
           </div>
-          <button onClick={() => navigate('/create-complaint')} className='hidden lg:flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-all duration-200 active:scale-[0.98] shadow-sm hover:shadow-md cursor-pointer text-sm'>
+          <button onClick={() => navigateTo('/create-complaint')} className='hidden lg:flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-all duration-200 active:scale-[0.98] shadow-sm hover:shadow-md cursor-pointer text-sm'>
             <Plus size={18} weight="bold" />
             Fazer Denúncia
           </button>
@@ -80,7 +80,7 @@ const ComplaintsPage: React.FC = () => {
       </div>
 
       {/* FAB mobile */}
-      <button onClick={() => navigate('/create-complaint')} className='lg:hidden fixed bottom-24 right-4 flex items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-all shadow-lg cursor-pointer z-10'>
+      <button onClick={() => navigateTo('/create-complaint')} className='lg:hidden fixed bottom-24 right-4 flex items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-all shadow-lg cursor-pointer z-10'>
         <Plus size={20} weight="bold" />
         Denunciar
       </button>

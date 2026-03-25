@@ -33,6 +33,7 @@ const ProfileArticles: React.FC<ProfileArticlesProps> = ({ userId }) => {
                     title={article.title}
                     description={article.content}
                     bgUrl={article.bgUrl ?? ''}
+                    imgUrl={article.imgUrl}
                     slug={String(article.id)}
                 />
             ))}
