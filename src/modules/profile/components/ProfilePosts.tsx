@@ -33,6 +33,7 @@ const ProfilePosts: React.FC<ProfilePostsProps> = ({ userId }) => {
                     content={post.content}
                     timestamp={post.createdAt}
                     imgUrl={post.imgUrl}
+                    userAvatarUrl={null}
                 />
             ))}
             <div ref={observerRef} className='flex justify-center py-8'>

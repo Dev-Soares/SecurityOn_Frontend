@@ -36,7 +36,7 @@ const Post: React.FC<PostProps> = ({ userId, content, timestamp, userAvatarUrl, 
         className='flex flex-row gap-3 items-center cursor-pointer rounded-xl px-3 py-2 -mx-3 hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-colors duration-200'>
             <div className='w-12 h-12 rounded-full overflow-hidden shrink-0 bg-gray-200 dark:bg-gray-800'>
                 <img
-                    src={userAvatarUrl || "avatar.png"}
+                    src={userAvatarUrl || "/avatar.png"}
                     alt={`${user.name} avatar`}
                     className='w-full h-full object-cover'
                 />
