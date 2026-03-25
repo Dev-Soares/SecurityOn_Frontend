@@ -1,5 +1,4 @@
 
-import { Image, X } from '@phosphor-icons/react';
 import { createPostSchema } from '../types/createPost';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,19 +15,10 @@ const CreatePostForm = () => {
     const {
         register,
         handleSubmit,
-        watch,
-        setValue,
         formState: { errors }
     } = useForm({
         resolver: zodResolver(createPostSchema)
     })
-
-    const imageFiles = watch('image') as FileList | undefined;
-    const imagePreview = imageFiles?.[0] ? URL.createObjectURL(imageFiles[0]) : null;
-
-    const removeImage = () => {
-        setValue('image', undefined);
-    };
 
     const onSubmit = (data: CreatePost) => {
         mutate(data, {
@@ -46,33 +36,7 @@ const CreatePostForm = () => {
             />
             <ErrorText message={errors.content?.message} />
 
-            {imagePreview && (
-                <div className="relative">
-                    <img src={imagePreview} alt="Preview" className="w-full rounded-xl" />
-                    <button
-                        type="button"
-                        onClick={removeImage}
-                        className="absolute top-2 right-2 p-1.5 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-colors duration-200 cursor-pointer"
-                    >
-                        <X size={14} weight="bold" className="text-white" />
-                    </button>
-                </div>
-            )}
-            <ErrorText message={errors.image?.message} />
-
-            <div className="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-800">
-                <label className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-300 dark:text-gray-600 cursor-not-allowed">
-                    <Image size={20} weight="bold" />
-                    <span className="text-sm font-medium">Adicionar Imagem</span>
-                    <input
-                        disabled
-                        {...register('image')}
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                    />
-                </label>
-
+            <div className="flex justify-end items-center pt-4 border-t border-gray-200 dark:border-gray-800">
                 <button
                     type="submit"
                     disabled={isPending}
