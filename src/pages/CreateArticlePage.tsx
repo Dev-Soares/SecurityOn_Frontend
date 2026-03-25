@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import Waves from '@/shared/components/Waves'
-import { useNavigate } from 'react-router-dom'
+import useNavigateTo from '@/shared/hooks/useNavigateTo'
 import { useCreateArticle } from '@/modules/articles/hooks/useCreateArticle'
 
 const CreateArticlePage: React.FC = () => {
-    const navigate = useNavigate()
+    const navigateTo = useNavigateTo()
     const { mutate: createArticle, isPending } = useCreateArticle()
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
@@ -14,7 +14,7 @@ const CreateArticlePage: React.FC = () => {
         e.preventDefault()
         createArticle(
             { title, content, bgUrl: bgUrl || undefined },
-            { onSuccess: () => navigate('/articles') }
+            { onSuccess: () => navigateTo('/articles') }
         )
     }
 

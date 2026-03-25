@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import useNavigateTo from '../hooks/useNavigateTo'
 import { DotsThree } from '@phosphor-icons/react'
 import { useUser } from '../contexts/userContext'
 
@@ -7,11 +7,11 @@ const ProfileCard: React.FC = ({}) => {
 
   const { user, isLogged } = useUser()
 
-  const navigate = useNavigate();
+  const navigateTo = useNavigateTo();
 
   return (
     <div className='flex items-center gap-3 p-3 w-full rounded-full hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors duration-200 cursor-pointer'
-      onClick={ isLogged? () => navigate('/profile') : ()=> navigate('/login')}>
+      onClick={ isLogged? () => navigateTo('/profile') : ()=> navigateTo('/login')}>
       <img src={user? user.avatarUrl : '/avatar.png'} alt={`${user?.name} avatar`} className='w-11 h-11 rounded-full object-cover shrink-0' />
       <div className='flex flex-col min-w-0 flex-1'>
         <span className='font-bold text-sm text-gray-900 dark:text-white truncate'>{user ? user.name : 'Convidado'}</span>

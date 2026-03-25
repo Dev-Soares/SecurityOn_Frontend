@@ -1,5 +1,6 @@
 import React from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import useNavigateTo from '@/shared/hooks/useNavigateTo'
 import { ArrowLeft, Clock, ShareNetwork, CalendarBlank } from '@phosphor-icons/react'
 import useGetArticle from '@/modules/articles/hooks/useGetArticle'
 import ArticleDetailSkeleton from '@/modules/articles/skeletons/ArticleDetailSkeleton'
@@ -8,7 +9,7 @@ import { shareLink } from '@/shared/utils/shareLink'
 
 const ArticleDetailPage: React.FC = () => {
 
-  const navigate = useNavigate()
+  const navigateTo = useNavigateTo()
   const { id } = useParams<{ id: string }>()
   
   const { data: article, isLoading, error, refetch } = useGetArticle(String(id))
@@ -20,7 +21,7 @@ const ArticleDetailPage: React.FC = () => {
       <main className='pb-20 min-h-screen w-full'>
         <div className='mx-auto max-w-3xl px-6 md:px-10 pt-6'>
           <button
-            onClick={() => navigate('/articles')}
+            onClick={() => navigateTo('/articles')}
             className='
               flex items-center gap-2 mb-8
               text-sm font-medium cursor-pointer
@@ -59,7 +60,7 @@ const ArticleDetailPage: React.FC = () => {
         {/* Top nav */}
         <div className='flex items-center justify-between mb-8'>
           <button
-            onClick={() => navigate('/articles')}
+            onClick={() => navigateTo('/articles')}
             className='
               flex items-center gap-2
               text-sm font-medium cursor-pointer
@@ -138,7 +139,7 @@ const ArticleDetailPage: React.FC = () => {
         {/* Bottom actions */}
         <div className='flex items-center justify-between mt-6'>
           <button
-            onClick={() => navigate('/articles')}
+            onClick={() => navigateTo('/articles')}
             className='
               flex items-center gap-2
               text-sm font-medium cursor-pointer

@@ -1,5 +1,6 @@
 import type { FunctionComponent } from "react"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
+import useNavigateTo from "../hooks/useNavigateTo"
 import SidebarButton from "@/shared/components/SidebarButton"
 import ProfileCard from "@/shared/components/ProfileCard"
 import { UsersThree, Article, Flag, SignIn, Sun, Moon } from "@phosphor-icons/react"
@@ -10,7 +11,7 @@ import { useUser } from "../contexts/userContext"
 
 const Sidebar: FunctionComponent = () => {
 
-  const navigateTo = useNavigate();
+  const navigateTo = useNavigateTo();
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
   const { isLogged } = useUser()

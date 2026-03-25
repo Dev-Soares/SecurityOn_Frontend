@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import useNavigateTo from '@/shared/hooks/useNavigateTo'
 import { ArrowRight, Clock } from '@phosphor-icons/react'
 
 interface ArticleCardProps {
@@ -18,11 +18,11 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
     slug,
     readTime = '5 min',
 }) => {
-    const navigate = useNavigate()
+    const navigateTo = useNavigateTo()
 
     return (
         <article
-            onClick={() => navigate(`/articles/${slug}`)}
+            onClick={() => navigateTo(`/articles/${slug}`)}
             className="
                 group relative flex flex-col
                 w-full sm:w-[calc(50%-16px)] xl:w-[calc(33.333%-20px)]

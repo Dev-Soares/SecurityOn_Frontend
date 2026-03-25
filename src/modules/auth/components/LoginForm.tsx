@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Input from '@/shared/components/Input';
-import { useNavigate } from 'react-router-dom';
+import useNavigateTo from '@/shared/hooks/useNavigateTo';
 
 
 const LoginForm: React.FC = () => {
 
-  const navigateTo = useNavigate();
+  const navigateTo = useNavigateTo();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -1,6 +1,6 @@
 import React from 'react'
 import { ArrowLeft } from "@phosphor-icons/react"
-import { useNavigate } from 'react-router-dom'
+import useNavigateTo from '../hooks/useNavigateTo'
 import LogoIcon from './LogoIcon'
 
 interface WavesProps {
@@ -8,13 +8,13 @@ interface WavesProps {
 }
 
 const Waves: React.FC<WavesProps> = ({}) => {
-  const navigate = useNavigate()
+  const navigateTo = useNavigateTo()
 
   return (
     <div className='lg:h-screen lg:w-[50%] w-full p-1 flex flex-col relative overflow-hidden'>
       {/* Botão voltar */}
       <button
-        onClick={() => navigate('/')}
+        onClick={() => navigateTo('/')}
         className='flex items-center gap-2 m-3 lg:m-5 cursor-pointer z-50 w-fit px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-200 active:scale-95'
       >
         <ArrowLeft size={18} weight="bold" />

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import Waves from '@/shared/components/Waves'
 import SelectDanger from '@/modules/complaints/components/SelectDanger'
-import { useNavigate } from 'react-router-dom'
+import useNavigateTo from '@/shared/hooks/useNavigateTo'
 
 type DangerType = 'aviso' | 'cuidado' | 'perigo' | 'critico'
 
 const CreateComplaintPage: React.FC = () => {
-    const navigate = useNavigate()
+    const navigateTo = useNavigateTo()
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [link, setLink] = useState('')
@@ -16,7 +16,7 @@ const CreateComplaintPage: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         console.log({ title, content, link, store, danger })
-        navigate('/complaint')
+        navigateTo('/complaint')
     }
 
     return (

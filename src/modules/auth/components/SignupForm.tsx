@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Input from '@/shared/components/Input';
-import { useNavigate } from 'react-router-dom';
+import useNavigateTo from '@/shared/hooks/useNavigateTo';
 import { ArrowLeft } from '@phosphor-icons/react';
 
 const steps = [
@@ -11,7 +11,7 @@ const steps = [
 
 const SignupForm: React.FC = () => {
 
-  const navigateTo = useNavigate();
+  const navigateTo = useNavigateTo();
 
   const [step, setStep] = useState(0);
   const [name, setName] = useState('');
