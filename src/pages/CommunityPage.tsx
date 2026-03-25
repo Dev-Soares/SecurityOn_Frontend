@@ -5,8 +5,8 @@ import ModalPost from '@/modules/community/components/ModalPost'
 import useFindAllPosts from '@/modules/community/hooks/useFindAllPosts'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
 import PostSkeleton from '@/modules/community/skeletons/PostSkeleton'
-import ErrorMessage from '@/shared/utils/ErrorMessage'
-import Spinner from '@/shared/utils/Spinner'
+import ErrorMessage from '@/shared/components/ErrorMessage'
+import Spinner from '@/shared/components/Spinner'
 
 const CommunityPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

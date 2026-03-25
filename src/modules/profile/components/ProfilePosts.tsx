@@ -2,7 +2,7 @@ import React from 'react'
 import { useFindPostByUser } from '@/modules/community/hooks/useFindPostByUser'
 import Post from '@/modules/community/components/Post'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
-import Spinner from '@/shared/utils/Spinner'
+import Spinner from '@/shared/components/Spinner'
 
 interface ProfilePostsProps {
     userId: string | undefined

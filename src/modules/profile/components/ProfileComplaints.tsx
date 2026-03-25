@@ -2,7 +2,7 @@ import React from 'react'
 import { useFindComplaintByUser } from '@/modules/complaints/hooks/useFindComplaintByUser'
 import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
-import Spinner from '@/shared/utils/Spinner'
+import Spinner from '@/shared/components/Spinner'
 
 interface ProfileComplaintsProps {
     userId: string | undefined

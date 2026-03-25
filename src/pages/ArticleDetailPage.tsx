@@ -4,7 +4,7 @@ import useNavigateTo from '@/shared/hooks/useNavigateTo'
 import { ArrowLeft, Clock, ShareNetwork, CalendarBlank } from '@phosphor-icons/react'
 import useGetArticle from '@/modules/articles/hooks/useGetArticle'
 import ArticleDetailSkeleton from '@/modules/articles/skeletons/ArticleDetailSkeleton'
-import ErrorMessage from '@/shared/utils/ErrorMessage'
+import ErrorMessage from '@/shared/components/ErrorMessage'
 import { shareLink } from '@/shared/utils/shareLink'
 
 const ArticleDetailPage: React.FC = () => {

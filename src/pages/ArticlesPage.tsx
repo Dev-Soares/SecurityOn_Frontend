@@ -3,9 +3,9 @@ import ArticleCard from '@/modules/articles/components/ArticleCard'
 import SearchBar from '@/shared/components/SearchBar'
 import useFindAllArticles from '@/modules/articles/hooks/useFindAllArticles'
 import ArticleCardSkeleton from '@/modules/articles/skeletons/ArticleCardSkeleton'
-import ErrorMessage from '@/shared/utils/ErrorMessage'
+import ErrorMessage from '@/shared/components/ErrorMessage'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
-import Spinner from '@/shared/utils/Spinner'
+import Spinner from '@/shared/components/Spinner'
 
 const ArticlesPage: React.FC = () => {
   const {

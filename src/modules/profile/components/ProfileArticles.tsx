@@ -2,7 +2,7 @@ import React from 'react'
 import { useFindArticleByUser } from '@/modules/articles/hooks/useFindArticleByUser'
 import ArticleCard from '@/modules/articles/components/ArticleCard'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
-import Spinner from '@/shared/utils/Spinner'
+import Spinner from '@/shared/components/Spinner'
 
 interface ProfileArticlesProps {
     userId: string | undefined
