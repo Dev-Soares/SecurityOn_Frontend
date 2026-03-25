@@ -61,10 +61,11 @@ const CreatePostForm = () => {
             <ErrorText message={errors.image?.message} />
 
             <div className="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-800">
-                <label className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 cursor-pointer text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
+                <label className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-300 dark:text-gray-600 cursor-not-allowed">
                     <Image size={20} weight="bold" />
                     <span className="text-sm font-medium">Adicionar Imagem</span>
                     <input
+                        disabled
                         {...register('image')}
                         type="file"
                         accept="image/*"
