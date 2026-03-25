@@ -1,17 +1,38 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Input from '@/shared/components/Input';
 import useNavigateTo from '@/shared/hooks/useNavigateTo';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signInSchema } from '../types/signIn';
+import type { SignIn } from '../types/signIn';
+import ErrorText from '@/shared/components/ErrorText';
+import { useSignIn } from '../hooks/useSignIn';
+import { showError } from '@/shared/components/Toast';
 
 
 const LoginForm: React.FC = () => {
 
   const navigateTo = useNavigateTo();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<SignIn>({
+    resolver: zodResolver(signInSchema)
+  })
+
+  const { mutate } = useSignIn()
+
+  const onSubmit = (data: SignIn) => {
+      mutate( data, {
+        onSuccess: () => navigateTo('/'),
+        onError: () => showError('Erro ao fazer login')
+      })
+  }
 
   return (
-    <form className="w-full max-w-md px-6 lg:px-8 flex flex-col gap-6 lg:gap-8 my-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md px-6 lg:px-8 flex flex-col gap-6 lg:gap-8 my-4">
       <div className='flex flex-col gap-1 lg:gap-2'>
         <h2 className='text-2xl lg:text-4xl font-bold text-gray-900 dark:text-white'>
           Bem-vindo de volta
@@ -27,22 +48,21 @@ const LoginForm: React.FC = () => {
             className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Email</label>
           <Input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            {...register('email')}
             placeholder="Digite seu email"
           />
+          <ErrorText message={errors.email?.message} />
         </div>
 
         <div className='flex flex-col gap-1.5 lg:gap-2'>
           <label htmlFor="password"
             className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Senha</label>
           <Input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            {...register('password')}
             placeholder="Digite sua senha"
             password={true}
           />
+          <ErrorText message={errors.password?.message} />
           <button type="button" className='text-sm lg:text-base text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 cursor-pointer self-end mt-1 font-medium transition-colors duration-200'>
             Esqueceu a senha?
           </button>
