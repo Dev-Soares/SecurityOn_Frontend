@@ -48,7 +48,7 @@ const ProfilePage: React.FC = () => {
             </button>
           </div>
 
-          <ProfileInfo />
+          <ProfileInfo userId={id} />
         </div>
       </div>
     </main>
