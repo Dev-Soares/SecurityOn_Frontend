@@ -10,11 +10,13 @@ import ComplaintsPage from './pages/ComplaintsPage'
 import ProfilePage from './pages/ProfilePage'
 import ArticleDetailPage from './pages/ArticleDetailPage'
 import { ScrollToTop } from './shared/utils/scrollToTop'
+import { AppToaster } from './shared/components/Toast'
 
 const App = () => {
   return (
     <>
       <ScrollToTop />
+      <AppToaster />
 
       <Routes>
         <Route path="/" element={<MainPage />}>

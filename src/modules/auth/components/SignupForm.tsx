@@ -2,50 +2,74 @@ import React, { useState } from 'react'
 import Input from '@/shared/components/Input';
 import useNavigateTo from '@/shared/hooks/useNavigateTo';
 import { ArrowLeft } from '@phosphor-icons/react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signUpSchema } from '../types/signUp';
+import type { SignUp } from '../types/signUp';
+import ErrorText from '@/shared/components/ErrorText';
+import Spinner from '@/shared/components/Spinner';
+import { useSignUp } from '../hooks/useSignUp';
+import { showSuccess, showError } from '@/shared/components/Toast';
 
 const steps = [
   { title: 'Como podemos te chamar?', subtitle: 'Escolha seu nome e username' },
   { title: 'Qual seu email?', subtitle: 'Usaremos para login e notificações' },
-  { title: 'Crie sua senha', subtitle: 'Mínimo de 6 caracteres' },
+  { title: 'Crie sua senha', subtitle: 'Mínimo de 8 caracteres' },
+]
+
+const stepFields: (keyof SignUp)[][] = [
+  ['name'],
+  ['email'],
+  ['password', 'confirmPassword'],
 ]
 
 const SignupForm: React.FC = () => {
 
   const navigateTo = useNavigateTo();
-
   const [step, setStep] = useState(0);
-  const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const canAdvance = () => {
-    if (step === 0) return name.trim().length > 0 && username.trim().length > 0
-    if (step === 1) return email.trim().length > 0
-    if (step === 2) return password.length >= 6 && password === confirmPassword
-    return false
-  }
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    formState: { errors }
+  } = useForm<SignUp>({
+    resolver: zodResolver(signUpSchema)
+  })
 
-  const handleNext = () => {
-    if (step < 2) setStep(step + 1)
+  const { mutate, isPending } = useSignUp()
+
+  const handleNext = async () => {
+    const valid = await trigger(stepFields[step])
+    if (valid) setStep(step + 1)
   }
 
   const handleBack = () => {
     if (step > 0) setStep(step - 1)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const onSubmit = (data: SignUp) => {
+    const { confirmPassword, ...payload } = data
+    mutate(payload, {
+      onSuccess: () => {
+        showSuccess('Conta criada com sucesso!')
+        navigateTo('/login')
+      },
+      onError: () => showError('Erro ao criar conta')
+    })
+  }
+
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (step < 2) {
       handleNext()
     } else {
-      console.log({ name, username, email, password })
+      handleSubmit(onSubmit)()
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-md px-6 lg:px-8 flex flex-col gap-8 lg:gap-10 my-4">
+    <form onSubmit={handleFormSubmit} className="w-full max-w-md px-6 lg:px-8 flex flex-col gap-8 lg:gap-10 my-4">
       {/* Progress bar - sticky */}
       <div className='flex items-center gap-2 sticky top-0 z-20 bg-white dark:bg-gray-950 py-3 -mt-4'>
         {steps.map((_, i) => (
@@ -86,19 +110,10 @@ const SignupForm: React.FC = () => {
             <label className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Nome</label>
             <Input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              {...register('name')}
               placeholder="Seu nome completo"
             />
-          </div>
-          <div className='flex flex-col gap-1.5 lg:gap-2'>
-            <label className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Username</label>
-            <Input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="@seuusername"
-            />
+            <ErrorText message={errors.name?.message} />
           </div>
         </div>
       )}
@@ -110,10 +125,10 @@ const SignupForm: React.FC = () => {
             <label className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Email</label>
             <Input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              {...register('email')}
               placeholder="seu@email.com"
             />
+            <ErrorText message={errors.email?.message} />
           </div>
         </div>
       )}
@@ -124,25 +139,20 @@ const SignupForm: React.FC = () => {
           <div className='flex flex-col gap-1.5 lg:gap-2'>
             <label className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Senha</label>
             <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Mínimo 6 caracteres"
+              {...register('password')}
+              placeholder="Mínimo 8 caracteres"
               password={true}
             />
+            <ErrorText message={errors.password?.message} />
           </div>
           <div className='flex flex-col gap-1.5 lg:gap-2'>
             <label className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Confirmar Senha</label>
             <Input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              {...register('confirmPassword')}
               placeholder="Confirme sua senha"
               password={true}
             />
-            {confirmPassword.length > 0 && password !== confirmPassword && (
-              <span className='text-xs text-red-500'>As senhas não coincidem</span>
-            )}
+            <ErrorText message={errors.confirmPassword?.message} />
           </div>
         </div>
       )}
@@ -151,9 +161,9 @@ const SignupForm: React.FC = () => {
       <div className='flex flex-col gap-3 lg:gap-4 mt-2'>
         <button
           type="submit"
-          disabled={!canAdvance()}
-          className='w-full bg-blue-500 hover:bg-blue-600 text-white py-3 lg:py-3.5 rounded-full font-semibold cursor-pointer transition-all duration-200 active:scale-[0.98] text-base lg:text-lg disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed'>
-          {step < 2 ? 'Continuar' : 'Criar Conta'}
+          disabled={isPending}
+          className='w-full bg-blue-500 hover:bg-blue-600 text-white py-3 lg:py-3.5 rounded-full font-semibold cursor-pointer transition-all duration-200 active:scale-[0.98] text-base lg:text-lg disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed flex items-center justify-center'>
+          {isPending ? <Spinner size="sm" className="border-white border-t-transparent" /> : (step < 2 ? 'Continuar' : 'Criar Conta')}
         </button>
 
         {step === 0 && (

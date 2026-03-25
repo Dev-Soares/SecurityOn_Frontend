@@ -2,7 +2,7 @@ import React from 'react'
 import { useFindComplaintByUser } from '@/modules/complaints/hooks/useFindComplaintByUser'
 import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
-import Spinner from '@/shared/utils/Spinner'
+import Spinner from '@/shared/components/Spinner'
 
 interface ProfileComplaintsProps {
     userId: string | undefined
@@ -19,7 +19,7 @@ const ProfileComplaints: React.FC<ProfileComplaintsProps> = ({ userId }) => {
     if (complaints.length === 0) {
         return (
             <div className='flex flex-col items-center justify-center py-16 gap-2'>
-                <p className='text-gray-400 dark:text-gray-500 text-base'>Nenhuma denúncia ainda</p>
+                <p className='text-gray-400 dark:text-gray-500 text-base'>Nenhuma denúncia feita</p>
             </div>
         )
     }

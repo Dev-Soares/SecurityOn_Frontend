@@ -2,7 +2,7 @@ import React from 'react'
 import { useFindArticleByUser } from '@/modules/articles/hooks/useFindArticleByUser'
 import ArticleCard from '@/modules/articles/components/ArticleCard'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
-import Spinner from '@/shared/utils/Spinner'
+import Spinner from '@/shared/components/Spinner'
 
 interface ProfileArticlesProps {
     userId: string | undefined
@@ -19,7 +19,7 @@ const ProfileArticles: React.FC<ProfileArticlesProps> = ({ userId }) => {
     if (articles.length === 0) {
         return (
             <div className='flex flex-col items-center justify-center py-16 gap-2'>
-                <p className='text-gray-400 dark:text-gray-500 text-base'>Nenhum artigo ainda</p>
+                <p className='text-gray-400 dark:text-gray-500 text-base'>Nenhum artigo publicado </p>
             </div>
         )
     }

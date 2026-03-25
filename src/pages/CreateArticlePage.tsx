@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Waves from '@/shared/components/Waves'
 import useNavigateTo from '@/shared/hooks/useNavigateTo'
 import { useCreateArticle } from '@/modules/articles/hooks/useCreateArticle'
+import Spinner from '@/shared/components/Spinner'
 
 const CreateArticlePage: React.FC = () => {
     const navigateTo = useNavigateTo()
@@ -82,9 +83,9 @@ const CreateArticlePage: React.FC = () => {
                             <button
                                 type='submit'
                                 disabled={!content.trim() || !title.trim() || isPending}
-                                className="w-full py-3 lg:py-3.5 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition-all duration-200 disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed cursor-pointer active:scale-[0.98] text-base lg:text-lg mt-4"
+                                className="w-full py-3 lg:py-3.5 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition-all duration-200 disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed cursor-pointer active:scale-[0.98] text-base lg:text-lg mt-4 flex items-center justify-center"
                             >
-                                {isPending ? 'Publicando...' : 'Publicar Artigo'}
+                                {isPending ? <Spinner size="sm" className="border-white border-t-transparent" /> : 'Publicar Artigo'}
                             </button>
                         </form>
                     </div>

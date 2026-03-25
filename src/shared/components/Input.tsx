@@ -1,15 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, forwardRef } from 'react'
 import { EyeIcon, EyeSlashIcon } from '@phosphor-icons/react'
 
 type InputProps = {
-    value?: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
     type?: string;
     password?:boolean
-};
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
-const Input: React.FC<InputProps> = ({ value, onChange, placeholder, type = "text", password }) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(({ placeholder, type = "text", password, ...rest }, ref) => {
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -18,11 +16,11 @@ const Input: React.FC<InputProps> = ({ value, onChange, placeholder, type = "tex
   return (
     <div className="relative w-full">
       <input type={inputType}
-     value={value}
+     ref={ref}
      maxLength={password ? 16 : 60}
-     onChange={onChange}
      placeholder={placeholder}
      className='w-full p-3 bg-transparent border-b border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 transition-all duration-200 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 text-sm lg:text-base'
+     {...rest}
      />
      {
         password && (
@@ -37,6 +35,6 @@ const Input: React.FC<InputProps> = ({ value, onChange, placeholder, type = "tex
 
      </div>
   )
-}
+})
 
 export default Input

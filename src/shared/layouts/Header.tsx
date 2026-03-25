@@ -4,16 +4,25 @@ import { useLocation } from 'react-router-dom'
 import useNavigateTo from '../hooks/useNavigateTo'
 import LogoIcon from '@/shared/components/LogoIcon'
 import { useTheme } from '@/shared/contexts/themeContext'
+import { useUser } from '@/shared/contexts/userContext'
 
-type headerProps = {
-    userImg: string | null;
-}
+const HeaderAvatarSkeleton: React.FC = () => (
+  <div className='w-9 h-9 md:w-11 md:h-11 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse shrink-0 ml-1' />
+)
 
-const Header: React.FC<headerProps> = ({ userImg }) => {
+const Header: React.FC = () => {
   const navigateTo = useNavigateTo();
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
-  const imgURL = userImg ? userImg : "avatar.png";
+  const { user, isLogged, isLoading } = useUser();
+
+  const handleAvatarClick = () => {
+    if (isLogged) {
+      navigateTo(`/profile/${user?.id}`)
+    } else {
+      navigateTo('/login')
+    }
+  }
 
   return (
     <header className='flex lg:hidden py-3 px-5 w-full justify-between items-center gap-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950'>
@@ -38,12 +47,20 @@ const Header: React.FC<headerProps> = ({ userImg }) => {
           )}
         </button>
 
-        <button
-          onClick={() => navigateTo('profile')}
-          className={`shrink-0 cursor-pointer ml-1 ${location.pathname === '/profile' ? 'hidden' : ''}`}
-        >
-          <img src={imgURL} alt="User avatar" className="rounded-full w-9 h-9 md:w-11 md:h-11 object-cover border border-gray-200 dark:border-gray-700" />
-        </button>
+        {isLoading ? (
+          <HeaderAvatarSkeleton />
+        ) : (
+          <button
+            onClick={handleAvatarClick}
+            className={`shrink-0 cursor-pointer ml-1 ${location.pathname === '/profile' ? 'hidden' : ''}`}
+          >
+            <img
+              src={user?.avatarUrl ? user.avatarUrl : '/avatar.png'}
+              alt={`${user?.name ?? 'User'} avatar`}
+              className="rounded-full w-9 h-9 md:w-11 md:h-11 object-cover border border-gray-200 dark:border-gray-700"
+            />
+          </button>
+        )}
       </div>
 
     </header>

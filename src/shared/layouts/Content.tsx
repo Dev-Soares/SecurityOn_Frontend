@@ -8,7 +8,7 @@ const Content: FunctionComponent = () => {
 
   return (
     <main className="dark:bg-gray-950 bg-white min-h-screen w-full pb-16 md:pb-10" >
-      <Header userImg={null} />
+      <Header />
       <Outlet />
       <BottomNav />
     </main>

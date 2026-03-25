@@ -48,7 +48,7 @@ const Post: React.FC<PostProps> = ({ userId, content, timestamp, userAvatarUrl, 
         </button>
 
         <div className='flex flex-col gap-3 mt-1'>
-            <p className='text-base leading-relaxed text-gray-800 dark:text-gray-200 mb-2'>{content}</p>
+            <p className='text-base leading-relaxed text-gray-800 dark:text-gray-200 mb-2 wrap-break-word'>{content}</p>
             {imgUrl && (
                 <img
                     src={imgUrl}

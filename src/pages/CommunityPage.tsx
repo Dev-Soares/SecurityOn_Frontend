@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Post from '@/modules/community/components/Post'
 import { Image } from '@phosphor-icons/react'
 import ModalPost from '@/modules/community/components/ModalPost'
 import useFindAllPosts from '@/modules/community/hooks/useFindAllPosts'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
 import PostSkeleton from '@/modules/community/skeletons/PostSkeleton'
-import ErrorMessage from '@/shared/utils/ErrorMessage'
-import Spinner from '@/shared/utils/Spinner'
+import ErrorMessage from '@/shared/components/ErrorMessage'
+import Spinner from '@/shared/components/Spinner'
+import { ModalPostProvider, useModalPost } from '@/modules/community/contexts/modalPostContext'
 
-const CommunityPage: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const CommunityPageContent: React.FC = () => {
+  const { open } = useModalPost()
 
    const {
     data,
@@ -36,7 +37,7 @@ const CommunityPage: React.FC = () => {
       <div className='bg-gray-100 dark:bg-gray-900 rounded-2xl p-4 border border-gray-200 dark:border-gray-800 w-full md:w-[70%] xl:w-[50%] mx-auto hover:border-gray-300 dark:hover:border-gray-700 transition-colors duration-200'>
         <div className='flex flex-row items-center gap-3'>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={open}
             className='group flex-1 flex items-center cursor-pointer rounded-full transition-all duration-200'
           >
             <input
@@ -47,14 +48,14 @@ const CommunityPage: React.FC = () => {
             />
           </button>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={open}
             className='p-2.5 cursor-pointer rounded-full transition-colors duration-200 text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 hover:bg-gray-200/70 dark:hover:bg-gray-800/70'
           >
             <Image size={22} weight="bold" />
           </button>
         </div>
       </div>
-      <ModalPost isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <ModalPost />
 
         <div className='flex flex-col gap-3 justify-center items-center md:gap-5'>
           {isLoading && <PostSkeleton />}
@@ -88,5 +89,11 @@ const CommunityPage: React.FC = () => {
     </main>
   )
 }
+
+const CommunityPage: React.FC = () => (
+  <ModalPostProvider>
+    <CommunityPageContent />
+  </ModalPostProvider>
+)
 
 export default CommunityPage

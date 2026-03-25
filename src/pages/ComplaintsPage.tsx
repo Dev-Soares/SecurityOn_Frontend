@@ -3,10 +3,10 @@ import { Plus } from '@phosphor-icons/react'
 import useNavigateTo from '@/shared/hooks/useNavigateTo'
 import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
 import ComplaintCardSkeleton from '@/modules/complaints/skeletons/ComplaintCardSkeleton'
-import ErrorMessage from '@/shared/utils/ErrorMessage'
+import ErrorMessage from '@/shared/components/ErrorMessage'
 import useFindAllComplaints from '@/modules/complaints/hooks/useFindAllComplaints'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
-import Spinner from '@/shared/utils/Spinner'
+import Spinner from '@/shared/components/Spinner'
 
 
 type DangerFilter = 'todos' | 'aviso' | 'cuidado' | 'perigo' | 'critico'
