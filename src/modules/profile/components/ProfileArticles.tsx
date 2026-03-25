@@ -19,7 +19,7 @@ const ProfileArticles: React.FC<ProfileArticlesProps> = ({ userId }) => {
     if (articles.length === 0) {
         return (
             <div className='flex flex-col items-center justify-center py-16 gap-2'>
-                <p className='text-gray-400 dark:text-gray-500 text-base'>Nenhum artigo ainda</p>
+                <p className='text-gray-400 dark:text-gray-500 text-base'>Nenhum artigo publicado </p>
             </div>
         )
     }

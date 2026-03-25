@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Waves from '@/shared/components/Waves'
-import SelectDanger from '@/modules/complaints/components/SelectDanger'
+import CreateComplaintForm from '@/modules/complaints/components/CreateComplaintForm'
 
 
 const CreateComplaintPage: React.FC = () => {
@@ -17,7 +17,7 @@ const CreateComplaintPage: React.FC = () => {
                             <p className='text-sm lg:text-lg text-gray-500 dark:text-gray-400'>Ajude a comunidade reportando golpes e fraudes</p>
                         </div>
 
-                        
+                        <CreateComplaintForm />
                     </div>
                 </div>
             </div>

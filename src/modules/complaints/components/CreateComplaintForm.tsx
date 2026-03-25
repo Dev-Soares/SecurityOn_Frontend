@@ -8,6 +8,7 @@ import { showSuccess, showError } from '@/shared/components/Toast';
 import ErrorText from '@/shared/components/ErrorText';
 import Spinner from '@/shared/components/Spinner';
 import SelectDanger from './SelectDanger';
+import useNavigateTo from '@/shared/hooks/useNavigateTo';
 
 const CreateComplaintForm = () => {
 
@@ -35,9 +36,14 @@ const CreateComplaintForm = () => {
     const link = watch('link') ?? ''
     const danger = watch('danger')
 
+    const navigateTo = useNavigateTo()
+
     const onSubmit = (data: CreateComplaint) => {
         mutate(data, {
-            onSuccess: () => showSuccess('Denúncia publicada com sucesso!'),
+            onSuccess: () => {
+                navigateTo('/complaint')
+                showSuccess('Denúncia publicada com sucesso!')
+            },
             onError: () => showError('Erro ao publicar a denúncia')
         })
     }
