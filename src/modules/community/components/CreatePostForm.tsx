@@ -7,10 +7,12 @@ import { showSuccess, showError } from '@/shared/components/Toast';
 import type { CreatePost } from '../types/createPost';
 import ErrorText from '@/shared/components/ErrorText';
 import Spinner from '@/shared/components/Spinner';
+import { useModalPost } from '../contexts/modalPostContext';
 
 const CreatePostForm = () => {
 
     const { mutate, isPending } = useCreatePost()
+    const { close } = useModalPost()
 
     const {
         register,
@@ -22,7 +24,10 @@ const CreatePostForm = () => {
 
     const onSubmit = (data: CreatePost) => {
         mutate(data, {
-            onSuccess: () => showSuccess('Post publicado com sucesso!'),
+            onSuccess: () => {
+                showSuccess('Post publicado com sucesso!')
+                close()
+            },
             onError: () => showError('Erro ao publicar o post')
         })
     }
