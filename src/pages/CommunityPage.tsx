@@ -6,6 +6,7 @@ import useFindAllPosts from '@/modules/community/hooks/useFindAllPosts'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
 import PostSkeleton from '@/modules/community/skeletons/PostSkeleton'
 import ErrorMessage from '@/shared/utils/ErrorMessage'
+import Spinner from '@/shared/utils/Spinner'
 
 const CommunityPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -80,7 +81,7 @@ const CommunityPage: React.FC = () => {
 
         <div ref={observerRef} className='flex justify-center py-8'>
           {isFetchingNextPage && (
-            <p className='text-gray-500 dark:text-gray-400'>Carregando mais posts...</p>
+            <Spinner size='lg'/>
           )}
         </div>
 

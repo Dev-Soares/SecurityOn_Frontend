@@ -6,6 +6,7 @@ import ComplaintCardSkeleton from '@/modules/complaints/skeletons/ComplaintCardS
 import ErrorMessage from '@/shared/utils/ErrorMessage'
 import useFindAllComplaints from '@/modules/complaints/hooks/useFindAllComplaints'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
+import Spinner from '@/shared/utils/Spinner'
 
 
 type DangerFilter = 'todos' | 'aviso' | 'cuidado' | 'perigo' | 'critico'
@@ -86,14 +87,7 @@ const ComplaintsPage: React.FC = () => {
 
         <div className='flex flex-col gap-4 w-full max-w-2xl px-4 mt-8'>
           {isLoading && (
-            <>
-              <ComplaintCardSkeleton />
-              <ComplaintCardSkeleton />
-              <ComplaintCardSkeleton />
-              <ComplaintCardSkeleton />
-              <ComplaintCardSkeleton />
-              <ComplaintCardSkeleton />
-            </>
+            <ComplaintCardSkeleton count={6} />
           )}
 
           {isError && (
@@ -118,7 +112,7 @@ const ComplaintsPage: React.FC = () => {
 
         <div ref={observerRef} className='flex justify-center py-8'>
           {isFetchingNextPage && (
-            <p className='text-gray-500 dark:text-gray-400'>Carregando mais denúncias...</p>
+            <Spinner />
           )}
         </div>
 

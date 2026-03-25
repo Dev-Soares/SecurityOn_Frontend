@@ -5,6 +5,7 @@ import useFindAllArticles from '@/modules/articles/hooks/useFindAllArticles'
 import ArticleCardSkeleton from '@/modules/articles/skeletons/ArticleCardSkeleton'
 import ErrorMessage from '@/shared/utils/ErrorMessage'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
+import Spinner from '@/shared/utils/Spinner'
 
 const ArticlesPage: React.FC = () => {
   const {
@@ -58,7 +59,7 @@ const ArticlesPage: React.FC = () => {
 
       <div ref={observerRef} className='flex justify-center py-8'>
         {isFetchingNextPage && (
-          <p className='text-gray-500 dark:text-gray-400'>Carregando mais artigos...</p>
+          <Spinner />
         )}
       </div>
     </main>

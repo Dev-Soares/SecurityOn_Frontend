@@ -1,8 +1,10 @@
 import React from 'react'
 
-const ComplaintCardSkeleton: React.FC = () => {
+const ComplaintCardSkeleton: React.FC<{ count?: number }> = ({ count = 6 }) => {
   return (
-    <div className="w-full flex flex-row bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden animate-pulse">
+    <>
+    {Array.from({ length: count }).map((_, i) => (
+    <div key={i} className="w-full flex flex-row bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden animate-pulse">
       {/* Left accent bar */}
       <div className="w-1 shrink-0 self-stretch bg-gray-300 dark:bg-gray-700" />
 
@@ -27,6 +29,8 @@ const ComplaintCardSkeleton: React.FC = () => {
         <div className="h-3 w-20 bg-gray-300/70 dark:bg-gray-700/70 rounded mt-1" />
       </div>
     </div>
+    ))}
+    </>
   )
 }
 

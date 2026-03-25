@@ -1,8 +1,10 @@
 import React from 'react'
 
-const PostSkeleton: React.FC = () => {
+const PostSkeleton: React.FC<{ count?: number }> = ({ count = 2 }) => {
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 h-auto px-6 flex flex-col rounded-2xl gap-4 w-full pt-6 pb-2 md:w-[70%] xl:w-[50%] animate-pulse">
+    <>
+    {Array.from({ length: count }).map((_, i) => (
+    <div key={i} className="bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 h-auto px-6 flex flex-col rounded-2xl gap-4 w-full pt-6 pb-2 md:w-[70%] xl:w-[50%] animate-pulse">
       {/* Header */}
       <div className="flex flex-row gap-3 items-center">
         <div className="w-12 h-12 rounded-full bg-gray-300 dark:bg-gray-700 shrink-0" />
@@ -25,11 +27,13 @@ const PostSkeleton: React.FC = () => {
 
       {/* Actions */}
       <div className="flex flex-row items-center justify-around border-t border-gray-200 dark:border-gray-800 py-3 mt-2 -mx-2">
-        <div className="h-6 w-6 bg-gray-300 dark:bg-gray-700 rounded" />
-        <div className="h-6 w-6 bg-gray-300 dark:bg-gray-700 rounded" />
-        <div className="h-6 w-6 bg-gray-300 dark:bg-gray-700 rounded" />
+        <div className="h-6 w-6 bg-gray-100 dark:bg-gray-900 rounded" />
+        <div className="h-6 w-6 bg-gray-100 dark:bg-gray-900 rounded" />
+        
       </div>
     </div>
+    ))}
+    </>
   )
 }
 
