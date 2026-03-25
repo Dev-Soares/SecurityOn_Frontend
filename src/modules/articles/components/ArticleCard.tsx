@@ -6,6 +6,7 @@ interface ArticleCardProps {
     title: string
     description: string
     bgUrl: string
+    imgUrl?: string
     id: string
     slug: string
     readTime?: string
@@ -15,6 +16,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
     title,
     description,
     bgUrl,
+    imgUrl,
     slug,
     readTime = '5 min',
 }) => {
@@ -37,10 +39,10 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
             "
         >
             {/* Image container */}
-            {bgUrl && (
+            {(bgUrl || imgUrl) && (
                 <div className="w-full h-48 overflow-hidden">
                     <img
-                        src={bgUrl}
+                        src={bgUrl || imgUrl}
                         alt={title}
                         className="
                             w-full h-full object-cover
