@@ -7,6 +7,7 @@ import { useCreatePost } from '../hooks/useCreatePost';
 import { showSuccess, showError } from '@/shared/components/Toast';
 import type { CreatePost } from '../types/createPost';
 import ErrorText from '@/shared/components/ErrorText';
+import Spinner from '@/shared/components/Spinner';
 
 const CreatePostForm = () => {
 
@@ -74,9 +75,9 @@ const CreatePostForm = () => {
                 <button
                     type="submit"
                     disabled={isPending}
-                    className="px-5 py-2 bg-blue-500 text-white text-sm font-semibold rounded-full hover:bg-blue-600 transition-colors duration-200 disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:text-gray-500 dark:disabled:text-gray-500 disabled:cursor-not-allowed cursor-pointer"
+                    className="px-5 py-2 bg-blue-500 text-white text-sm font-semibold rounded-full hover:bg-blue-600 transition-colors duration-200 disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:text-gray-500 dark:disabled:text-gray-500 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center min-w-[90px]"
                 >
-                    Publicar
+                    {isPending ? <Spinner size="sm" className="border-white border-t-transparent" /> : 'Publicar'}
                 </button>
             </div>
         </form>

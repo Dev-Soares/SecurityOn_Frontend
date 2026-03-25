@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '../types/signUp';
 import type { SignUp } from '../types/signUp';
 import ErrorText from '@/shared/components/ErrorText';
+import Spinner from '@/shared/components/Spinner';
 import { useSignUp } from '../hooks/useSignUp';
 import { showSuccess, showError } from '@/shared/components/Toast';
 
@@ -161,8 +162,8 @@ const SignupForm: React.FC = () => {
         <button
           type="submit"
           disabled={isPending}
-          className='w-full bg-blue-500 hover:bg-blue-600 text-white py-3 lg:py-3.5 rounded-full font-semibold cursor-pointer transition-all duration-200 active:scale-[0.98] text-base lg:text-lg disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed'>
-          {step < 2 ? 'Continuar' : 'Criar Conta'}
+          className='w-full bg-blue-500 hover:bg-blue-600 text-white py-3 lg:py-3.5 rounded-full font-semibold cursor-pointer transition-all duration-200 active:scale-[0.98] text-base lg:text-lg disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed flex items-center justify-center'>
+          {isPending ? <Spinner size="sm" className="border-white border-t-transparent" /> : (step < 2 ? 'Continuar' : 'Criar Conta')}
         </button>
 
         {step === 0 && (

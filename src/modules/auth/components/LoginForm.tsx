@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signInSchema } from '../types/signIn';
 import type { SignIn } from '../types/signIn';
 import ErrorText from '@/shared/components/ErrorText';
+import Spinner from '@/shared/components/Spinner';
 import { useSignIn } from '../hooks/useSignIn';
 import { showError } from '@/shared/components/Toast';
 
@@ -22,7 +23,7 @@ const LoginForm: React.FC = () => {
     resolver: zodResolver(signInSchema)
   })
 
-  const { mutate } = useSignIn()
+  const { mutate, isPending } = useSignIn()
 
   const onSubmit = (data: SignIn) => {
       mutate( data, {
@@ -72,8 +73,9 @@ const LoginForm: React.FC = () => {
       <div className='flex flex-col gap-3 lg:gap-4 mt-2'>
         <button
           type="submit"
-          className='w-full bg-blue-500 hover:bg-blue-600 text-white py-3 lg:py-3.5 rounded-full font-semibold cursor-pointer transition-all duration-200 active:scale-[0.98] text-base lg:text-lg'>
-          Entrar
+          disabled={isPending}
+          className='w-full bg-blue-500 hover:bg-blue-600 text-white py-3 lg:py-3.5 rounded-full font-semibold cursor-pointer transition-all duration-200 active:scale-[0.98] text-base lg:text-lg disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed flex items-center justify-center'>
+          {isPending ? <Spinner size="sm" className="border-white border-t-transparent" /> : 'Entrar'}
         </button>
 
         <div className='flex items-center gap-3 my-1'>
