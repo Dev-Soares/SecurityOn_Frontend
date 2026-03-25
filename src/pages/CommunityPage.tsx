@@ -81,7 +81,7 @@ const CommunityPage: React.FC = () => {
 
         <div ref={observerRef} className='flex justify-center py-8'>
           {isFetchingNextPage && (
-            <Spinner size='lg'/>
+            <Spinner />
           )}
         </div>
 
