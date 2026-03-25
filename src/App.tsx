@@ -10,13 +10,10 @@ import ComplaintsPage from './pages/ComplaintsPage'
 import ProfilePage from './pages/ProfilePage'
 import ArticleDetailPage from './pages/ArticleDetailPage'
 import { ScrollToTop } from './shared/utils/scrollToTop'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
-const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <ScrollToTop />
 
       <Routes>
@@ -35,7 +32,7 @@ const App = () => {
         <Route path="/create-complaint" element={<CreateComplaintPage />} />
         <Route path="/create-article" element={<CreateArticlePage />} />
       </Routes>
-    </QueryClientProvider>
+    </>
   )
 }
 
