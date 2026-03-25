@@ -9,11 +9,13 @@ import ErrorText from '@/shared/components/ErrorText';
 import Spinner from '@/shared/components/Spinner';
 import { useSignIn } from '../hooks/useSignIn';
 import { showError } from '@/shared/components/Toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 
 const LoginForm: React.FC = () => {
 
   const navigateTo = useNavigateTo();
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -27,7 +29,10 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = (data: SignIn) => {
       mutate( data, {
-        onSuccess: () => navigateTo('/'),
+        onSuccess: async () => {
+          await queryClient.invalidateQueries({ queryKey: ['me'] })
+          navigateTo('/')
+        },
         onError: () => showError('Erro ao fazer login')
       })
   }
