@@ -5,6 +5,7 @@ import ProfileCard from "@/shared/components/ProfileCard"
 import { UsersThree, Article, Flag, SignIn, Sun, Moon } from "@phosphor-icons/react"
 import LogoIcon from "@/shared/components/LogoIcon"
 import { useTheme } from "@/shared/contexts/themeContext"
+import { useUser } from "../contexts/userContext"
 
 
 const Sidebar: FunctionComponent = () => {
@@ -12,6 +13,7 @@ const Sidebar: FunctionComponent = () => {
   const navigateTo = useNavigate();
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
+  const { isLogged } = useUser()
 
   return (
 
@@ -52,11 +54,11 @@ const Sidebar: FunctionComponent = () => {
           )}
           <span>{theme === 'dark' ? 'Modo Escuro' : 'Modo Claro'}</span>
         </button>
-        <button onClick={() => navigateTo('/login')}
+        {!isLogged && <button onClick={() => navigateTo('/login')}
         className="flex justify-center items-center gap-3 w-full py-3.5 text-white bg-blue-500 hover:bg-blue-600 active:scale-[0.98] transition-all duration-200 rounded-full text-lg font-bold cursor-pointer shadow-sm hover:shadow-md">
           <SignIn size={24} weight="bold" />
           <span>Entrar</span>
-        </button>
+        </button> }
         <ProfileCard />
       </div>
     </aside>
