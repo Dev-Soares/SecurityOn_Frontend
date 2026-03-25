@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import type { User } from "@/modules/profile/types/user";
 import { useFindMe } from "../hooks/useFindMe";
 
