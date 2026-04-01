@@ -57,11 +57,11 @@ const CreateComplaintForm = () => {
                 <input
                     id="title"
                     {...register('title')}
-                    maxLength={80}
+                    maxLength={200}
                     placeholder='Golpe na Loja X'
                     className="w-full p-3 bg-transparent border-b border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 transition-all duration-200 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 text-sm lg:text-base"
                 />
-                <span className='text-xs text-gray-400 dark:text-gray-500'>{title.length}/80</span>
+                <span className='text-xs text-gray-400 dark:text-gray-500'>{title.length}/200</span>
                 <ErrorText message={errors.title?.message} />
             </div>
 
@@ -98,11 +98,11 @@ const CreateComplaintForm = () => {
                 <textarea
                     id="content"
                     {...register('content')}
-                    maxLength={500}
+                    maxLength={5000}
                     placeholder="Tentativa de golpe envolvendo..."
                     className="w-full min-h-32 p-3 bg-transparent border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-blue-500 transition-all duration-200 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 text-sm lg:text-base resize-none"
                 />
-                <span className='text-xs text-gray-400 dark:text-gray-500'>{content.length}/500</span>
+                <span className='text-xs text-gray-400 dark:text-gray-500'>{content.length}/5000</span>
                 <ErrorText message={errors.content?.message} />
             </div>
 

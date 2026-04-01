@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom"
 const Content: FunctionComponent = () => {
 
   return (
-    <main className="dark:bg-gray-950 bg-white min-h-screen w-full pb-16 md:pb-10" >
+    <main className="dark:bg-gray-950 bg-white min-h-dvh w-full pb-20 md:pb-10" >
       <Header />
       <Outlet />
       <BottomNav />

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const signUpSchema = z.object({
-  name: z.string().min(1, 'Nome obrigatório'),
+  name: z.string().min(1, 'Nome obrigatório').max(100, 'Máximo 100 caracteres'),
   email: z.string().email('E-mail inválido'),
   password: z.string().min(8, 'Mínimo 8 caracteres'),
   confirmPassword: z.string().min(1, 'Confirmação obrigatória'),

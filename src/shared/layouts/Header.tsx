@@ -25,7 +25,7 @@ const Header: React.FC = () => {
   }
 
   return (
-    <header className='flex lg:hidden py-3 px-5 w-full justify-between items-center gap-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950'>
+    <header className='flex lg:hidden sticky top-0 z-50 py-3 px-5 w-full justify-between items-center gap-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950'>
 
       {/* Logo + Brand */}
       <div className="flex items-center gap-1">

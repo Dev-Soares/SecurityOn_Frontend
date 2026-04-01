@@ -9,7 +9,8 @@ import type { SignUp } from '../types/signUp';
 import ErrorText from '@/shared/components/ErrorText';
 import Spinner from '@/shared/components/Spinner';
 import { useSignUp } from '../hooks/useSignUp';
-import { showSuccess, showError } from '@/shared/components/Toast';
+import { useAutoLogin } from '../hooks/useAutoLogin';
+import { showError } from '@/shared/components/Toast';
 
 const steps = [
   { title: 'Como podemos te chamar?', subtitle: 'Escolha seu nome e username' },
@@ -38,6 +39,7 @@ const SignupForm: React.FC = () => {
   })
 
   const { mutate, isPending } = useSignUp()
+  const { mutate: autoLogin } = useAutoLogin()
 
   const handleNext = async () => {
     const valid = await trigger(stepFields[step])
@@ -52,8 +54,7 @@ const SignupForm: React.FC = () => {
     const { confirmPassword, ...payload } = data
     mutate(payload, {
       onSuccess: () => {
-        showSuccess('Conta criada com sucesso!')
-        navigateTo('/login')
+        autoLogin({ email: payload.email, password: payload.password })
       },
       onError: () => showError('Erro ao criar conta')
     })

@@ -17,10 +17,14 @@ const CreatePostForm = () => {
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors }
     } = useForm({
-        resolver: zodResolver(createPostSchema)
+        resolver: zodResolver(createPostSchema),
+        defaultValues: { content: '' }
     })
+
+    const content = watch('content') ?? ''
 
     const onSubmit = (data: CreatePost) => {
         mutate(data, {
@@ -36,9 +40,11 @@ const CreatePostForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <textarea
                 {...register('content')}
+                maxLength={5000}
                 placeholder="O que você está pensando?"
                 className="w-full min-h-32 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl text-gray-900 dark:text-white text-sm leading-relaxed border border-gray-200 dark:border-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 resize-none placeholder:text-gray-400 dark:placeholder:text-gray-500 transition-colors duration-200"
             />
+            <span className='text-xs text-gray-400 dark:text-gray-500'>{content.length}/5000</span>
             <ErrorText message={errors.content?.message} />
 
             <div className="flex justify-end items-center pt-4 border-t border-gray-200 dark:border-gray-800">

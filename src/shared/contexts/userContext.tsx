@@ -1,28 +1,21 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import type { User } from "@/modules/profile/types/user";
 import { useFindMe } from "../hooks/useFindMe";
 
 interface UserContextType {
     user: User | null
     isLoading: boolean
-    isLogged: boolean | null
+    isLogged: boolean
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined)
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 
-    const [user, setUser] = useState<User | null>(null)
-
-    const [isLogged, setIsLogged] = useState<boolean>(false)
-
     const { data, isLoading } = useFindMe()
 
-    useEffect(() => {
-        const userData = data?.data ?? null
-        setUser(userData)
-        setIsLogged(userData ? true : false)
-    }, [data])
+    const user: User | null = data?.data ?? null
+    const isLogged = !!user
 
     return (
         <UserContext.Provider value={{ user, isLoading, isLogged }}>
