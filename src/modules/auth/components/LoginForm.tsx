@@ -30,7 +30,7 @@ const LoginForm: React.FC = () => {
   const onSubmit = (data: SignIn) => {
       mutate( data, {
         onSuccess: async () => {
-          await queryClient.invalidateQueries({ queryKey: ['me'] })
+          await queryClient.refetchQueries({ queryKey: ['me'] })
           navigateTo('/')
         },
         onError: () => showError('Erro ao fazer login')

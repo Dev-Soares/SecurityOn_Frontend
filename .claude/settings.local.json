@@ -6,7 +6,11 @@
       "Bash(grep -r \"style.*width\\\\|style.*height\" '/c/Users/berna/OneDrive/Documentos/Projetos/SecurityOn/SecurityOn - Frontend/src' --include=*.tsx --include=*.ts)",
       "Bash(grep -r \"top-\\\\|bottom-\\\\|left-\\\\|right-\" '/c/Users/berna/OneDrive/Documentos/Projetos/SecurityOn/SecurityOn - Frontend/src' --include=*.tsx --include=*.ts)",
       "Bash(grep -r \"w-\\\\|h-\" '/c/Users/berna/OneDrive/Documentos/Projetos/SecurityOn/SecurityOn - Frontend/src' --include=*.tsx --include=*.ts)",
-      "Bash(grep -r \"pb-\\\\|pt-\\\\|min-h-\\\\|max-w-\\\\|overflow\" '/c/Users/berna/OneDrive/Documentos/Projetos/SecurityOn/SecurityOn - Frontend/src' --include=*.tsx --include=*.ts)"
+      "Bash(grep -r \"pb-\\\\|pt-\\\\|min-h-\\\\|max-w-\\\\|overflow\" '/c/Users/berna/OneDrive/Documentos/Projetos/SecurityOn/SecurityOn - Frontend/src' --include=*.tsx --include=*.ts)",
+      "Bash(./node_modules/.bin/tsc --noEmit)",
+      "Bash(npm run:*)",
+      "Bash(ls node_modules/.bin/tsc*)",
+      "Bash(npm install:*)"
     ]
   }
 }

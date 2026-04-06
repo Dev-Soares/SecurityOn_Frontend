@@ -11,7 +11,7 @@ export const useAutoLogin = () => {
     return useMutation({
         mutationFn: (data: SignIn) => signInService(data),
         onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: ['me'] })
+            await queryClient.refetchQueries({ queryKey: ['me'] })
             showSuccess('Conta criada com sucesso!')
             navigateTo('/')
         },

@@ -21,7 +21,7 @@ const ModalPost: React.FC = () => {
                     <div className='flex items-center gap-3'>
                         <div className='w-10 h-10 rounded-full overflow-hidden shrink-0 bg-gray-200 dark:bg-gray-800'>
                             <img
-                                src={'avatar.png'}
+                                src={'/avatar.png'}
                                 alt="User avatar"
                                 className='w-full h-full object-cover'
                             />

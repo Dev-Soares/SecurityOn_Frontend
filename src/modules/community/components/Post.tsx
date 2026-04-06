@@ -15,11 +15,12 @@ type PostProps = {
 
 const Post: React.FC<PostProps> = ({ userId, content, timestamp, userAvatarUrl, imgUrl }) => {
 
-    const {data: user } = useGetUser(userId)
+    const {data: user, isError, isLoading } = useGetUser(userId)
 
     const navigateTo = useNavigateTo()
 
-    if (!user) return <PostSkeleton />
+    if (isLoading) return <PostSkeleton />
+    if (isError || !user) return null
 
     const formattedDate = new Date(timestamp).toLocaleDateString('pt-BR', {
         day: '2-digit',
