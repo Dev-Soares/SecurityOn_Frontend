@@ -13,7 +13,26 @@ interface FriendshipButtonProps {
     userId: string
 }
 
-const baseStyle = 'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 disabled:cursor-not-allowed min-h-[38px]'
+const baseStyle = 'flex items-center justify-center gap-2 px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 disabled:cursor-not-allowed min-h-[38px]'
+
+interface SwapLabelProps {
+    idle: React.ReactNode
+    hover: React.ReactNode
+}
+
+// Os dois rótulos ocupam a MESMA célula do grid: a largura do botão é sempre a
+// do maior dos dois, então o hover não empurra layout. A troca é crossfade de
+// opacidade, não corte seco de texto.
+const SwapLabel: React.FC<SwapLabelProps> = ({ idle, hover }) => (
+    <span className='grid place-items-center'>
+        <span className='col-start-1 row-start-1 flex items-center gap-2 whitespace-nowrap opacity-100 group-hover:opacity-0 transition-opacity duration-200'>
+            {idle}
+        </span>
+        <span className='col-start-1 row-start-1 flex items-center gap-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
+            {hover}
+        </span>
+    </span>
+)
 
 const FriendshipButton: React.FC<FriendshipButtonProps> = ({ userId }) => {
 
@@ -44,7 +63,7 @@ const FriendshipButton: React.FC<FriendshipButtonProps> = ({ userId }) => {
 
     if (isLoading || !status) {
         return (
-            <div className={`${baseStyle} border border-gray-200 dark:border-gray-800 justify-center min-w-[130px]`}>
+            <div className={`${baseStyle} border border-gray-200 dark:border-gray-800 justify-center min-w-[132px]`}>
                 <Spinner size='sm' />
             </div>
         )
@@ -76,15 +95,13 @@ const FriendshipButton: React.FC<FriendshipButtonProps> = ({ userId }) => {
             <button
                 onClick={() => onRemove('Amizade desfeita')}
                 disabled={isPending}
-                className={`${baseStyle} group border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-red-400 dark:hover:border-red-500 hover:text-red-500 dark:hover:text-red-400`}
+                className={`${baseStyle} group border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-red-400 dark:hover:border-red-500 hover:text-red-500 dark:hover:text-red-400 min-w-[132px]`}
             >
                 {isRemoving ? <Spinner size='sm' /> : (
-                    <>
-                        <Check size={18} weight='bold' className='group-hover:hidden' />
-                        <UserMinus size={18} weight='bold' className='hidden group-hover:block' />
-                        <span className='group-hover:hidden'>Amigos</span>
-                        <span className='hidden group-hover:block'>Desfazer</span>
-                    </>
+                    <SwapLabel
+                        idle={<><Check size={18} weight='bold' /><span>Amigos</span></>}
+                        hover={<><UserMinus size={18} weight='bold' /><span>Desfazer</span></>}
+                    />
                 )}
             </button>
         )
@@ -95,15 +112,13 @@ const FriendshipButton: React.FC<FriendshipButtonProps> = ({ userId }) => {
             <button
                 onClick={() => onRemove('Pedido cancelado')}
                 disabled={isPending}
-                className={`${baseStyle} group border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-red-400 dark:hover:border-red-500 hover:text-red-500 dark:hover:text-red-400`}
+                className={`${baseStyle} group border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-red-400 dark:hover:border-red-500 hover:text-red-500 dark:hover:text-red-400 min-w-[132px]`}
             >
                 {isRemoving ? <Spinner size='sm' /> : (
-                    <>
-                        <Clock size={18} weight='bold' className='group-hover:hidden' />
-                        <X size={18} weight='bold' className='hidden group-hover:block' />
-                        <span className='group-hover:hidden'>Pendente</span>
-                        <span className='hidden group-hover:block'>Cancelar</span>
-                    </>
+                    <SwapLabel
+                        idle={<><Clock size={18} weight='bold' /><span>Pendente</span></>}
+                        hover={<><X size={18} weight='bold' /><span>Cancelar</span></>}
+                    />
                 )}
             </button>
         )
@@ -139,7 +154,7 @@ const FriendshipButton: React.FC<FriendshipButtonProps> = ({ userId }) => {
         <button
             onClick={onSend}
             disabled={isPending}
-            className={`${baseStyle} bg-blue-500 text-white hover:bg-blue-600 disabled:bg-gray-300 dark:disabled:bg-gray-700 justify-center min-w-[130px]`}
+            className={`${baseStyle} bg-blue-500 text-white hover:bg-blue-600 disabled:bg-gray-300 dark:disabled:bg-gray-700 justify-center min-w-[132px]`}
         >
             {isSending ? <Spinner size='sm' className='border-white border-t-transparent' /> : (
                 <>
