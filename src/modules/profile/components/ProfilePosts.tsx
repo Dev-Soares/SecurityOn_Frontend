@@ -27,14 +27,7 @@ const ProfilePosts: React.FC<ProfilePostsProps> = ({ userId }) => {
     return (
         <div className='flex flex-col items-center gap-4 w-full py-4'>
             {posts.map(post => (
-                <Post
-                    key={post.id}
-                    userId={post.userId}
-                    content={post.content}
-                    timestamp={post.createdAt}
-                    imgUrl={post.imgUrl}
-                    userAvatarUrl={null}
-                />
+                <Post key={post.id} post={post} userAvatarUrl={null} />
             ))}
             <div ref={observerRef} className='flex justify-center py-8'>
                 {isFetchingNextPage && <Spinner  />}

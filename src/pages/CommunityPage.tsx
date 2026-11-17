@@ -70,13 +70,7 @@ const CommunityPageContent: React.FC = () => {
           )}
 
           {posts.map((post) => (
-            <Post
-              key={post.id}
-              userId={post.userId}
-              content={post.content}
-              timestamp={post.createdAt}
-              imgUrl={post.imgUrl}
-            />
+            <Post key={post.id} post={post} />
           ))}
         </div>
 
