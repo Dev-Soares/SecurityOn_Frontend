@@ -1,7 +1,6 @@
 import React from 'react'
 import { useFindCommentsByPost } from '../hooks/useFindCommentsByPost'
 import CommentItem from './CommentItem'
-import CommentForm from './CommentForm'
 import Spinner from '@/shared/components/Spinner'
 import ErrorMessage from '@/shared/components/ErrorMessage'
 
@@ -10,6 +9,8 @@ interface CommentListProps {
     postAuthorId: string
 }
 
+// Só a lista. O campo de escrever fica ancorado no rodapé do diálogo que a contém,
+// fora da área que rola.
 const CommentList: React.FC<CommentListProps> = ({ postId, postAuthorId }) => {
 
     const {
@@ -25,11 +26,9 @@ const CommentList: React.FC<CommentListProps> = ({ postId, postAuthorId }) => {
     const comments = data?.pages.flatMap(page => page.data) ?? []
 
     return (
-        <div className='flex flex-col gap-4 border-t border-gray-200 dark:border-gray-800 pt-4 pb-2 -mx-2 px-2'>
-            <CommentForm postId={postId} />
-
+        <div className='flex flex-col gap-4'>
             {isLoading && (
-                <div className='flex justify-center py-4'>
+                <div className='flex justify-center py-6'>
                     <Spinner size='sm' />
                 </div>
             )}
@@ -42,25 +41,21 @@ const CommentList: React.FC<CommentListProps> = ({ postId, postAuthorId }) => {
             )}
 
             {!isLoading && !isError && comments.length === 0 && (
-                <p className='text-sm text-gray-400 dark:text-gray-500 text-center py-2'>
+                <p className='text-sm text-gray-400 dark:text-gray-500 text-center py-6'>
                     Nenhum comentário ainda. Seja o primeiro.
                 </p>
             )}
 
-            {comments.length > 0 && (
-                <div className='flex flex-col gap-4'>
-                    {comments.map(comment => (
-                        <CommentItem
-                            key={comment.id}
-                            comment={comment}
-                            postAuthorId={postAuthorId}
-                        />
-                    ))}
-                </div>
-            )}
+            {comments.map(comment => (
+                <CommentItem
+                    key={comment.id}
+                    comment={comment}
+                    postAuthorId={postAuthorId}
+                />
+            ))}
 
-            {/* Paginação por botão: um observer dentro de cada post do feed
-                dispararia fetch de comentário em tudo que passa pela tela. */}
+            {/* Paginação por botão: um observer aqui dispararia fetch a cada
+                diálogo aberto e a cada rolagem curta. */}
             {hasNextPage && (
                 <button
                     onClick={() => fetchNextPage()}
