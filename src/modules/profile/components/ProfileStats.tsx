@@ -6,6 +6,7 @@ interface ProfileStatsProps {
 }
 
 // Os quatro números vêm no mesmo GET /user/:id, como subconsultas de COUNT.
+// Aqui são só leitura: quem troca de aba é a barra logo abaixo.
 const ProfileStats: React.FC<ProfileStatsProps> = ({ counts }) => {
 
     const stats = [
@@ -16,11 +17,15 @@ const ProfileStats: React.FC<ProfileStatsProps> = ({ counts }) => {
     ]
 
     return (
-        <ul className='flex flex-wrap items-center gap-x-6 gap-y-2'>
+        <ul className='grid grid-cols-4 gap-1 sm:gap-2'>
             {stats.map(stat => (
-                <li key={stat.label} className='flex items-baseline gap-1.5'>
-                    <span className='text-base font-bold text-gray-900 dark:text-white'>{stat.value}</span>
-                    <span className='text-sm text-gray-500 dark:text-gray-400'>{stat.label}</span>
+                <li key={stat.label} className='flex flex-col items-center gap-0.5 px-1 py-2'>
+                    <span className='text-base sm:text-lg font-bold text-gray-900 dark:text-white leading-none'>
+                        {stat.value}
+                    </span>
+                    <span className='text-[11px] sm:text-xs text-gray-500 dark:text-gray-400'>
+                        {stat.label}
+                    </span>
                 </li>
             ))}
         </ul>

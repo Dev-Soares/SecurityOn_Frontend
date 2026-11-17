@@ -11,9 +11,17 @@ import type { Post as PostType } from '../types/post'
 type PostProps = {
     post: PostType;
     userAvatarUrl?: string | null;
+    // 'feed' é o card da Comunidade, que define a própria largura no meio da
+    // página. 'full' ocupa a coluna em que for montado — é o caso do perfil.
+    variant?: 'feed' | 'full';
 }
 
-const Post: React.FC<PostProps> = ({ post, userAvatarUrl }) => {
+const surfaceByVariant = {
+    feed: 'w-full md:w-[70%] xl:w-[50%] bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-800',
+    full: 'w-full bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800',
+}
+
+const Post: React.FC<PostProps> = ({ post, userAvatarUrl, variant = 'feed' }) => {
 
     const navigateTo = useNavigateTo()
     const { isLogged } = useUser()
@@ -52,7 +60,7 @@ const Post: React.FC<PostProps> = ({ post, userAvatarUrl }) => {
     )
 
     return (
-        <article className='bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 flex flex-col rounded-2xl overflow-hidden w-full md:w-[70%] xl:w-[50%]'>
+        <article className={`border flex flex-col rounded-2xl overflow-hidden ${surfaceByVariant[variant]}`}>
             {/* Cabeçalho */}
             <div className='flex items-center gap-3 px-5 pt-5 pb-4'>
                 <button

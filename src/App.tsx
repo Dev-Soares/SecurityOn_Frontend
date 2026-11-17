@@ -8,6 +8,7 @@ import CommunityPage from './pages/CommunityPage'
 import ArticlesPage from './pages/ArticlesPage'
 import ComplaintsPage from './pages/ComplaintsPage'
 import ProfilePage from './pages/ProfilePage'
+import FriendsPage from './pages/FriendsPage'
 import ArticleDetailPage from './pages/ArticleDetailPage'
 import { ScrollToTop } from './shared/utils/scrollToTop'
 import { AppToaster } from './shared/components/Toast'
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="articles" element={<ArticlesPage />} />
           <Route path="articles/:id" element={<ArticleDetailPage />} />
           <Route path="complaint" element={<ComplaintsPage />} />
+          <Route path="friends" element={<FriendsPage />} />
           <Route path="profile/:id" element={<ProfilePage />} />
         </Route>
 

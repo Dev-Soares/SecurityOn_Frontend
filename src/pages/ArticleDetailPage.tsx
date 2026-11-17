@@ -1,8 +1,10 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import useNavigateTo from '@/shared/hooks/useNavigateTo'
-import { ArrowLeft, Clock, ShareNetwork, CalendarBlank } from '@phosphor-icons/react'
+import { ArrowLeft, ShareNetwork } from '@phosphor-icons/react'
 import useGetArticle from '@/modules/articles/hooks/useGetArticle'
+import ArticleAuthorLine from '@/modules/articles/components/ArticleAuthorLine'
+import { readTimeOf } from '@/modules/articles/utils/articleMeta'
 import ArticleDetailSkeleton from '@/modules/articles/skeletons/ArticleDetailSkeleton'
 import ErrorMessage from '@/shared/components/ErrorMessage'
 import { shareLink } from '@/shared/utils/shareLink'
@@ -43,15 +45,9 @@ const ArticleDetailPage: React.FC = () => {
     )
   }
 
-  const formattedDate = new Date(article.createdAt).toLocaleDateString('pt-BR', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  })
-
   const paragraphs = article.content.split('\n').filter((p: string) => p.trim() !== '')
 
-  const readTime = `${Math.max(1, Math.ceil(article.content.split(/\s+/).length / 200))} min`
+  const readTime = readTimeOf(article.content)
 
   return (
     <main className='pb-20 min-h-screen w-full'>
@@ -95,20 +91,18 @@ const ArticleDetailPage: React.FC = () => {
           {article.title}
         </h1>
 
-        {/* Meta row */}
-        <div className='flex flex-wrap items-center gap-4 mt-4 text-sm text-gray-500 dark:text-gray-400'>
-          <div className='flex items-center gap-1.5'>
-            <CalendarBlank size={14} weight="bold" />
-            <span>{formattedDate}</span>
+        {/* Assinatura: mesma linha de autor do feed, para o artigo aberto não
+            perder de quem é o texto. */}
+        {article.user && (
+          <div className='mt-5'>
+            <ArticleAuthorLine
+              author={article.user}
+              createdAt={article.createdAt}
+              readTime={readTime}
+              avatarSize={44}
+            />
           </div>
-
-          <span className='w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600' />
-
-          <div className='flex items-center gap-1.5'>
-            <Clock size={14} weight="bold" />
-            <span>{readTime} de leitura</span>
-          </div>
-        </div>
+        )}
 
         {/* Hero image */}
         {article.bgUrl && (

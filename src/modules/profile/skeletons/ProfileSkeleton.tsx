@@ -2,36 +2,62 @@ import React from 'react'
 
 const ProfileSkeleton: React.FC = () => {
   return (
-    <main className="min-h-screen pb-32 md:pb-24 lg:pb-16 lg:py-8 lg:px-8 flex flex-col gap-6 bg-white dark:bg-gray-950 animate-pulse">
-      <div className="w-full relative flex flex-col rounded-b-3xl">
+    <main className='min-h-screen pb-28 md:pb-20 lg:pb-10 bg-gray-50 dark:bg-gray-950 animate-pulse'>
+      <div className='mx-auto w-full max-w-5xl px-3 sm:px-6 py-4 sm:py-6 flex flex-col gap-4 xl:grid xl:grid-cols-[minmax(0,1fr)_20rem] xl:gap-6 xl:items-start'>
 
-        {/* Banner */}
-        <div className="bg-gray-300 dark:bg-gray-700 h-40 lg:h-56 rounded-b-2xl lg:rounded-b-xl" />
+        {/* Cabeçalho */}
+        <section className='xl:col-span-2 overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900'>
+          <div className='h-28 sm:h-40 lg:h-48 w-full bg-gray-200 dark:bg-gray-800' />
 
-        {/* Avatar */}
-        <div className="absolute top-26 lg:top-38 left-6 sm:left-8">
-          <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full border-4 border-white dark:border-gray-950 bg-gray-300 dark:bg-gray-700" />
-        </div>
+          <div className='px-4 sm:px-6 pb-5'>
+            <div className='flex items-end justify-between gap-3 -mt-12 sm:-mt-16'>
+              <div className='w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-gray-900' />
+              <div className='h-10 w-36 rounded-full bg-gray-200 dark:bg-gray-800' />
+            </div>
 
-        <div className="bg-none h-30 rounded-t-3xl w-full flex flex-col items-start justify-start p-4 sm:p-6 pt-12 sm:pt-16 gap-4 sm:gap-6 md:gap-6 mb-8">
-          {/* Name + username */}
-          <div className="flex flex-col gap-2 mt-6">
-            <div className="h-8 w-48 bg-gray-300 dark:bg-gray-700 rounded" />
-            <div className="h-5 w-32 bg-gray-300/70 dark:bg-gray-700/70 rounded" />
+            <div className='mt-4 flex flex-col gap-2'>
+              <div className='h-6 w-48 rounded bg-gray-300 dark:bg-gray-700' />
+              <div className='h-4 w-32 rounded bg-gray-200 dark:bg-gray-800' />
+              <div className='h-4 w-56 rounded bg-gray-200 dark:bg-gray-800' />
+            </div>
+
+            <div className='mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 grid grid-cols-4 gap-2'>
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className='h-12 rounded-xl bg-gray-200 dark:bg-gray-800' />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Trilho lateral */}
+        <aside className='flex flex-col gap-4 xl:col-start-2 xl:row-start-2'>
+          <div className='rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 flex flex-col gap-3'>
+            <div className='h-4 w-24 rounded bg-gray-300 dark:bg-gray-700' />
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className='h-9 rounded-xl bg-gray-200 dark:bg-gray-800' />
+            ))}
+          </div>
+        </aside>
+
+        {/* Abas + conteúdo */}
+        <div className='min-w-0 flex flex-col gap-4 xl:col-start-1 xl:row-start-2'>
+          <div className='flex gap-1 p-1 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900'>
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className='flex-1 h-10 rounded-xl bg-gray-200 dark:bg-gray-800' />
+            ))}
           </div>
 
-          {/* Edit button */}
-          <div className="h-10 w-24 bg-gray-300 dark:bg-gray-700 rounded-lg" />
-
-          {/* Tabs */}
-          <nav className="flex border-b w-full border-gray-200 dark:border-gray-800">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="w-[33.33%] pb-3 flex justify-center">
-                <div className="h-5 w-16 bg-gray-300 dark:bg-gray-700 rounded" />
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className='rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 flex flex-col gap-4'>
+              <div className='flex items-center gap-3'>
+                <div className='w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800' />
+                <div className='h-4 w-32 rounded bg-gray-200 dark:bg-gray-800' />
               </div>
-            ))}
-          </nav>
+              <div className='h-40 rounded-xl bg-gray-200 dark:bg-gray-800' />
+            </div>
+          ))}
         </div>
+
       </div>
     </main>
   )

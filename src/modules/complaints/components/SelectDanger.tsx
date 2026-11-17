@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { CaretDown } from '@phosphor-icons/react'
-
-type DangerType = 'aviso' | 'cuidado' | 'perigo' | 'critico'
+import { dangerConfig, dangerLevels } from '../config/dangerConfig'
+import type { DangerType } from '../config/dangerConfig'
 
 interface SelectDangerProps {
     value: DangerType | false
@@ -9,32 +9,13 @@ interface SelectDangerProps {
     required?: boolean
 }
 
-const dangerOptions = [
-    {
-        value: 'aviso' as DangerType,
-        label: 'Aviso',
-        description: 'Requer atenção',
-        dotColor: 'bg-yellow-500',
-    },
-    {
-        value: 'cuidado' as DangerType,
-        label: 'Cuidado',
-        description: 'Risco moderado',
-        dotColor: 'bg-orange-500',
-    },
-    {
-        value: 'perigo' as DangerType,
-        label: 'Perigo',
-        description: 'Risco alto',
-        dotColor: 'bg-red-500',
-    },
-    {
-        value: 'critico' as DangerType,
-        label: 'Crítico',
-        description: 'Risco extremo',
-        dotColor: 'bg-red-700',
-    },
-]
+// Rótulo, descrição e cor vêm do dangerConfig — mesma fonte que o card do feed usa.
+const dangerOptions = dangerLevels.map((value) => ({
+    value: value,
+    label: dangerConfig[value].label,
+    description: dangerConfig[value].description,
+    dotColor: dangerConfig[value].dot,
+}))
 
 const SelectDanger: React.FC<SelectDangerProps> = ({ value, onChange }) => {
     const [isOpen, setIsOpen] = useState(false)
@@ -67,6 +48,7 @@ const SelectDanger: React.FC<SelectDangerProps> = ({ value, onChange }) => {
             >
                 {selectedOption ? (
                     <div className="flex items-center gap-2.5">
+                        <span className={`w-2 h-2 rounded-full shrink-0 ${selectedOption.dotColor}`} />
                         <span className="font-medium text-gray-900 dark:text-white text-sm lg:text-base">{selectedOption.label}</span>
                         <span className="text-xs text-gray-500 dark:text-gray-400">— {selectedOption.description}</span>
                     </div>
@@ -91,6 +73,7 @@ const SelectDanger: React.FC<SelectDangerProps> = ({ value, onChange }) => {
                                 value === option.value ? 'bg-gray-50 dark:bg-gray-800/50' : ''
                             }`}
                         >
+                            <span className={`w-2 h-2 rounded-full shrink-0 ${option.dotColor}`} />
                             <span className="font-medium text-gray-900 dark:text-white text-sm">{option.label}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">— {option.description}</span>
                         </button>

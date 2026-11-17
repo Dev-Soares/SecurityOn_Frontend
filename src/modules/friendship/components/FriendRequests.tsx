@@ -1,11 +1,12 @@
 import React from 'react'
-import { Check, X } from '@phosphor-icons/react'
+import { Check, X, UserPlus } from '@phosphor-icons/react'
 import { useFindReceivedRequests } from '../hooks/useFindReceivedRequests'
 import { useAcceptFriendship } from '../hooks/useAcceptFriendship'
 import { useRemoveFriendship } from '../hooks/useRemoveFriendship'
 import { showError, showSuccess } from '@/shared/components/Toast'
 import useNavigateTo from '@/shared/hooks/useNavigateTo'
 import Spinner from '@/shared/components/Spinner'
+import EmptyState from '@/shared/components/EmptyState'
 
 interface FriendRequestsProps {
     // Só o dono do perfil vê os próprios pedidos recebidos.
@@ -23,7 +24,25 @@ const FriendRequests: React.FC<FriendRequestsProps> = ({ enabled }) => {
 
     const requests = data?.pages.flatMap(page => page.data) ?? []
 
-    if (!enabled || isLoading || requests.length === 0) return null
+    if (!enabled) return null
+
+    if (isLoading) {
+        return (
+            <div className='flex justify-center py-16'>
+                <Spinner />
+            </div>
+        )
+    }
+
+    if (requests.length === 0) {
+        return (
+            <EmptyState
+                icon={<UserPlus size={40} weight='light' />}
+                title='Nenhum pedido pendente'
+                description='Quem pedir sua amizade aparece aqui para aceitar ou recusar.'
+            />
+        )
+    }
 
     const onAccept = (id: string) => acceptRequest(id, {
         onSuccess: () => showSuccess('Pedido aceito'),
@@ -36,14 +55,7 @@ const FriendRequests: React.FC<FriendRequestsProps> = ({ enabled }) => {
     })
 
     return (
-        <section className='flex flex-col gap-3 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900'>
-            <h2 className='text-base font-bold text-gray-900 dark:text-white'>
-                Pedidos de amizade
-                <span className='ml-2 text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300'>
-                    {requests.length}
-                </span>
-            </h2>
-
+        <section className='flex flex-col gap-3 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900'>
             <ul className='flex flex-col gap-2'>
                 {requests.map(request => (
                     <li key={request.id} className='flex items-center gap-3'>
