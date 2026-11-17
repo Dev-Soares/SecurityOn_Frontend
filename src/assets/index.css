@@ -5,6 +5,25 @@
 @theme {
   --animate-toast-in: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   --animate-toast-out: toast-out 0.3s ease-in forwards;
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-sheet-up: sheet-up 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-zoom-in: zoom-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Folha subindo do rodapé — o gesto de abrir comentários no mobile. */
+@keyframes sheet-up {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes zoom-in {
+  0% { opacity: 0; transform: scale(0.97); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 @keyframes toast-in {
@@ -114,6 +133,77 @@ body {
 
 .dark * {
   scrollbar-color: #60a5fa #1f2937;
+}
+
+/* Fora de @layer de propósito: as regras globais de scrollbar acima também são
+   não-layered, e no cascade qualquer estilo sem layer ganha de estilo em layer,
+   independente de especificidade. Dentro de @layer utilities estas nunca valeriam. */
+
+/* Scrollbar fino para caixas pequenas — o global tem 16px e borda de 3px,
+   proporcional à página, grosseiro dentro de textarea ou lista em modal. */
+.scrollbar-slim::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-slim::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 4px;
+  box-shadow: none;
+}
+
+.scrollbar-slim::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border: 2px solid transparent;
+  /* Mantém o thumb fino sem perder a área de clique dos 8px. */
+  background-clip: content-box;
+  border-radius: 9999px;
+  box-shadow: none;
+}
+
+.scrollbar-slim::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+  background-clip: content-box;
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.scrollbar-slim::-webkit-scrollbar-thumb:active {
+  background: #64748b;
+  background-clip: content-box;
+  box-shadow: none;
+  transform: none;
+}
+
+.dark .scrollbar-slim::-webkit-scrollbar-thumb {
+  background: #475569;
+  background-clip: content-box;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.dark .scrollbar-slim::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+  background-clip: content-box;
+}
+
+.scrollbar-slim {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.dark .scrollbar-slim {
+  scrollbar-color: #475569 transparent;
+}
+
+/* Para campos que crescem com o conteúdo: não há o que rolar, a barra só suja a caixa. */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
 }
 
 @layer utilities {

@@ -1,55 +1,74 @@
 import React, { useState } from 'react'
-import ProfileBanner from '@/modules/profile/components/ProfileBanner'
-import { PencilSimple } from '@phosphor-icons/react'
-import ProfileInfo from '@/modules/profile/components/ProfileInfo'
 import { useParams } from 'react-router-dom'
-import useGetUser from '@/modules/profile/hooks/useGetUser'
+import ProfileHeader from '@/modules/profile/components/ProfileHeader'
+import ProfileInfo from '@/modules/profile/components/ProfileInfo'
+import ProfileAbout from '@/modules/profile/components/ProfileAbout'
 import ProfileSkeleton from '@/modules/profile/skeletons/ProfileSkeleton'
+import ErrorMessage from '@/shared/components/ErrorMessage'
+import useGetUser from '@/modules/profile/hooks/useGetUser'
+import { useUser } from '@/shared/contexts/userContext'
+import type { ProfileTab } from '@/modules/profile/types/tab'
 
 const ProfilePage: React.FC = () => {
 
   const { id } = useParams<{ id: string }>()
 
-  const { data: user} = useGetUser(id!)
+  const { data: user, isError, refetch } = useGetUser(id!)
 
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { user: loggedUser } = useUser()
+
+  // A aba vive na página porque dois lugares a controlam: as abas e os números
+  // (header e coluna lateral), que funcionam como atalho.
+  const [activeTab, setActiveTab] = useState<ProfileTab>('posts')
+
+  if (isError) {
+    return (
+      <main className='min-h-screen bg-gray-50 dark:bg-gray-950 flex items-start justify-center px-4 py-16'>
+        <div className='w-full max-w-md'>
+          <ErrorMessage message='Não foi possível carregar este perfil.' onRetry={() => refetch()} />
+        </div>
+      </main>
+    )
+  }
 
   if (!user) return <ProfileSkeleton />
 
   const userName = user.name.toLowerCase().replace(/\s/g, '')
+  const isOwnProfile = loggedUser?.id === user.id
 
   return (
-    <main className='min-h-screen pb-32 md:pb-24 lg:pb-16 flex flex-col bg-white dark:bg-gray-950'>
-      <div className="w-full relative flex flex-col">
-        <ProfileBanner />
+    <main className='min-h-screen pb-28 md:pb-20 lg:pb-10 bg-gray-50 dark:bg-gray-950'>
+      {/* Uma coluna no celular; a partir de xl, conteúdo à esquerda e um
+          trilho fixo à direita — o cabeçalho atravessa as duas colunas. */}
+      <div className='mx-auto w-full max-w-5xl px-3 sm:px-6 py-4 sm:py-6 flex flex-col gap-4 xl:grid xl:grid-cols-[minmax(0,1fr)_20rem] xl:gap-6 xl:items-start'>
 
-        {/* Profile info area - offset for avatar */}
-        <div className='px-6 sm:px-8 pt-20 lg:pt-24 flex flex-col gap-5'>
-          <div className='flex items-start justify-between'>
-            <div className='flex flex-col gap-0.5'>
-              <h1 className='text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mt-1'>{user.name}</h1>
-              <p className='text-base text-gray-500 dark:text-gray-400'>@{userName}</p>
-            </div>
-
-            <button
-              onClick={() => setIsEditing(!isEditing)}
-              className={`
-                flex items-center gap-2 px-4 py-2 rounded-full
-                text-sm font-medium cursor-pointer
-                transition-all duration-200
-                ${isEditing
-                  ? 'bg-blue-500 text-white'
-                  : 'border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-600'
-                }
-              `}
-            >
-              <PencilSimple size={18} weight="bold" />
-              <span className='text-base'>Editar</span>
-            </button>
-          </div>
-
-          <ProfileInfo userId={id} />
+        <div className='xl:col-span-2'>
+          <ProfileHeader
+            user={user}
+            userName={userName}
+            isOwnProfile={isOwnProfile}
+          />
         </div>
+
+        <aside className='flex flex-col gap-4 xl:col-start-2 xl:row-start-2 xl:self-start xl:sticky xl:top-4'>
+          <ProfileAbout
+            user={user}
+            userName={userName}
+            isOwnProfile={isOwnProfile}
+            activeTab={activeTab}
+            onSelectTab={setActiveTab}
+          />
+        </aside>
+
+        <div className='min-w-0 xl:col-start-1 xl:row-start-2'>
+          <ProfileInfo
+            userId={id}
+            isOwnProfile={isOwnProfile}
+            activeTab={activeTab}
+            onSelectTab={setActiveTab}
+          />
+        </div>
+
       </div>
     </main>
   )

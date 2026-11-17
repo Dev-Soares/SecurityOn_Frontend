@@ -1,15 +1,17 @@
 import type { FunctionComponent } from "react"
-import { UsersThree, Article, Flag } from "@phosphor-icons/react"
+import { UsersThree, Article, Flag, Handshake } from "@phosphor-icons/react"
 import { useLocation } from "react-router-dom"
 import useNavigateTo from "../hooks/useNavigateTo"
+import { usePendingRequestsBadge } from "@/modules/friendship/hooks/usePendingRequestsBadge"
 
 type NavItemProps = {
   icon: (active: boolean) => React.ReactNode
   route: string
   label: string
+  badge?: string | null
 }
 
-const NavItem: FunctionComponent<NavItemProps> = ({ icon, route, label }) => {
+const NavItem: FunctionComponent<NavItemProps> = ({ icon, route, label, badge }) => {
   const navigateTo = useNavigateTo();
   const location = useLocation();
   const isActive = location.pathname === route;
@@ -33,13 +35,23 @@ const NavItem: FunctionComponent<NavItemProps> = ({ icon, route, label }) => {
           ${isActive ? "w-full" : "w-0"}
         `}
       />
-      {icon(isActive)}
+      <span className="relative flex items-center justify-center">
+        {icon(isActive)}
+        {badge && (
+          <span className="absolute -top-1 -right-2.5 min-w-[18px] px-1 rounded-full bg-blue-500 text-white text-[10px] font-bold leading-[18px] text-center">
+            {badge}
+          </span>
+        )}
+      </span>
       <span className="text-xs">{label}</span>
     </button>
   )
 }
 
 const BottomNav: FunctionComponent = () => {
+
+  const pendingRequests = usePendingRequestsBadge()
+
   return (
     <nav
       className="lg:hidden fixed left-0 right-0 bottom-0 z-50 bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800 flex justify-around items-center px-2 py-2"
@@ -65,6 +77,14 @@ const BottomNav: FunctionComponent = () => {
         )}
         route="/complaint"
         label="Denúncias"
+      />
+      <NavItem
+        icon={active => (
+          <Handshake size={26} weight={active ? "fill" : "regular"} />
+        )}
+        route="/friends"
+        label="Amigos"
+        badge={pendingRequests}
       />
     </nav>
   )

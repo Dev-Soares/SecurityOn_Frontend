@@ -1,22 +1,20 @@
 import React from 'react'
 
 interface ProfileBannerProps {
-    userImgUrl?: string
+    coverUrl?: string
 }
 
-const ProfileBanner: React.FC<ProfileBannerProps> = ({ userImgUrl }) => {
-
-    const mainUrl = userImgUrl ? userImgUrl : "/avatar.png"
-
+// Capa do perfil. Sem imagem salva no backend, o gradiente é o estado padrão —
+// e não um buraco cinza.
+const ProfileBanner: React.FC<ProfileBannerProps> = ({ coverUrl }) => {
     return (
-        <>
-            <div className='bg-blue-500 h-40 lg:h-56 rounded-b-2xl lg:rounded-b-xl' />
-            <div className='absolute top-26 lg:top-38 left-6 sm:left-8'>
-                <div className='w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-white dark:border-gray-950 bg-gray-200 dark:bg-gray-800'>
-                    <img src={mainUrl} alt="Avatar" className='w-full h-full object-cover' />
-                </div>
-            </div>
-        </>
+        <div className='relative h-28 sm:h-40 lg:h-48 w-full overflow-hidden bg-gradient-to-br from-blue-700 via-blue-500 to-sky-400'>
+            {coverUrl && (
+                <img src={coverUrl} alt='' className='absolute inset-0 w-full h-full object-cover' />
+            )}
+            <div className='absolute inset-0 bg-[radial-gradient(circle_at_15%_120%,rgba(255,255,255,0.45),transparent_55%)]' />
+            <div className='absolute inset-0 bg-[radial-gradient(circle_at_85%_-20%,rgba(255,255,255,0.25),transparent_50%)]' />
+        </div>
     )
 }
 

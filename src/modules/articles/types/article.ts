@@ -1,10 +1,16 @@
+export interface ArticleAuthor {
+  id: string;
+  name: string;
+  avatarUrl?: string | null;
+}
+
 export interface Article {
-  id: number;
+  id: string;
   title: string;
   content: string;
-  bgUrl?: string;
-  imgUrl?: string;
-  userId: number;
+  bgUrl?: string | null;
+  userId: string;
   createdAt: string;
-  updatedAt: string;
+  // Autor vem junto do artigo: o feed não precisa de um GET /user por card.
+  user: ArticleAuthor;
 }

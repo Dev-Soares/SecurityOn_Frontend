@@ -1,74 +1,172 @@
-import React from 'react'
-import { Heart, ChatCircle } from '@phosphor-icons/react'
-import useGetUser from '@/modules/profile/hooks/useGetUser'
-import PostSkeleton from '../skeletons/PostSkeleton'
+import React, { useState } from 'react'
+import { ThumbsUp, ChatCircle } from '@phosphor-icons/react'
 import useNavigateTo from '@/shared/hooks/useNavigateTo'
-
+import { useUser } from '@/shared/contexts/userContext'
+import { useToggleLike } from '@/modules/likes/hooks/useToggleLike'
+import PostCommentsDialog from './PostCommentsDialog'
+import { showError } from '@/shared/components/Toast'
+import { formatFullDate, formatRelativeTime } from '@/shared/utils/formatRelativeTime'
+import type { Post as PostType } from '../types/post'
 
 type PostProps = {
-    userId: string;
-    content: string;
-    timestamp: string;
+    post: PostType;
     userAvatarUrl?: string | null;
-    imgUrl?: string | null;
+    // 'feed' é o card da Comunidade, que define a própria largura no meio da
+    // página. 'full' ocupa a coluna em que for montado — é o caso do perfil.
+    variant?: 'feed' | 'full';
 }
 
-const Post: React.FC<PostProps> = ({ userId, content, timestamp, userAvatarUrl, imgUrl }) => {
+const surfaceByVariant = {
+    feed: 'w-full md:w-[70%] xl:w-[50%] bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-800',
+    full: 'w-full bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800',
+}
 
-    const {data: user, isError, isLoading } = useGetUser(userId)
+const Post: React.FC<PostProps> = ({ post, userAvatarUrl, variant = 'feed' }) => {
 
     const navigateTo = useNavigateTo()
+    const { isLogged } = useUser()
 
-    if (isLoading) return <PostSkeleton />
-    if (isError || !user) return null
+    const [showComments, setShowComments] = useState(false)
 
-    const formattedDate = new Date(timestamp).toLocaleDateString('pt-BR', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-    })
+    const { mutate: toggleLike } = useToggleLike()
 
-  return (
-    <div className='bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 h-auto px-6 flex flex-col rounded-2xl gap-4 w-full pt-6 pb-2 md:w-[70%] xl:w-[50%]'>
-        <button
-        onClick={ () => navigateTo(`/profile/${userId}`)}
-        className='flex flex-row gap-3 items-center cursor-pointer rounded-xl px-3 py-2 -mx-3 hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-colors duration-200'>
-            <div className='w-12 h-12 rounded-full overflow-hidden shrink-0 bg-gray-200 dark:bg-gray-800'>
-                <img
-                    src={userAvatarUrl || "/avatar.png"}
-                    alt={`${user.name} avatar`}
-                    className='w-full h-full object-cover'
-                />
+    const goToProfile = () => navigateTo(`/profile/${post.userId}`)
+
+    const onToggleLike = () => {
+        if (!isLogged) {
+            showError('Entre na sua conta para curtir')
+            return
+        }
+        toggleLike({ postId: post.id, liked: post.liked })
+    }
+
+    // Com imagem, o texto é legenda: vem depois dela, prefixado pelo autor.
+    // Sem imagem o texto é o próprio conteúdo do card: sobe para cima das ações, maior,
+    // e sem repetir o nome que já está logo acima no cabeçalho.
+    const caption = post.imgUrl ? (
+        <p className='text-base text-gray-800 dark:text-gray-200 leading-relaxed wrap-break-word'>
+            <button
+                onClick={goToProfile}
+                className='font-semibold text-gray-900 dark:text-white cursor-pointer hover:underline mr-1.5'
+            >
+                {post.user.name}
+            </button>
+            {post.content}
+        </p>
+    ) : (
+        <p className='text-base text-gray-800 dark:text-gray-200 leading-relaxed wrap-break-word'>
+            {post.content}
+        </p>
+    )
+
+    return (
+        <article className={`border flex flex-col rounded-2xl overflow-hidden ${surfaceByVariant[variant]}`}>
+            {/* Cabeçalho */}
+            <div className='flex items-center gap-3 px-5 pt-5 pb-4'>
+                <button
+                    onClick={goToProfile}
+                    className='shrink-0 w-10 h-10 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-800 cursor-pointer'
+                >
+                    <img
+                        src={userAvatarUrl || '/avatar.png'}
+                        alt={`${post.user.name} avatar`}
+                        className='w-full h-full object-cover'
+                    />
+                </button>
+
+                <div className='min-w-0 flex items-center gap-1.5'>
+                    <button
+                        onClick={goToProfile}
+                        className='text-sm font-semibold text-gray-900 dark:text-white cursor-pointer hover:underline truncate'
+                    >
+                        {post.user.name}
+                    </button>
+                    <span className='text-gray-400 dark:text-gray-600 text-sm'>·</span>
+                    <time
+                        dateTime={post.createdAt}
+                        title={formatFullDate(post.createdAt)}
+                        className='text-sm text-gray-500 dark:text-gray-400 shrink-0'
+                    >
+                        {formatRelativeTime(post.createdAt)}
+                    </time>
+                </div>
             </div>
-            <div className='flex flex-col text-left'>
-                <p className='font-semibold text-base text-gray-900 dark:text-white'>{user.name}</p>
-                <p className='text-sm text-gray-500 dark:text-gray-400'>{formattedDate}</p>
-            </div>
-        </button>
 
-        <div className='flex flex-col gap-3 mt-1'>
-            <p className='text-base leading-relaxed text-gray-800 dark:text-gray-200 mb-2 wrap-break-word'>{content}</p>
-            {imgUrl && (
-                <img
-                    src={imgUrl}
-                    alt="Post image"
-                    className='w-full h-auto rounded-xl object-cover'
+            {/* Mídia: recuada da borda, acompanhando o padding do card.
+                max-h evita que uma imagem em retrato empurre o resto do feed para fora da tela. */}
+            {post.imgUrl ? (
+                <div className='px-5'>
+                    <img
+                        src={post.imgUrl}
+                        alt=''
+                        loading='lazy'
+                        className='w-full max-h-[70vh] object-cover rounded-xl bg-gray-200 dark:bg-gray-800'
+                    />
+                </div>
+            ) : (
+                <div className='px-5 pb-1'>{caption}</div>
+            )}
+
+            {/* Ações: alinhadas à esquerda, sob a imagem.
+                px-3 compensa o padding interno dos botões e alinha o ícone à coluna do texto. */}
+            <div className='flex items-center gap-1 px-3 pt-3'>
+                <button
+                    onClick={onToggleLike}
+                    className='flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-colors duration-200 group'
+                    aria-label={post.liked ? 'Descurtir post' : 'Curtir post'}
+                    aria-pressed={post.liked}
+                >
+                    <ThumbsUp
+                        size={24}
+                        weight={post.liked ? 'fill' : 'regular'}
+                        className={`${post.liked
+                            ? 'text-blue-500'
+                            : 'text-gray-600 dark:text-gray-300 group-hover:text-blue-500'} transition-colors duration-200`}
+                    />
+                </button>
+
+                <button
+                    onClick={() => setShowComments(true)}
+                    className='flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-colors duration-200 group'
+                    aria-label='Ver comentários'
+                    aria-haspopup='dialog'
+                >
+                    <ChatCircle
+                        size={24}
+                        weight='regular'
+                        className='text-gray-600 dark:text-gray-300 group-hover:text-blue-500 transition-colors duration-200'
+                    />
+                    {post._count.comments > 0 && (
+                        <span className='text-sm text-gray-500 dark:text-gray-400'>
+                            {post._count.comments}
+                        </span>
+                    )}
+                </button>
+            </div>
+
+            {/* Curtidas, e a legenda só no card com imagem — sem imagem o texto
+                já foi renderizado acima das ações. */}
+            <div className='flex flex-col gap-1.5 px-5 pt-1 pb-5'>
+                {post._count.likes > 0 && (
+                    <p className='text-sm font-semibold text-gray-900 dark:text-white'>
+                        {post._count.likes} {post._count.likes === 1 ? 'curtida' : 'curtidas'}
+                    </p>
+                )}
+
+                {post.imgUrl && caption}
+            </div>
+
+            {/* Montado só ao abrir: o hook de comentários busca no mount. */}
+            {showComments && (
+                <PostCommentsDialog
+                    post={post}
+                    userAvatarUrl={userAvatarUrl}
+                    isOpen={showComments}
+                    onClose={() => setShowComments(false)}
                 />
             )}
-        </div>
-
-        <div className='flex flex-row items-center justify-around border-t border-gray-200 dark:border-gray-800 py-1.5 mt-2 -mx-2'>
-            <button className='flex items-center gap-2 px-5 py-2 rounded-lg cursor-pointer hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-colors duration-200 group'>
-                <Heart size={22} weight="regular" className='text-gray-500 dark:text-gray-400 group-hover:text-red-500 transition-colors duration-200' />
-            </button>
-            <button className='flex items-center gap-2 px-5 py-2 rounded-lg cursor-pointer hover:bg-gray-200/70 dark:hover:bg-gray-800/70 transition-colors duration-200 group'>
-                <ChatCircle size={22} weight="regular" className='text-gray-500 dark:text-gray-400 group-hover:text-blue-500 transition-colors duration-200' />
-            </button>
-        </div>
-    </div>
-  )
+        </article>
+    )
 }
 
 export default Post

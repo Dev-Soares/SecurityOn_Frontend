@@ -8,9 +8,11 @@ type SidebarButtonProps = {
     isSelected: boolean;
     iconOutline: React.ReactNode;
     iconFilled: React.ReactNode;
+    // Contador opcional (ex.: pedidos de amizade pendentes).
+    badge?: string | null;
 }
 
-const SidebarButton: FunctionComponent<SidebarButtonProps> = ({ text, iconOutline, iconFilled, isSelected, route}) => {
+const SidebarButton: FunctionComponent<SidebarButtonProps> = ({ text, iconOutline, iconFilled, isSelected, route, badge}) => {
 
   const navigateTo = useNavigateTo();
 
@@ -23,6 +25,11 @@ const SidebarButton: FunctionComponent<SidebarButtonProps> = ({ text, iconOutlin
       }`}>
         {isSelected ? iconFilled : iconOutline}
         <span>{text}</span>
+        {badge && (
+          <span className='ml-auto min-w-6 px-2 py-0.5 rounded-full bg-blue-500 text-white text-xs font-bold text-center'>
+            {badge}
+          </span>
+        )}
     </button>
   )
 }

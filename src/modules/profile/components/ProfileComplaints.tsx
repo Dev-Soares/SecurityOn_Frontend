@@ -1,8 +1,10 @@
 import React from 'react'
+import { Flag } from '@phosphor-icons/react'
 import { useFindComplaintByUser } from '@/modules/complaints/hooks/useFindComplaintByUser'
 import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
 import Spinner from '@/shared/components/Spinner'
+import EmptyState from '@/shared/components/EmptyState'
 
 interface ProfileComplaintsProps {
     userId: string | undefined
@@ -10,35 +12,37 @@ interface ProfileComplaintsProps {
 
 const ProfileComplaints: React.FC<ProfileComplaintsProps> = ({ userId }) => {
 
-    const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useFindComplaintByUser(userId!)
+    const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useFindComplaintByUser(userId!)
 
     const observerRef = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage })
 
     const complaints = data?.pages.flatMap(page => page.data) ?? []
 
-    if (complaints.length === 0) {
+    if (isLoading) {
         return (
-            <div className='flex flex-col items-center justify-center py-16 gap-2'>
-                <p className='text-gray-400 dark:text-gray-500 text-base'>Nenhuma denúncia feita</p>
+            <div className='flex justify-center py-16'>
+                <Spinner />
             </div>
         )
     }
 
+    if (complaints.length === 0) {
+        return (
+            <EmptyState
+                icon={<Flag size={40} weight='light' />}
+                title='Nenhuma denúncia feita'
+                description='As lojas e golpes denunciados por este perfil aparecem aqui.'
+            />
+        )
+    }
+
     return (
-        <div className='flex flex-col items-center gap-4 w-full py-4 px-4'>
+        <div className='flex flex-col gap-3 w-full'>
             {complaints.map(complaint => (
-                <ComplaintCard
-                    key={complaint.id}
-                    title={complaint.title}
-                    content={complaint.content}
-                    date={complaint.createdAt}
-                    danger={complaint.danger}
-                    store={complaint.store}
-                    link={complaint.link}
-                />
+                <ComplaintCard key={complaint.id} complaint={complaint} variant='compact' />
             ))}
-            <div ref={observerRef} className='flex justify-center py-8'>
-                {isFetchingNextPage && <Spinner  />}
+            <div ref={observerRef} className='flex justify-center py-6'>
+                {isFetchingNextPage && <Spinner />}
             </div>
         </div>
     )
