@@ -65,7 +65,7 @@ const Post: React.FC<PostProps> = ({ post, userAvatarUrl, variant = 'feed' }) =>
             <div className='flex items-center gap-3 px-5 pt-5 pb-4'>
                 <button
                     onClick={goToProfile}
-                    className='shrink-0 w-10 h-10 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-800 cursor-pointer'
+                    className='shrink-0 w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-800 cursor-pointer'
                 >
                     <img
                         src={userAvatarUrl || '/avatar.png'}
@@ -77,7 +77,7 @@ const Post: React.FC<PostProps> = ({ post, userAvatarUrl, variant = 'feed' }) =>
                 <div className='min-w-0 flex items-center gap-1.5'>
                     <button
                         onClick={goToProfile}
-                        className='text-sm font-semibold text-gray-900 dark:text-white cursor-pointer hover:underline truncate'
+                        className='text-base font-semibold text-gray-900 dark:text-white cursor-pointer hover:underline truncate'
                     >
                         {post.user.name}
                     </button>
@@ -100,7 +100,7 @@ const Post: React.FC<PostProps> = ({ post, userAvatarUrl, variant = 'feed' }) =>
                         src={post.imgUrl}
                         alt=''
                         loading='lazy'
-                        className='w-full max-h-[70vh] object-cover rounded-xl bg-gray-200 dark:bg-gray-800'
+                        className='w-full max-h-56 sm:max-h-72 object-cover rounded-xl bg-gray-200 dark:bg-gray-800'
                     />
                 </div>
             ) : (
