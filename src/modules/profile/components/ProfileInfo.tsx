@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ProfilePosts from '@/modules/profile/components/ProfilePosts'
 import ProfileComplaints from '@/modules/profile/components/ProfileComplaints'
 import ProfileArticles from '@/modules/profile/components/ProfileArticles'
+import FriendsList from '@/modules/friendship/components/FriendsList'
 
 interface ProfileInfoProps {
     userId: string | undefined
@@ -9,18 +10,20 @@ interface ProfileInfoProps {
 
 const ProfileInfo: React.FC<ProfileInfoProps> = ({ userId }) => {
 
-    const [activeTab, setActiveTab] = useState<'posts' | 'alerts' | 'articles'>('posts');
+    const [activeTab, setActiveTab] = useState<'posts' | 'alerts' | 'articles' | 'friends'>('posts');
 
     const tabs = [
         { key: 'posts' as const, label: 'Posts' },
         { key: 'alerts' as const, label: 'Denúncias' },
         { key: 'articles' as const, label: 'Artigos' },
+        { key: 'friends' as const, label: 'Amigos' },
     ]
 
     const tabContent = {
         posts: <ProfilePosts userId={userId} />,
         alerts: <ProfileComplaints userId={userId} />,
         articles: <ProfileArticles userId={userId} />,
+        friends: <FriendsList userId={userId} />,
     }
 
     return (
@@ -29,7 +32,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ userId }) => {
                 {tabs.map(tab => (
                     <button
                         key={tab.key}
-                        className={`cursor-pointer relative px-2 pb-3 w-[33.33%] text-base lg:text-lg font-medium transition-colors duration-200 ${
+                        className={`cursor-pointer relative px-2 pb-3 w-1/4 text-base lg:text-lg font-medium transition-colors duration-200 ${
                             activeTab === tab.key
                                 ? 'text-blue-600 dark:text-blue-400'
                                 : 'text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'
