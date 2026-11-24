@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { Plus, Flag } from '@phosphor-icons/react'
-import useNavigateTo from '@/shared/hooks/useNavigateTo'
+import { useComplaintSheet } from '@/modules/complaints/contexts/complaintSheetContext'
 import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
 import ComplaintsAside from '@/modules/complaints/components/ComplaintsAside'
 import ComplaintCardSkeleton from '@/modules/complaints/skeletons/ComplaintCardSkeleton'
@@ -11,7 +11,7 @@ import Spinner from '@/shared/components/Spinner'
 
 const ComplaintsPage: React.FC = () => {
 
-  const navigateTo = useNavigateTo()
+  const { open: openComplaintSheet } = useComplaintSheet()
 
   const {
     data,
@@ -31,7 +31,7 @@ const ComplaintsPage: React.FC = () => {
   )
 
   return (
-    <main className='pt-5 sm:pt-8 pb-28 md:pb-16'>
+    <main className='pt-8 lg:pt-16 pb-28 md:pb-16'>
       <div className='mx-auto w-full max-w-6xl px-3 sm:px-4 xl:px-8 flex gap-8'>
 
         {/* Feed */}
@@ -46,7 +46,7 @@ const ComplaintsPage: React.FC = () => {
             </div>
 
             <button
-              onClick={() => navigateTo('/create-complaint')}
+              onClick={openComplaintSheet}
               className='hidden lg:flex shrink-0 items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full text-sm shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-200 cursor-pointer'
             >
               <Plus size={18} weight='bold' />
@@ -96,7 +96,7 @@ const ComplaintsPage: React.FC = () => {
 
       {/* Ação principal no mobile, acima da navegação de baixo. */}
       <button
-        onClick={() => navigateTo('/create-complaint')}
+        onClick={openComplaintSheet}
         className='lg:hidden fixed bottom-24 right-4 z-20 flex items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full shadow-lg cursor-pointer transition-colors duration-200'
       >
         <Plus size={20} weight='bold' />

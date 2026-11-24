@@ -7,12 +7,73 @@
   --animate-toast-out: toast-out 0.3s ease-in forwards;
   --animate-fade-in: fade-in 0.2s ease-out;
   --animate-sheet-up: sheet-up 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-sheet-right: sheet-right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   --animate-zoom-in: zoom-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Tokens semânticos no padrão do Rubik: a tela nova fala em papel
+   (primary, muted, border) e os dois temas trocam o valor por baixo.
+   As telas antigas seguem nos utilitários crus de cinza/azul — os tokens
+   são aditivos e não mexem no que já existe. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Azul da marca como primary; neutros com viés frio para casarem com ele. */
+:root {
+  --radius: 0.5rem;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.21 0.034 264.4);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0.034 264.4);
+  --primary: oklch(0.546 0.245 262.9);
+  --primary-foreground: oklch(1 0 0);
+  --muted: oklch(0.967 0.003 264.5);
+  --muted-foreground: oklch(0.551 0.027 264.4);
+  --border: oklch(0.928 0.006 264.5);
+  --input: oklch(0.872 0.01 258.3);
+  --ring: oklch(0.546 0.245 262.9);
+  --destructive: oklch(0.577 0.245 27.3);
+}
+
+.dark {
+  --background: oklch(0.13 0.028 261.7);
+  --foreground: oklch(0.985 0.002 247.8);
+  --card: oklch(0.21 0.034 264.4);
+  --card-foreground: oklch(0.985 0.002 247.8);
+  --primary: oklch(0.623 0.214 259.8);
+  --primary-foreground: oklch(1 0 0);
+  --muted: oklch(0.278 0.033 256.8);
+  --muted-foreground: oklch(0.707 0.022 261.3);
+  --border: oklch(0.278 0.033 256.8);
+  --input: oklch(0.373 0.034 259.7);
+  --ring: oklch(0.623 0.214 259.8);
+  --destructive: oklch(0.704 0.191 22.2);
 }
 
 @keyframes fade-in {
   0% { opacity: 0; }
   100% { opacity: 1; }
+}
+
+/* Painel entrando pela borda direita, o gesto de abrir o formulário de denúncia. */
+@keyframes sheet-right {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0); }
 }
 
 /* Folha subindo do rodapé, o gesto de abrir comentários no mobile. */
@@ -209,5 +270,347 @@ body {
 @layer utilities {
   .font-custom {
     font-weight: 650;
+  }
+}
+
+/* -------------------------------------------------------------------------
+ * Entrar e criar conta, padrão "mercury": campos de linha com brilho no foco
+ * e botão em pílula. O fundo são as ONDAS do SecurityOn, que já eram a
+ * assinatura dessas telas — o padrão original usa bolhas líquidas, que não
+ * dizem nada sobre este produto.
+ *
+ * Acompanha o tema: claro por padrão, noite sob .dark. Quem escolheu o tema
+ * claro antes de entrar não deve levar uma tela escura na cara.
+ * ---------------------------------------------------------------------- */
+.mercury-screen {
+  --m-bg: #f8fafc;
+  --m-tint: #dbeafe;
+  --m-text: #0f172a;
+  --m-dim: #475569;
+  --m-line: rgba(15, 23, 42, 0.3);
+  --m-placeholder: rgba(15, 23, 42, 0.38);
+  --m-accent: #2563eb;
+  --m-track: rgba(15, 23, 42, 0.12);
+  --m-halo: rgba(248, 250, 252, 0.92);
+  --m-hover: rgba(15, 23, 42, 0.06);
+  --m-blue: #2563eb;
+  --m-blue-light: #3b82f6;
+  --m-logo: #1a81ef;
+  --m-wave-1: rgba(37, 99, 235, 0.08);
+  --m-wave-2: rgba(37, 99, 235, 0.16);
+  --m-wave-3: rgba(37, 99, 235, 0.28);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* dvh: a altura VISÍVEL no celular, descontada a barra do navegador. */
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: var(--m-text);
+  /* Clareia na direção de onde as ondas sobem, para o rodapé não virar um
+     bloco chapado abaixo do resto. */
+  background:
+    radial-gradient(120% 80% at 50% 120%, var(--m-tint) 0%, transparent 60%),
+    var(--m-bg);
+}
+
+.dark .mercury-screen {
+  --m-bg: #050b1a;
+  --m-tint: #0b2550;
+  --m-text: #ffffff;
+  --m-dim: rgba(255, 255, 255, 0.8);
+  --m-line: rgba(255, 255, 255, 0.4);
+  --m-placeholder: rgba(255, 255, 255, 0.45);
+  --m-accent: #38bdf8;
+  --m-track: rgba(255, 255, 255, 0.15);
+  --m-halo: rgba(5, 11, 26, 0.88);
+  --m-hover: rgba(255, 255, 255, 0.1);
+  --m-logo: #ffffff;
+  --m-wave-1: rgba(56, 189, 248, 0.1);
+  --m-wave-2: rgba(37, 99, 235, 0.22);
+  --m-wave-3: rgba(255, 255, 255, 0.06);
+}
+
+/* Fixo e recortado: a onda passa das bordas e, solta, viraria área de rolagem. */
+.wave-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.wave-stage svg {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: calc(100% + 2px);
+  height: 55vh;
+  min-height: 260px;
+}
+
+.mercury-back {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin: 16px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--m-dim);
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: 9999px;
+  transition: background 0.2s, color 0.2s;
+}
+.mercury-back:hover {
+  color: var(--m-text);
+  background: var(--m-hover);
+}
+.mercury-back:focus-visible {
+  outline: 2px solid var(--m-accent);
+  outline-offset: 2px;
+}
+
+.mercury-card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 440px;
+  margin: auto;
+  padding: 40px;
+  /* Halo atrás do form: a onda passa por baixo dos campos e, sem ele, a crista
+     disputa legibilidade com o texto. */
+  background: radial-gradient(
+    closest-side,
+    var(--m-halo),
+    color-mix(in srgb, var(--m-halo) 60%, transparent) 70%,
+    transparent
+  );
+}
+.mercury-header {
+  margin-bottom: 40px;
+}
+/* O nome acompanha a arte: azul sobre o fundo claro, branco sobre o noite,
+   que é exatamente o que a logo ao lado faz. */
+.mercury-wordmark {
+  color: var(--m-logo);
+}
+.mercury-title {
+  color: var(--m-text);
+}
+.mercury-sub {
+  color: var(--m-dim);
+}
+.mercury-link {
+  font-weight: 700;
+  color: var(--m-accent);
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  transition: opacity 0.2s;
+}
+.mercury-link:hover {
+  opacity: 0.8;
+}
+.mercury-link:focus-visible {
+  outline: 2px solid var(--m-accent);
+  outline-offset: 2px;
+}
+/* Traço de passo do cadastro: mesmo gesto do medidor de perigo do feed. */
+.mercury-step {
+  flex: 1;
+  height: 2px;
+  background: var(--m-track);
+  transition: background 0.3s;
+}
+.mercury-step--on {
+  background: var(--m-accent);
+}
+
+.mercury-field {
+  position: relative;
+  margin-bottom: 26px;
+}
+.mercury-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--m-dim);
+}
+/* Caixa do input: a linha e o brilho se medem por ela, não pelo campo inteiro,
+   senão a mensagem de erro empurraria o brilho para baixo do texto. */
+.mercury-line {
+  position: relative;
+}
+/* O olho da senha, dentro da linha do campo. */
+.mercury-reveal {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  padding: 4px;
+  color: var(--m-dim);
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color 0.2s;
+}
+.mercury-reveal:hover {
+  color: var(--m-text);
+}
+.mercury-reveal:focus-visible {
+  outline: 2px solid var(--m-accent);
+  outline-offset: 2px;
+}
+.mercury-field input {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--m-text);
+  outline: none;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--m-line);
+}
+.mercury-field input::placeholder {
+  font-weight: 400;
+  color: var(--m-placeholder);
+}
+.mercury-field input[aria-invalid="true"] {
+  border-bottom-color: #ef4444;
+}
+.mercury-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--m-accent);
+  box-shadow: 0 0 15px var(--m-accent);
+  transition: width 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+}
+.mercury-field:focus-within .mercury-glow {
+  width: 100%;
+}
+.mercury-error {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #dc2626;
+}
+.dark .mercury-error {
+  color: #fca5a5;
+}
+.mercury-submit {
+  position: relative;
+  margin-top: 40px;
+}
+/* Mesma forma do botão que esta tela sempre teve: pílula azul da marca com
+   texto branco em caixa normal. O destaque de cor fica no brilho do campo. */
+.mercury-button {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 32px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  /* background-color, não o atalho `background`: o atalho carrega imagem e
+     posição junto, e o que muda no hover é só a cor. */
+  background-color: var(--m-blue);
+  border: none;
+  border-radius: 9999px;
+  transition: background-color 0.25s ease, transform 0.15s ease;
+}
+.mercury-button:hover:not(:disabled) {
+  background-color: var(--m-blue-light);
+}
+.mercury-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.mercury-button:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+.mercury-button:focus-visible {
+  outline: 2px solid var(--m-text);
+  outline-offset: 4px;
+}
+/* Preenchimento automático do navegador: o Chrome pinta o campo e troca a cor
+   do texto, o que quebra o campo de linha. O fundo do autofill não pode ser
+   sobrescrito direto; a transição longa é o jeito suportado de mantê-lo
+   transparente. */
+.mercury-field input:-webkit-autofill,
+.mercury-field input:-webkit-autofill:hover,
+.mercury-field input:-webkit-autofill:focus,
+.mercury-field input:autofill {
+  -webkit-text-fill-color: var(--m-text);
+  caret-color: var(--m-text);
+  transition: background-color 86400s ease-in-out 0s;
+}
+
+/* Menos movimento: caem o crescimento do brilho e o afundar do botão. A troca
+   de cor do hover fica: ela não é movimento, e sem ela o botão passa a mudar de
+   cor num estalo. */
+@media (prefers-reduced-motion: reduce) {
+  .mercury-glow {
+    transition: none;
+  }
+  .mercury-button {
+    transition: background-color 0.25s ease;
+  }
+  .mercury-button:active:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* Telas estreitas: menos respiro lateral, mais campo. */
+@media (max-width: 400px) {
+  .mercury-card {
+    padding: 32px 24px;
+  }
+}
+/* Telas BAIXAS (celular deitado): modo compacto, para o form inteiro — até o
+   botão — caber sem rolar. */
+@media (max-height: 620px) {
+  .mercury-card {
+    padding: 16px 24px;
+  }
+  .mercury-header {
+    margin-bottom: 18px;
+  }
+  /* A marca encolhe junto: com o logo grande, o form não cabe deitado.
+     !important porque o tamanho da logo vem de style inline no componente. */
+  .mercury-header img {
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+  }
+  .mercury-field {
+    margin-bottom: 14px;
+  }
+  .mercury-label {
+    margin-bottom: 4px;
+  }
+  .mercury-field input {
+    padding: 6px 0;
+    font-size: 16px;
+  }
+  .mercury-submit {
+    margin-top: 20px;
+  }
+  .mercury-button {
+    padding: 10px 32px;
+    font-size: 16px;
   }
 }

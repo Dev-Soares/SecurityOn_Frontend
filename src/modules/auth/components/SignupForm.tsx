@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
-import Input from '@/shared/components/Input';
-import useNavigateTo from '@/shared/hooks/useNavigateTo';
-import { ArrowLeft } from '@phosphor-icons/react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { signUpSchema } from '../types/signUp';
-import type { SignUp } from '../types/signUp';
-import ErrorText from '@/shared/components/ErrorText';
-import Spinner from '@/shared/components/Spinner';
-import { useSignUp } from '../hooks/useSignUp';
-import { useAutoLogin } from '../hooks/useAutoLogin';
-import { showError } from '@/shared/components/Toast';
+import axios from 'axios'
+import { ArrowLeft, WarningCircle } from '@phosphor-icons/react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { signUpSchema } from '../types/signUp'
+import type { SignUp } from '../types/signUp'
+import { useSignUp } from '../hooks/useSignUp'
+import { useAutoLogin } from '../hooks/useAutoLogin'
+import MercuryField from './MercuryField'
+import useNavigateTo from '@/shared/hooks/useNavigateTo'
+
+const NAME_MAX = 100
 
 const steps = [
-  { title: 'Como podemos te chamar?', subtitle: 'Escolha seu nome e username' },
-  { title: 'Qual seu email?', subtitle: 'Usaremos para login e notificações' },
-  { title: 'Crie sua senha', subtitle: 'Mínimo de 8 caracteres' },
+  { question: 'Como podemos te chamar?', hint: 'Esse nome aparece nas suas denúncias e nos seus comentários.' },
+  { question: 'Qual seu email?', hint: 'É com ele que você entra. Não aparece para mais ninguém.' },
+  { question: 'Crie uma senha', hint: 'No mínimo 8 caracteres.' },
 ]
 
 const stepFields: (keyof SignUp)[][] = [
@@ -24,21 +24,28 @@ const stepFields: (keyof SignUp)[][] = [
   ['password', 'confirmPassword'],
 ]
 
+const LAST_STEP = steps.length - 1
+
+const messageForError = (error: unknown): string =>
+  axios.isAxiosError(error) && error.response?.status === 409
+    ? 'Esse email já tem conta. Entre com ele ou cadastre outro.'
+    : 'Não foi possível criar a conta agora. Tente novamente.'
+
 const SignupForm: React.FC = () => {
 
-  const navigateTo = useNavigateTo();
-  const [step, setStep] = useState(0);
+  const navigateTo = useNavigateTo()
+  const [step, setStep] = useState(0)
 
   const {
     register,
     handleSubmit,
     trigger,
-    formState: { errors }
+    formState: { errors },
   } = useForm<SignUp>({
-    resolver: zodResolver(signUpSchema)
+    resolver: zodResolver(signUpSchema),
   })
 
-  const { mutate, isPending } = useSignUp()
+  const { mutate, isPending, isError, error } = useSignUp()
   const { mutate: autoLogin } = useAutoLogin()
 
   const handleNext = async () => {
@@ -46,146 +53,140 @@ const SignupForm: React.FC = () => {
     if (valid) setStep(step + 1)
   }
 
-  const handleBack = () => {
-    if (step > 0) setStep(step - 1)
-  }
-
   const onSubmit = (data: SignUp) => {
-    const { confirmPassword, ...payload } = data
+    // A confirmação só existe para o zod comparar as duas senhas, o servidor não a recebe.
+    const payload = { name: data.name, email: data.email, password: data.password }
+
     mutate(payload, {
-      onSuccess: () => {
-        autoLogin({ email: payload.email, password: payload.password })
-      },
-      onError: () => showError('Erro ao criar conta')
+      onSuccess: () => autoLogin({ email: payload.email, password: payload.password }),
     })
   }
 
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (step < 2) {
+  const handleFormSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+
+    if (step < LAST_STEP) {
       handleNext()
-    } else {
-      handleSubmit(onSubmit)()
+      return
     }
+
+    handleSubmit(onSubmit)()
   }
 
   return (
-    <form onSubmit={handleFormSubmit} className="w-full max-w-md px-6 lg:px-8 flex flex-col gap-8 lg:gap-10 my-4">
-      {/* Progress bar - sticky */}
-      <div className='flex items-center gap-2 sticky top-0 z-20 bg-white dark:bg-gray-950 py-3 -mt-4'>
-        {steps.map((_, i) => (
-          <div
-            key={i}
-            className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-              i <= step ? 'bg-blue-500' : 'bg-gray-200 dark:bg-gray-800'
-            }`}
-          />
-        ))}
-      </div>
+    <form onSubmit={handleFormSubmit} aria-busy={isPending} noValidate>
 
-      {/* Header */}
-      <div className='flex flex-col gap-1 lg:gap-2 mb-4 lg:mb-6'>
-        <div className='flex items-center gap-3'>
-          {step > 0 && (
-            <button
-              type="button"
-              onClick={handleBack}
-              className='p-1 -ml-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200 cursor-pointer'
-            >
-              <ArrowLeft size={22} weight="bold" />
-            </button>
-          )}
-          <h2 className='text-2xl lg:text-4xl font-bold text-gray-900 dark:text-white'>
-            {steps[step].title}
-          </h2>
-        </div>
-        <p className='text-sm lg:text-lg text-gray-500 dark:text-gray-400'>
-          {steps[step].subtitle}
+      <div className='mb-7 flex flex-col gap-2'>
+        <span aria-hidden className='flex items-center gap-1.5'>
+          {steps.map((_, index) => (
+            <span
+              key={index}
+              className={`mercury-step ${index <= step ? 'mercury-step--on' : ''}`}
+            />
+          ))}
+        </span>
+
+        <p role='status' className='mercury-label mb-0!'>
+          Passo {step + 1} de {steps.length}
         </p>
       </div>
 
-      {/* Step 1: Nome e Username */}
-      {step === 0 && (
-        <div className='flex flex-col gap-4 lg:gap-5'>
-          <div className='flex flex-col gap-1.5 lg:gap-2'>
-            <label className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Nome</label>
-            <Input
-              type="text"
-              {...register('name')}
-              placeholder="Seu nome completo"
-            />
-            <ErrorText message={errors.name?.message} />
-          </div>
-        </div>
-      )}
-
-      {/* Step 2: Email */}
-      {step === 1 && (
-        <div className='flex flex-col gap-4 lg:gap-5'>
-          <div className='flex flex-col gap-1.5 lg:gap-2'>
-            <label className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Email</label>
-            <Input
-              type="email"
-              {...register('email')}
-              placeholder="seu@email.com"
-            />
-            <ErrorText message={errors.email?.message} />
-          </div>
-        </div>
-      )}
-
-      {/* Step 3: Senha */}
-      {step === 2 && (
-        <div className='flex flex-col gap-4 lg:gap-5'>
-          <div className='flex flex-col gap-1.5 lg:gap-2'>
-            <label className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Senha</label>
-            <Input
-              {...register('password')}
-              placeholder="Mínimo 8 caracteres"
-              password={true}
-            />
-            <ErrorText message={errors.password?.message} />
-          </div>
-          <div className='flex flex-col gap-1.5 lg:gap-2'>
-            <label className='text-sm lg:text-base font-medium text-gray-700 dark:text-gray-300'>Confirmar Senha</label>
-            <Input
-              {...register('confirmPassword')}
-              placeholder="Confirme sua senha"
-              password={true}
-            />
-            <ErrorText message={errors.confirmPassword?.message} />
-          </div>
-        </div>
-      )}
-
-      {/* Actions */}
-      <div className='flex flex-col gap-3 lg:gap-4 mt-2'>
-        <button
-          type="submit"
-          disabled={isPending}
-          className='w-full bg-blue-500 hover:bg-blue-600 text-white py-3 lg:py-3.5 rounded-full font-semibold cursor-pointer transition-all duration-200 active:scale-[0.98] text-base lg:text-lg disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed flex items-center justify-center'>
-          {isPending ? <Spinner size="sm" className="border-white border-t-transparent" /> : (step < 2 ? 'Continuar' : 'Criar Conta')}
-        </button>
-
-        {step === 0 && (
-          <>
-            <div className='flex items-center gap-3 my-1'>
-              <div className='flex-1 h-px bg-gray-200 dark:bg-gray-800' />
-              <span className='text-sm lg:text-base text-gray-400 dark:text-gray-500'>ou</span>
-              <div className='flex-1 h-px bg-gray-200 dark:bg-gray-800' />
-            </div>
-
-            <button
-              type="button"
-              onClick={() => navigateTo('/login')}
-              className='w-full border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 py-3 lg:py-3.5 rounded-full font-semibold cursor-pointer transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800/50 active:scale-[0.98] text-base lg:text-lg'>
-              Já tenho conta
-            </button>
-          </>
+      <div className='mb-8 flex items-start gap-2'>
+        {step > 0 && (
+          <button
+            type='button'
+            onClick={() => setStep(step - 1)}
+            aria-label='Voltar ao passo anterior'
+            className='mercury-back m-0! p-1.5'
+          >
+            <ArrowLeft size={20} weight='bold' />
+          </button>
         )}
+
+        <div className='min-w-0'>
+          <h2 className='mercury-title text-xl font-black tracking-tight'>
+            {steps[step].question}
+          </h2>
+          <p className='mercury-sub mt-1 text-sm leading-relaxed'>
+            {steps[step].hint}
+          </p>
+        </div>
       </div>
+
+      {step === 0 && (
+        <MercuryField
+          label='Nome'
+          maxLength={NAME_MAX}
+          autoComplete='name'
+          placeholder='Seu nome'
+          error={errors.name?.message}
+          {...register('name')}
+        />
+      )}
+
+      {step === 1 && (
+        <MercuryField
+          label='Email'
+          type='email'
+          inputMode='email'
+          autoComplete='email'
+          autoCapitalize='none'
+          spellCheck={false}
+          placeholder='voce@email.com'
+          error={errors.email?.message}
+          {...register('email')}
+        />
+      )}
+
+      {step === LAST_STEP && (
+        <>
+          <MercuryField
+            label='Senha'
+            password
+            autoComplete='new-password'
+            placeholder='Mínimo 8 caracteres'
+            error={errors.password?.message}
+            {...register('password')}
+          />
+
+          <MercuryField
+            label='Repetir senha'
+            password
+            autoComplete='new-password'
+            placeholder='A mesma senha'
+            error={errors.confirmPassword?.message}
+            {...register('confirmPassword')}
+          />
+        </>
+      )}
+
+      {isError && (
+        <p role='alert' className='mercury-error flex items-center gap-2'>
+          <WarningCircle size={16} weight='bold' className='shrink-0' />
+          {messageForError(error)}
+        </p>
+      )}
+
+      <div className='mercury-submit'>
+        <button type='submit' className='mercury-button' disabled={isPending}>
+          {isPending ? 'Criando…' : (step < LAST_STEP ? 'Continuar' : 'Criar conta')}
+        </button>
+      </div>
+
+      {step === 0 && (
+        <p className='mercury-sub mt-6 text-center text-sm'>
+          Já tem conta?{' '}
+          <button
+            type='button'
+            onClick={() => navigateTo('/login')}
+            className='mercury-link'
+          >
+            Entrar
+          </button>
+        </p>
+      )}
     </form>
   )
 }
 
-export default SignupForm;
+export default SignupForm

@@ -21,7 +21,7 @@ const ArticleDetailPage: React.FC = () => {
   if (error || !article) {
     return (
       <main className='pb-20 min-h-screen w-full'>
-        <div className='mx-auto max-w-3xl px-6 md:px-10 pt-6'>
+        <div className='mx-auto max-w-3xl px-6 md:px-10 pt-8 lg:pt-16'>
           <button
             onClick={() => navigateTo('/articles')}
             className='
@@ -51,7 +51,7 @@ const ArticleDetailPage: React.FC = () => {
 
   return (
     <main className='pb-20 min-h-screen w-full'>
-      <div className='mx-auto max-w-3xl px-6 md:px-10 pt-6'>
+      <div className='mx-auto max-w-3xl px-6 md:px-10 pt-8 lg:pt-16'>
 
         {/* Top nav */}
         <div className='flex items-center justify-between mb-8'>

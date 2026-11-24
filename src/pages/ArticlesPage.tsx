@@ -44,7 +44,7 @@ const ArticlesPage: React.FC = () => {
   const [feature, ...rest] = visibleArticles
 
   return (
-    <main className='pb-16 pt-5 sm:pt-8'>
+    <main className='pb-16 pt-8 lg:pt-16'>
       <div className='mx-auto w-full max-w-6xl px-3 sm:px-4 xl:px-8 flex gap-8'>
 
         {/* Feed */}

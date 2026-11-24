@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import axios from 'axios'
 import { MagnifyingGlass, ShieldCheck, Warning, Plus } from '@phosphor-icons/react'
-import useNavigateTo from '@/shared/hooks/useNavigateTo'
+import { useComplaintSheet } from '@/modules/complaints/contexts/complaintSheetContext'
 import useFindComplaintByLink from '@/modules/complaints/hooks/useFindComplaintByLink'
 import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
 import ComplaintCardSkeleton from '@/modules/complaints/skeletons/ComplaintCardSkeleton'
@@ -30,7 +30,7 @@ const messageForError = (error: unknown): string => {
 
 const CheckSitePage: React.FC = () => {
 
-    const navigateTo = useNavigateTo()
+    const { open: openComplaintSheet } = useComplaintSheet()
 
     const [input, setInput] = useState('')
     // Só o endereço submetido alimenta a consulta, verificar é um ato do visitante,
@@ -58,7 +58,7 @@ const CheckSitePage: React.FC = () => {
     const showResult = Boolean(data) && !isFetching && !isError
 
     return (
-        <main className='pt-5 sm:pt-8 pb-28 md:pb-16'>
+        <main className='pt-8 lg:pt-16 pb-28 md:pb-16'>
             <div className='mx-auto w-full max-w-2xl px-3 sm:px-4 xl:px-8 flex flex-col gap-4 sm:gap-5'>
 
                 <header className='px-1'>
@@ -171,7 +171,7 @@ const CheckSitePage: React.FC = () => {
                             </div>
 
                             <button
-                                onClick={() => navigateTo('/create-complaint')}
+                                onClick={openComplaintSheet}
                                 className='shrink-0 flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full text-sm shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-200 cursor-pointer'
                             >
                                 <Plus size={18} weight='bold' />

@@ -40,7 +40,7 @@ const ProfilePage: React.FC = () => {
     <main className='min-h-screen pb-28 md:pb-20 lg:pb-10 bg-gray-50 dark:bg-gray-950'>
       {/* Uma coluna no celular; a partir de xl, conteúdo à esquerda e um
           trilho fixo à direita, o cabeçalho atravessa as duas colunas. */}
-      <div className='mx-auto w-full max-w-5xl px-3 sm:px-6 py-4 sm:py-6 flex flex-col gap-4 xl:grid xl:grid-cols-[minmax(0,1fr)_20rem] xl:gap-6 xl:items-start'>
+      <div className='mx-auto w-full max-w-5xl px-3 sm:px-6 pt-8 pb-4 sm:pb-6 lg:pt-16 flex flex-col gap-4 xl:grid xl:grid-cols-[minmax(0,1fr)_20rem] xl:gap-6 xl:items-start'>
 
         <div className='xl:col-span-2'>
           <ProfileHeader
