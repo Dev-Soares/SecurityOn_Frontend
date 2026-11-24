@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom"
 import useNavigateTo from "../hooks/useNavigateTo"
 import SidebarButton from "@/shared/components/SidebarButton"
 import ProfileCard from "@/shared/components/ProfileCard"
-import { UsersThree, Article, Flag, Handshake, SignIn, Sun, Moon } from "@phosphor-icons/react"
+import { UsersThree, Article, Flag, Handshake, ShieldCheck, SignIn, Sun, Moon } from "@phosphor-icons/react"
 import LogoIcon from "@/shared/components/LogoIcon"
 import { useTheme } from "@/shared/contexts/themeContext"
 import { useUser } from "../contexts/userContext"
@@ -33,6 +33,7 @@ const Sidebar: FunctionComponent = () => {
         <SidebarButton text="Comunidade" route="/community" iconOutline={<UsersThree size={28} weight="regular" />} iconFilled={<UsersThree size={28} weight="fill" />} isSelected={location.pathname === '/community'} />
         <SidebarButton text="Artigos" route="/articles" iconOutline={<Article size={28} weight="regular" />} iconFilled={<Article size={28} weight="fill" />} isSelected={location.pathname === '/articles'} />
         <SidebarButton text="Denúncias" route="/complaint" iconOutline={<Flag size={28} weight="regular" />} iconFilled={<Flag size={28} weight="fill" />} isSelected={location.pathname === '/complaint'} />
+        <SidebarButton text="Verificar site" route="/check-site" iconOutline={<ShieldCheck size={28} weight="regular" />} iconFilled={<ShieldCheck size={28} weight="fill" />} isSelected={location.pathname === '/check-site'} />
         <SidebarButton text="Amigos" route="/friends" iconOutline={<Handshake size={28} weight="regular" />} iconFilled={<Handshake size={28} weight="fill" />} isSelected={location.pathname === '/friends'} badge={pendingRequests} />
       </nav>
 

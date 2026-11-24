@@ -9,7 +9,7 @@ interface ComplaintsAsideProps {
 }
 
 // Coluna da direita do feed: o que a lista já carregada diz em números.
-// Tudo é derivado das denúncias em memória — a API não tem rota de agregação,
+// Tudo é derivado das denúncias em memória, a API não tem rota de agregação,
 // então os totais acompanham o que o scroll infinito trouxe até agora.
 const ComplaintsAside: React.FC<ComplaintsAsideProps> = ({ complaints }) => {
 
@@ -26,7 +26,7 @@ const ComplaintsAside: React.FC<ComplaintsAsideProps> = ({ complaints }) => {
 
     const total = complaints.length
 
-    // O mt alinha o topo da coluna com o primeiro card do feed — abaixo do título
+    // O mt alinha o topo da coluna com o primeiro card do feed, abaixo do título
     // e da busca. O sticky assume a partir daí, quando a página rola.
     return (
         <aside className='hidden xl:flex flex-col gap-4 w-80 shrink-0 sticky top-8 self-start mt-[8.5rem]'>
@@ -74,7 +74,7 @@ const ComplaintsAside: React.FC<ComplaintsAsideProps> = ({ complaints }) => {
                 </div>
                 <ul className='mt-2.5 flex flex-col gap-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400'>
                     <li>Diga o nome da loja ou empresa e, se tiver, o link do site.</li>
-                    <li>Conte o que aconteceu na ordem — como chegaram em você e o que pediram.</li>
+                    <li>Conte o que aconteceu na ordem: como chegaram em você e o que pediram.</li>
                     <li>Escolha o nível de perigo pelo risco real de quem cair no golpe.</li>
                     <li>Não publique dados pessoais seus nem de terceiros.</li>
                 </ul>

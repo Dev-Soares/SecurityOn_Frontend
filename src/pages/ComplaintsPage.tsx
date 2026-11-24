@@ -1,10 +1,9 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { Plus, Flag } from '@phosphor-icons/react'
 import useNavigateTo from '@/shared/hooks/useNavigateTo'
 import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
 import ComplaintsAside from '@/modules/complaints/components/ComplaintsAside'
 import ComplaintCardSkeleton from '@/modules/complaints/skeletons/ComplaintCardSkeleton'
-import SearchBar from '@/shared/components/SearchBar'
 import ErrorMessage from '@/shared/components/ErrorMessage'
 import useFindAllComplaints from '@/modules/complaints/hooks/useFindAllComplaints'
 import useInfiniteScroll from '@/shared/hooks/useInfiniteScroll'
@@ -13,8 +12,6 @@ import Spinner from '@/shared/components/Spinner'
 const ComplaintsPage: React.FC = () => {
 
   const navigateTo = useNavigateTo()
-
-  const [search, setSearch] = useState('')
 
   const {
     data,
@@ -32,19 +29,6 @@ const ComplaintsPage: React.FC = () => {
     () => data?.pages.flatMap((page) => page.data) ?? [],
     [data],
   )
-
-  // Busca local, sobre o que já foi carregado — a API ainda não tem busca de
-  // denúncia. A loja entra no termo: é por ela que se procura aqui.
-  const visible = useMemo(() => {
-    const term = search.trim().toLowerCase()
-    if (!term) return complaints
-
-    return complaints.filter(({ title, content, store }) =>
-      `${title} ${content} ${store ?? ''}`.toLowerCase().includes(term),
-    )
-  }, [complaints, search])
-
-  const isSearching = search.trim().length > 0
 
   return (
     <main className='pt-5 sm:pt-8 pb-28 md:pb-16'>
@@ -70,12 +54,6 @@ const ComplaintsPage: React.FC = () => {
             </button>
           </header>
 
-          <SearchBar
-            value={search}
-            onChange={setSearch}
-            placeholder='Buscar por loja, título ou relato...'
-          />
-
           {isLoading && (
             <div className='flex flex-col gap-3 sm:gap-4'>
               <ComplaintCardSkeleton count={4} />
@@ -89,30 +67,20 @@ const ComplaintsPage: React.FC = () => {
             />
           )}
 
-          {!isLoading && !isError && visible.length === 0 && (
+          {!isLoading && !isError && complaints.length === 0 && (
             <div className='rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-900 py-16 px-6 flex flex-col items-center text-center'>
               <span className='flex items-center justify-center w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-400 dark:text-gray-500'>
                 <Flag size={24} weight='bold' />
               </span>
               <p className='mt-4 text-gray-500 dark:text-gray-400'>
-                {isSearching
-                  ? `Nenhuma denúncia encontrada para "${search.trim()}".`
-                  : 'Nenhuma denúncia publicada ainda.'}
+                Nenhuma denúncia publicada ainda.
               </p>
-              {isSearching && (
-                <button
-                  onClick={() => setSearch('')}
-                  className='mt-3 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer'
-                >
-                  Limpar busca
-                </button>
-              )}
             </div>
           )}
 
-          {visible.length > 0 && (
+          {complaints.length > 0 && (
             <div className='flex flex-col gap-3 sm:gap-4'>
-              {visible.map((complaint) => (
+              {complaints.map((complaint) => (
                 <ComplaintCard key={complaint.id} complaint={complaint} />
               ))}
             </div>

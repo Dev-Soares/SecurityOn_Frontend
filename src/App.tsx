@@ -7,6 +7,7 @@ import CreateArticlePage from './pages/CreateArticlePage'
 import CommunityPage from './pages/CommunityPage'
 import ArticlesPage from './pages/ArticlesPage'
 import ComplaintsPage from './pages/ComplaintsPage'
+import CheckSitePage from './pages/CheckSitePage'
 import ProfilePage from './pages/ProfilePage'
 import FriendsPage from './pages/FriendsPage'
 import ArticleDetailPage from './pages/ArticleDetailPage'
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="articles" element={<ArticlesPage />} />
           <Route path="articles/:id" element={<ArticleDetailPage />} />
           <Route path="complaint" element={<ComplaintsPage />} />
+          <Route path="check-site" element={<CheckSitePage />} />
           <Route path="friends" element={<FriendsPage />} />
           <Route path="profile/:id" element={<ProfilePage />} />
         </Route>

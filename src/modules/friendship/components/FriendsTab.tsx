@@ -11,7 +11,7 @@ interface FriendsTabProps {
 type FriendsView = 'friends' | 'requests'
 
 // Pedidos recebidos e lista de amigos são o mesmo assunto, mas não cabem na
-// mesma tela: um switch alterna entre os dois. Só o dono do perfil vê pedidos —
+// mesma tela: um switch alterna entre os dois. Só o dono do perfil vê pedidos,
 // para visitante, a lista aparece sozinha, sem switch.
 const FriendsTab: React.FC<FriendsTabProps> = ({ userId, isOwnProfile }) => {
 

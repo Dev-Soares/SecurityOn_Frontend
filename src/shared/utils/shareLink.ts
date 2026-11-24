@@ -6,7 +6,7 @@ type Dados = {
 
 // 'shared' saiu pela folha de compartilhamento do sistema, 'copied' caiu no
 // clipboard (navegador de desktop, que não tem navigator.share), 'failed' quando
-// nem isso deu — aí quem chamou decide o que avisar.
+// nem isso deu, aí quem chamou decide o que avisar.
 export type ShareResult = 'shared' | 'copied' | 'failed'
 
 export const shareLink = async (dados: Dados): Promise<ShareResult> => {

@@ -9,7 +9,7 @@ interface SelectDangerProps {
     required?: boolean
 }
 
-// Rótulo, descrição e cor vêm do dangerConfig — mesma fonte que o card do feed usa.
+// Rótulo, descrição e cor vêm do dangerConfig, mesma fonte que o card do feed usa.
 const dangerOptions = dangerLevels.map((value) => ({
     value: value,
     label: dangerConfig[value].label,
@@ -50,7 +50,7 @@ const SelectDanger: React.FC<SelectDangerProps> = ({ value, onChange }) => {
                     <div className="flex items-center gap-2.5">
                         <span className={`w-2 h-2 rounded-full shrink-0 ${selectedOption.dotColor}`} />
                         <span className="font-medium text-gray-900 dark:text-white text-sm lg:text-base">{selectedOption.label}</span>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">— {selectedOption.description}</span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">{selectedOption.description}</span>
                     </div>
                 ) : (
                     <span className="text-gray-400 dark:text-gray-500">Selecione o nível de perigo</span>
@@ -75,7 +75,7 @@ const SelectDanger: React.FC<SelectDangerProps> = ({ value, onChange }) => {
                         >
                             <span className={`w-2 h-2 rounded-full shrink-0 ${option.dotColor}`} />
                             <span className="font-medium text-gray-900 dark:text-white text-sm">{option.label}</span>
-                            <span className="text-xs text-gray-500 dark:text-gray-400">— {option.description}</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">{option.description}</span>
                         </button>
                     ))}
                 </div>

@@ -5,7 +5,7 @@ import ComplaintCard from '@/modules/complaints/components/ComplaintCard'
 import type { Complaint } from '../types/complaint'
 
 // Vitrine estática do card, com dados de exemplo. Nenhuma rota monta este
-// componente — a listagem real é a ComplaintsPage. Serve só para olhar os quatro
+// componente, a listagem real é a ComplaintsPage. Serve só para olhar os quatro
 // níveis de perigo lado a lado sem depender da API.
 const mockComplaints: Complaint[] = [
   {

@@ -15,7 +15,7 @@
   100% { opacity: 1; }
 }
 
-/* Folha subindo do rodapé — o gesto de abrir comentários no mobile. */
+/* Folha subindo do rodapé, o gesto de abrir comentários no mobile. */
 @keyframes sheet-up {
   0% { transform: translateY(100%); }
   100% { transform: translateY(0); }
@@ -139,7 +139,7 @@ body {
    não-layered, e no cascade qualquer estilo sem layer ganha de estilo em layer,
    independente de especificidade. Dentro de @layer utilities estas nunca valeriam. */
 
-/* Scrollbar fino para caixas pequenas — o global tem 16px e borda de 3px,
+/* Scrollbar fino para caixas pequenas, o global tem 16px e borda de 3px,
    proporcional à página, grosseiro dentro de textarea ou lista em modal. */
 .scrollbar-slim::-webkit-scrollbar {
   width: 8px;

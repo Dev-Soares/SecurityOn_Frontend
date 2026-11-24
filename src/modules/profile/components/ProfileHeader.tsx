@@ -26,7 +26,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                 <div className='flex flex-wrap items-end justify-between gap-3 -mt-12 sm:-mt-16'>
                     {/* O tamanho fica no container: como item de flex a <img>
                         sozinha era achatada quando a linha apertava.
-                        relative z-10 porque a capa é position:relative — sem isso
+                        relative z-10 porque a capa é position:relative, sem isso
                         ela pinta por cima da metade de cima do avatar. */}
                     <div className='relative z-10 shrink-0 w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-800 ring-4 ring-white dark:ring-gray-900'>
                         <img

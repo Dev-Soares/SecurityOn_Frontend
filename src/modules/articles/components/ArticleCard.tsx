@@ -6,9 +6,9 @@ import { excerptOf, readTimeOf } from '../utils/articleMeta'
 import { shareLink } from '@/shared/utils/shareLink'
 import type { Article } from '../types/article'
 
-// 'feature': primeiro artigo do feed — capa grande, título maior.
-// 'row': resto do feed — texto à esquerda, miniatura à direita, como num feed profissional.
-// 'grid': coluna estreita do perfil — card vertical compacto.
+// 'feature': primeiro artigo do feed, capa grande, título maior.
+// 'row': resto do feed, texto à esquerda, miniatura à direita, como num feed profissional.
+// 'grid': coluna estreita do perfil, card vertical compacto.
 type ArticleCardVariant = 'feature' | 'row' | 'grid'
 
 interface ArticleCardProps {

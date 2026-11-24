@@ -4,7 +4,7 @@ interface DangerConfig {
     label: string
     // Texto curto do nível, usado no select de criação.
     description: string
-    // Posição na escala — preenche o medidor de risco do card.
+    // Posição na escala, preenche o medidor de risco do card.
     rank: 1 | 2 | 3 | 4
     text: string
     // Preenchimento: segmentos do medidor, barras do resumo lateral.
@@ -47,7 +47,7 @@ export const dangerConfig: Record<DangerType, DangerConfig> = {
     },
 }
 
-// Ordem de severidade — usada nos filtros e no resumo da coluna lateral,
+// Ordem de severidade, usada nos filtros e no resumo da coluna lateral,
 // que leem os níveis do próprio config em vez de repetir a lista.
 export const dangerLevels: DangerType[] = ['aviso', 'cuidado', 'perigo', 'critico']
 

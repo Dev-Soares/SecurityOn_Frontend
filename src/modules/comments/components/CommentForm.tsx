@@ -37,7 +37,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
     }
 
     const onSubmit = (data: CreateComment, event?: React.BaseSyntheticEvent) => {
-        // O textarea vem do form do próprio evento — um ref aqui seria lido durante o
+        // O textarea vem do form do próprio evento, um ref aqui seria lido durante o
         // render, no caminho handleSubmit(onSubmit).
         const form = event?.target as HTMLFormElement | undefined
         const textarea = form?.elements.namedItem('content') as HTMLTextAreaElement | null

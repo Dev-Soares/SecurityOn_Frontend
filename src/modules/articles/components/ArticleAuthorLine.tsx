@@ -21,7 +21,7 @@ const ArticleAuthorLine: React.FC<ArticleAuthorLineProps> = ({
 }) => {
     const navigateTo = useNavigateTo()
 
-    // O card inteiro é clicável e leva ao artigo — o clique no autor precisa parar aqui
+    // O card inteiro é clicável e leva ao artigo, o clique no autor precisa parar aqui
     // antes de o pai abrir a leitura.
     const goToProfile = (e: React.MouseEvent) => {
         e.stopPropagation()
