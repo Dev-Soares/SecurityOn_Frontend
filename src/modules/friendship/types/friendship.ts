@@ -19,7 +19,7 @@ export type FriendshipRelation =
   | 'pending_sent'
   | 'pending_received';
 
-// Relação entre o usuário logado e o perfil visitado — é o que decide qual
+// Relação entre o usuário logado e o perfil visitado, é o que decide qual
 // botão aparece.
 export interface FriendshipStatus {
   userId: string;

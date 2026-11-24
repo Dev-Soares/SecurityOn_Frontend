@@ -28,7 +28,7 @@ const ArticlesPage: React.FC = () => {
     [data],
   )
 
-  // Filtro local, sobre o que já foi carregado — a API ainda não tem busca de artigo.
+  // Filtro local, sobre o que já foi carregado, a API ainda não tem busca de artigo.
   // O autor entra no termo: num feed se procura tanto pelo assunto quanto por quem escreveu.
   const visibleArticles = useMemo(() => {
     const term = search.trim().toLowerCase()
@@ -44,7 +44,7 @@ const ArticlesPage: React.FC = () => {
   const [feature, ...rest] = visibleArticles
 
   return (
-    <main className='pb-16 pt-5 sm:pt-8'>
+    <main className='pb-16 pt-8 lg:pt-16'>
       <div className='mx-auto w-full max-w-6xl px-3 sm:px-4 xl:px-8 flex gap-8'>
 
         {/* Feed */}
@@ -88,7 +88,7 @@ const ArticlesPage: React.FC = () => {
 
           {visibleArticles.length > 0 && (
             <div className='flex flex-col gap-3 sm:gap-4'>
-              {/* O primeiro artigo abre o feed em destaque — menos durante a busca,
+              {/* O primeiro artigo abre o feed em destaque, menos durante a busca,
                   onde nenhum resultado é mais importante que os outros. */}
               <ArticleCard
                 key={feature.id}

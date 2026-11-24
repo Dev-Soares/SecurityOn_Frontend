@@ -26,7 +26,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, isLocke
     if (!isOpen) return null
 
     // z acima do diálogo de comentários: editar/excluir sempre abre por cima dele.
-    // Portal pelo mesmo motivo — fixed dentro de um ancestral animado ficaria preso.
+    // Portal pelo mesmo motivo, fixed dentro de um ancestral animado ficaria preso.
     return createPortal(
         <div className='fixed inset-0 z-60 flex items-center justify-center animate-fade-in'>
             <div

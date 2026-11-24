@@ -13,7 +13,7 @@ const FriendsPage: React.FC = () => {
   const { user, isLoading, isLogged } = useUser()
 
   return (
-    <main className='pt-5 sm:pt-8 pb-28 md:pb-16'>
+    <main className='pt-8 lg:pt-16 pb-28 md:pb-16'>
       <div className='mx-auto w-full max-w-2xl px-3 sm:px-4 flex flex-col gap-3 sm:gap-4'>
 
         <header className='px-1'>

@@ -7,7 +7,7 @@ interface RiskMeterProps {
 }
 
 // Os quatro níveis são uma escala, não quatro rótulos soltos: o medidor mostra
-// onde a denúncia cai dentro dela. É o único lugar do card que usa a cor do nível —
+// onde a denúncia cai dentro dela. É o único lugar do card que usa a cor do nível,
 // a pílula, o ícone e a faixa lateral diziam a mesma coisa três vezes.
 const RiskMeter: React.FC<RiskMeterProps> = ({ danger }) => {
 

@@ -24,7 +24,7 @@ export const formatRelativeTime = (isoDate: string): string => {
     })
 }
 
-// Data completa, para o title do elemento — o tempo relativo perde a informação exata.
+// Data completa, para o title do elemento, o tempo relativo perde a informação exata.
 export const formatFullDate = (isoDate: string): string =>
     new Date(isoDate).toLocaleDateString('pt-BR', {
         day: '2-digit',

@@ -17,6 +17,6 @@ export interface Post {
   // Autor vem junto do post: o feed não precisa de um GET /user por card.
   user: PostAuthor;
   _count: PostCounts;
-  // "Curtido por mim" — falso para visitante não autenticado.
+  // "Curtido por mim", falso para visitante não autenticado.
   liked: boolean;
 }

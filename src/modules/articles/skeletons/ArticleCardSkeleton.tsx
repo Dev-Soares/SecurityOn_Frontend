@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Espelha o card de linha do feed: assinatura em cima, texto à esquerda,
-// miniatura à direita e rodapé — para a lista não pular quando os dados chegam.
+// miniatura à direita e rodapé, para a lista não pular quando os dados chegam.
 const ArticleCardSkeleton: React.FC<{ count?: number }> = ({ count = 4 }) => {
   return (
     <>

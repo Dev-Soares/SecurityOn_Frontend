@@ -12,7 +12,7 @@ type PostProps = {
     post: PostType;
     userAvatarUrl?: string | null;
     // 'feed' é o card da Comunidade, que define a própria largura no meio da
-    // página. 'full' ocupa a coluna em que for montado — é o caso do perfil.
+    // página. 'full' ocupa a coluna em que for montado, é o caso do perfil.
     variant?: 'feed' | 'full';
 }
 
@@ -29,7 +29,7 @@ const Post: React.FC<PostProps> = ({ post, userAvatarUrl, variant = 'feed' }) =>
     const [showComments, setShowComments] = useState(false)
 
     // Uma imagem que não carrega ocupa zero altura e some do card, mas o imgUrl
-    // continua preenchido — o texto iria para o rodapé como legenda de uma imagem
+    // continua preenchido, o texto iria para o rodapé como legenda de uma imagem
     // que ninguém vê. Ao falhar, o card passa a se comportar como um post só de texto.
     const [imgFailed, setImgFailed] = useState(false)
     const hasImage = Boolean(post.imgUrl) && !imgFailed
@@ -151,7 +151,7 @@ const Post: React.FC<PostProps> = ({ post, userAvatarUrl, variant = 'feed' }) =>
                 </button>
             </div>
 
-            {/* Curtidas, e a legenda só no card com imagem — sem imagem o texto
+            {/* Curtidas, e a legenda só no card com imagem, sem imagem o texto
                 já foi renderizado acima das ações. */}
             <div className='flex flex-col gap-1.5 px-5 pt-1 pb-5'>
                 {post._count.likes > 0 && (

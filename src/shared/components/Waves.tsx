@@ -71,10 +71,10 @@ const Waves: React.FC<WavesProps> = ({}) => {
         {/* Logo */}
         <div className='flex flex-row items-center justify-center my-16'>
           <div className='hidden lg:block'>
-            <LogoIcon color='light' size={140} />
+            <LogoIcon color='white' size={140} />
           </div>
           <div className='block lg:hidden'>
-            <LogoIcon color='light' size={100} />
+            <LogoIcon color='white' size={100} />
           </div>
           <h2 className='font-semibold text-4xl text-white'>SecurityOn</h2>
         </div>

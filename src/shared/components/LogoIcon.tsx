@@ -1,14 +1,14 @@
 import React from "react"
-import logoLight from "/OnSecurityLight.png"
-import logoDark from "/OnSecurityDark.png"
-import { useTheme } from "@/shared/contexts/themeContext"
-import  { useState, useEffect } from "react";
+import logoBlue from "/OnSecurityDark.png"
+import logoWhite from "/OnSecurityLight.png"
 
 type LogoIconProps = {
   size?: number | string
   className?: string
   alt?: string
-  color?: "light" | "dark"
+  // Só para a marca sobre fundo colorido, onde o azul sumiria. Em qualquer
+  // outro lugar a logo é azul, nos dois temas.
+  color?: "white"
 }
 
 const LogoIcon: React.FC<LogoIconProps> = ({
@@ -16,37 +16,16 @@ const LogoIcon: React.FC<LogoIconProps> = ({
   className = "",
   alt = "Logo",
   color,
-}) => {
-
-  const { theme } = useTheme();
-
-  const [logo, setLogo] = useState('');
-
-  useEffect(() => {
-
-    if(color === 'light') {
-      setLogo(logoLight);
-      return;
-    }
-    if(color === 'dark') {
-      setLogo(logoDark);
-      return;
-    }
-    const logo =  theme !== 'dark' ? logoDark : logoLight;
-    setLogo(logo);
-  }, [theme]);
-
-  return (
-    <img
-      src={logo}
-      width={size}
-      height={size}
-      alt={alt}
-      className={className}
-      style={{ width: size, height: size }}
-      draggable={false}
-    />
-  )
-};
+}) => (
+  <img
+    src={color === "white" ? logoWhite : logoBlue}
+    width={size}
+    height={size}
+    alt={alt}
+    className={className}
+    style={{ width: size, height: size }}
+    draggable={false}
+  />
+)
 
 export default LogoIcon

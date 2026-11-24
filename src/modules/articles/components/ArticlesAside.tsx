@@ -10,13 +10,13 @@ interface ArticlesAsideProps {
 }
 
 // Coluna da direita do feed: o que saiu por último e por que o assunto importa.
-// Só aparece em telas largas — abaixo disso o feed ocupa a largura toda.
+// Só aparece em telas largas, abaixo disso o feed ocupa a largura toda.
 const ArticlesAside: React.FC<ArticlesAsideProps> = ({ articles }) => {
     const navigateTo = useNavigateTo()
 
     const latest = articles.slice(0, 5)
 
-    // O mt alinha o topo da coluna com o primeiro card do feed — abaixo do título
+    // O mt alinha o topo da coluna com o primeiro card do feed, abaixo do título
     // e da busca. O sticky assume a partir daí, quando a página rola.
     return (
         <aside className='hidden xl:flex flex-col gap-4 w-80 shrink-0 sticky top-8 self-start mt-[7.5rem]'>

@@ -6,7 +6,7 @@ interface UpdateCommentInput {
   content: string;
 }
 
-// Editar não muda o contador do post — só o conteúdo da lista.
+// Editar não muda o contador do post, só o conteúdo da lista.
 export const useUpdateComment = (postId: string) => {
   const queryClient = useQueryClient();
 

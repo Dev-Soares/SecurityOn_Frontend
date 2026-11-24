@@ -9,7 +9,7 @@ import { showError, showSuccess } from '@/shared/components/Toast'
 import type { Complaint } from '../types/complaint'
 
 // 'feed': card da listagem de denúncias, que define a largura da coluna central.
-// 'compact': coluna estreita do perfil — mesmo card com respiro menor.
+// 'compact': coluna estreita do perfil, mesmo card com respiro menor.
 type ComplaintCardVariant = 'feed' | 'compact'
 
 interface ComplaintCardProps {
@@ -37,7 +37,7 @@ const ComplaintCard: React.FC<ComplaintCardProps> = ({ complaint, variant = 'fee
     const onShare = async () => {
         const result = await shareLink({
             title: title,
-            text: store ? `${title} — ${store}` : title,
+            text: store ? `${title} (${store})` : title,
             // Sem página de detalhe, o destino útil é o site denunciado;
             // sem link, a própria listagem.
             url: link ? absoluteUrl(link) : `${window.location.origin}/complaint`,

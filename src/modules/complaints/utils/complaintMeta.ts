@@ -1,10 +1,10 @@
-// O link vem do formulário como o usuário digitou — "www.loja.com/golpe" é comum.
+// O link vem do formulário como o usuário digitou, "www.loja.com/golpe" é comum.
 // Sem protocolo o href virava caminho relativo e o "Ver site" abria a própria aplicação.
 export const absoluteUrl = (link: string): string =>
     /^https?:\/\//i.test(link) ? link : `https://${link}`
 
 // Domínio para rotular o link no card: num feed, "loja-falsa-exemplo.com" diz mais
-// que a URL inteira — e o resto do caminho só estoura a largura do card.
+// que a URL inteira, e o resto do caminho só estoura a largura do card.
 export const domainOf = (link: string): string => {
     try {
         return new URL(absoluteUrl(link)).hostname.replace(/^www\./, '')

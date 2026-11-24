@@ -4,7 +4,7 @@ interface ProfileBannerProps {
     coverUrl?: string
 }
 
-// Capa do perfil. Sem imagem salva no backend, o gradiente é o estado padrão —
+// Capa do perfil. Sem imagem salva no backend, o gradiente é o estado padrão,
 // e não um buraco cinza.
 const ProfileBanner: React.FC<ProfileBannerProps> = ({ coverUrl }) => {
     return (
