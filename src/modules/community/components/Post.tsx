@@ -28,6 +28,12 @@ const Post: React.FC<PostProps> = ({ post, userAvatarUrl, variant = 'feed' }) =>
 
     const [showComments, setShowComments] = useState(false)
 
+    // Uma imagem que não carrega ocupa zero altura e some do card, mas o imgUrl
+    // continua preenchido — o texto iria para o rodapé como legenda de uma imagem
+    // que ninguém vê. Ao falhar, o card passa a se comportar como um post só de texto.
+    const [imgFailed, setImgFailed] = useState(false)
+    const hasImage = Boolean(post.imgUrl) && !imgFailed
+
     const { mutate: toggleLike } = useToggleLike()
 
     const goToProfile = () => navigateTo(`/profile/${post.userId}`)
@@ -43,7 +49,7 @@ const Post: React.FC<PostProps> = ({ post, userAvatarUrl, variant = 'feed' }) =>
     // Com imagem, o texto é legenda: vem depois dela, prefixado pelo autor.
     // Sem imagem o texto é o próprio conteúdo do card: sobe para cima das ações, maior,
     // e sem repetir o nome que já está logo acima no cabeçalho.
-    const caption = post.imgUrl ? (
+    const caption = hasImage ? (
         <p className='text-base text-gray-800 dark:text-gray-200 leading-relaxed wrap-break-word'>
             <button
                 onClick={goToProfile}
@@ -94,12 +100,13 @@ const Post: React.FC<PostProps> = ({ post, userAvatarUrl, variant = 'feed' }) =>
 
             {/* Mídia: recuada da borda, acompanhando o padding do card.
                 max-h evita que uma imagem em retrato empurre o resto do feed para fora da tela. */}
-            {post.imgUrl ? (
+            {hasImage ? (
                 <div className='px-5'>
                     <img
-                        src={post.imgUrl}
+                        src={post.imgUrl!}
                         alt=''
                         loading='lazy'
+                        onError={() => setImgFailed(true)}
                         className='w-full max-h-56 sm:max-h-72 object-cover rounded-xl bg-gray-200 dark:bg-gray-800'
                     />
                 </div>
@@ -153,7 +160,7 @@ const Post: React.FC<PostProps> = ({ post, userAvatarUrl, variant = 'feed' }) =>
                     </p>
                 )}
 
-                {post.imgUrl && caption}
+                {hasImage && caption}
             </div>
 
             {/* Montado só ao abrir: o hook de comentários busca no mount. */}

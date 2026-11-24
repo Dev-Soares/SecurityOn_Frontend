@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ThumbsUp, X } from '@phosphor-icons/react'
 import CommentList from '@/modules/comments/components/CommentList'
@@ -27,6 +27,10 @@ const PostCommentsDialog: React.FC<PostCommentsDialogProps> = ({ post, userAvata
     const { mutate: toggleLike } = useToggleLike()
 
     useDialogDismiss(isOpen, onClose)
+
+    // Imagem quebrada deixaria a coluna preta do desktop vazia: melhor não montá-la.
+    const [imgFailed, setImgFailed] = useState(false)
+    const hasImage = Boolean(post.imgUrl) && !imgFailed
 
     if (!isOpen) return null
 
@@ -95,11 +99,12 @@ const PostCommentsDialog: React.FC<PostCommentsDialogProps> = ({ post, userAvata
             >
                 {/* Coluna da mídia: só no desktop e só quando o post tem imagem.
                     No mobile o post continua visível no feed atrás da folha. */}
-                {post.imgUrl && (
+                {hasImage && (
                     <div className='hidden md:flex md:w-[55%] bg-black items-center justify-center'>
                         <img
-                            src={post.imgUrl}
+                            src={post.imgUrl!}
                             alt=''
+                            onError={() => setImgFailed(true)}
                             className='max-h-full max-w-full object-contain'
                         />
                     </div>
