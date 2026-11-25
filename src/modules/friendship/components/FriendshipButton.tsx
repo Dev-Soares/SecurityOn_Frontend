@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { UserPlus, UserMinus, Check, X, Clock } from '@phosphor-icons/react'
 import { useFriendshipStatus } from '../hooks/useFriendshipStatus'
 import { useSendFriendRequest } from '../hooks/useSendFriendRequest'
@@ -8,9 +8,12 @@ import { useUser } from '@/shared/contexts/userContext'
 import { showError, showSuccess } from '@/shared/components/Toast'
 import useNavigateTo from '@/shared/hooks/useNavigateTo'
 import Spinner from '@/shared/components/Spinner'
+import ConfirmDialog from '@/shared/components/ConfirmDialog'
 
 interface FriendshipButtonProps {
     userId: string
+    // Nome de exibição do outro perfil, usado no texto da confirmação.
+    userName?: string
 }
 
 const baseStyle = 'flex items-center justify-center gap-2 px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-200 disabled:cursor-not-allowed min-h-[38px]'
@@ -34,10 +37,13 @@ const SwapLabel: React.FC<SwapLabelProps> = ({ idle, hover }) => (
     </span>
 )
 
-const FriendshipButton: React.FC<FriendshipButtonProps> = ({ userId }) => {
+const FriendshipButton: React.FC<FriendshipButtonProps> = ({ userId, userName }) => {
 
     const { user, isLogged } = useUser()
     const navigateTo = useNavigateTo()
+
+    // Desfazer amizade é destrutivo e silencioso do outro lado: confirma antes.
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
     const isSelf = user?.id === userId
 
@@ -82,28 +88,42 @@ const FriendshipButton: React.FC<FriendshipButtonProps> = ({ userId }) => {
         })
     }
 
-    const onRemove = (message: string) => {
+    const onRemove = (message: string, onSettled?: () => void) => {
         if (!status.friendshipId) return
         removeFriendship(status.friendshipId, {
             onSuccess: () => showSuccess(message),
             onError: () => showError('Erro ao remover amizade'),
+            onSettled,
         })
     }
 
     if (status.relation === 'friends') {
         return (
-            <button
-                onClick={() => onRemove('Amizade desfeita')}
-                disabled={isPending}
-                className={`${baseStyle} group border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-red-400 dark:hover:border-red-500 hover:text-red-500 dark:hover:text-red-400 min-w-[132px]`}
-            >
-                {isRemoving ? <Spinner size='sm' /> : (
-                    <SwapLabel
-                        idle={<><Check size={18} weight='bold' /><span>Amigos</span></>}
-                        hover={<><UserMinus size={18} weight='bold' /><span>Desfazer</span></>}
-                    />
-                )}
-            </button>
+            <>
+                <button
+                    onClick={() => setIsConfirmOpen(true)}
+                    disabled={isPending}
+                    className={`${baseStyle} group border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-red-400 dark:hover:border-red-500 hover:text-red-500 dark:hover:text-red-400 min-w-[132px]`}
+                >
+                    {isRemoving ? <Spinner size='sm' /> : (
+                        <SwapLabel
+                            idle={<><Check size={18} weight='bold' /><span>Amigos</span></>}
+                            hover={<><UserMinus size={18} weight='bold' /><span>Desfazer</span></>}
+                        />
+                    )}
+                </button>
+
+                <ConfirmDialog
+                    isOpen={isConfirmOpen}
+                    onClose={() => setIsConfirmOpen(false)}
+                    onConfirm={() => onRemove('Amizade desfeita', () => setIsConfirmOpen(false))}
+                    title={userName ? `Desfazer amizade com ${userName}?` : 'Desfazer amizade?'}
+                    message='Vocês deixarão de ser amigos. Para voltar a ser, será preciso um novo pedido de amizade.'
+                    confirmLabel='Desfazer'
+                    isLoading={isRemoving}
+                    variant='danger'
+                />
+            </>
         )
     }
 

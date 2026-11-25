@@ -19,8 +19,12 @@ const FriendRequests: React.FC<FriendRequestsProps> = ({ enabled }) => {
 
     const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } = useFindReceivedRequests(enabled)
 
-    const { mutate: acceptRequest, isPending: isAccepting } = useAcceptFriendship()
-    const { mutate: removeFriendship, isPending: isRemoving } = useRemoveFriendship()
+    // `variables` é o friendshipId da mutation em voo: com ele o spinner fica na
+    // linha clicada, em vez de todas as linhas reagirem ao mesmo isPending.
+    const { mutate: acceptRequest, isPending: isAccepting, variables: acceptingId } = useAcceptFriendship()
+    const { mutate: removeFriendship, isPending: isRemoving, variables: removingId } = useRemoveFriendship()
+
+    const isBusy = isAccepting || isRemoving
 
     const requests = data?.pages.flatMap(page => page.data) ?? []
 
@@ -72,20 +76,27 @@ const FriendRequests: React.FC<FriendRequestsProps> = ({ enabled }) => {
                         </button>
 
                         <div className='flex items-center gap-2 shrink-0'>
+                            {/* min-w fixo: trocar o rótulo pelo spinner não encolhe o botão. */}
                             <button
                                 onClick={() => onAccept(request.id)}
-                                disabled={isAccepting || isRemoving}
-                                className='h-9 px-3 flex items-center gap-1.5 rounded-full bg-blue-500 text-white text-xs font-semibold hover:bg-blue-600 disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed cursor-pointer transition-colors duration-200'
+                                disabled={isBusy}
+                                className='h-9 px-3 min-w-23 flex items-center justify-center gap-1.5 rounded-full bg-blue-500 text-white text-xs font-semibold hover:bg-blue-600 disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed cursor-pointer transition-colors duration-200'
                             >
-                                <Check size={15} weight='bold' /> Aceitar
+                                {isAccepting && acceptingId === request.id
+                                    ? <Spinner size='sm' className='border-white/40 border-t-white' />
+                                    : <><Check size={15} weight='bold' /> Aceitar</>
+                                }
                             </button>
                             <button
                                 onClick={() => onDecline(request.id)}
-                                disabled={isAccepting || isRemoving}
+                                disabled={isBusy}
                                 className='h-9 w-9 flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 hover:border-red-400 dark:hover:border-red-500 disabled:cursor-not-allowed cursor-pointer transition-colors duration-200'
                                 aria-label='Recusar pedido'
                             >
-                                <X size={15} weight='bold' />
+                                {isRemoving && removingId === request.id
+                                    ? <Spinner size='sm' />
+                                    : <X size={15} weight='bold' />
+                                }
                             </button>
                         </div>
                     </li>

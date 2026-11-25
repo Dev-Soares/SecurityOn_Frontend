@@ -16,6 +16,9 @@ export const usePendingRequestsBadge = (): string | null => {
 
   const hasMore = pages[pages.length - 1]?.hasNextPage ?? false;
 
+  // Acima de 99 o selo viraria uma barra de dígitos: trunca para caber na pílula.
+  if (count > 99) return "99+";
+
   return hasMore ? `${count}+` : String(count);
 };
 

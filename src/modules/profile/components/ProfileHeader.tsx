@@ -38,7 +38,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
                     {!isOwnProfile && (
                         <div className='flex items-center gap-2 ml-auto pb-1'>
-                            <FriendshipButton userId={user.id} />
+                            <FriendshipButton userId={user.id} userName={user.name} />
                         </div>
                     )}
                 </div>
