@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import FriendRequests from './FriendRequests'
 import FriendsList from './FriendsList'
 import { usePendingRequestsBadge } from '../hooks/usePendingRequestsBadge'
+import CountBadge from '@/shared/components/CountBadge'
 
 interface FriendsTabProps {
     userId: string | undefined
@@ -45,17 +46,10 @@ const FriendsTab: React.FC<FriendsTabProps> = ({ userId, isOwnProfile }) => {
                         `}
                     >
                         <span>{item.label}</span>
-                        {item.badge && (
-                            <span className={`
-                                min-w-5 px-1.5 py-0.5 rounded-full text-[11px] font-bold text-center
-                                ${view === item.key
-                                    ? 'bg-white/25 text-white'
-                                    : 'bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300'
-                                }
-                            `}>
-                                {item.badge}
-                            </span>
-                        )}
+                        <CountBadge
+                            value={item.badge}
+                            variant={view === item.key ? 'onPrimary' : 'soft'}
+                        />
                     </button>
                 ))}
             </div>

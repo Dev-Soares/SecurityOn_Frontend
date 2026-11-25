@@ -2,6 +2,7 @@ import type { FunctionComponent } from "react"
 import { UsersThree, Article, Flag } from "@phosphor-icons/react"
 import { useLocation } from "react-router-dom"
 import useNavigateTo from "../hooks/useNavigateTo"
+import CountBadge from "@/shared/components/CountBadge"
 
 type NavItemProps = {
   icon: (active: boolean) => React.ReactNode
@@ -36,11 +37,7 @@ const NavItem: FunctionComponent<NavItemProps> = ({ icon, route, label, badge })
       />
       <span className="relative flex items-center justify-center">
         {icon(isActive)}
-        {badge && (
-          <span className="absolute -top-1 -right-2.5 min-w-[18px] px-1 rounded-full bg-blue-500 text-white text-[10px] font-bold leading-[18px] text-center">
-            {badge}
-          </span>
-        )}
+        <CountBadge value={badge} variant="overlay" className="absolute -top-2 -right-3" />
       </span>
       <span className="text-xs">{label}</span>
     </button>

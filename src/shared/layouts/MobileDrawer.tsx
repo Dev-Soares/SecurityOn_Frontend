@@ -6,6 +6,7 @@ import LogoIcon from "@/shared/components/LogoIcon"
 import { useTheme } from "@/shared/contexts/themeContext"
 import { useUser } from "../contexts/userContext"
 import { usePendingRequestsBadge } from "@/modules/friendship/hooks/usePendingRequestsBadge"
+import CountBadge from "@/shared/components/CountBadge"
 
 type DrawerItemProps = {
   text: string
@@ -28,11 +29,7 @@ const DrawerItem: FunctionComponent<DrawerItemProps> = ({ text, route, isSelecte
   >
     {isSelected ? iconFilled : iconOutline}
     <span>{text}</span>
-    {badge && (
-      <span className='ml-auto min-w-6 px-2 py-0.5 rounded-full bg-blue-500 text-white text-xs font-bold text-center'>
-        {badge}
-      </span>
-    )}
+    <CountBadge value={badge} className='ml-auto' />
   </button>
 )
 

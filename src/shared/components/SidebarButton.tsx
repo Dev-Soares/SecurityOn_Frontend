@@ -1,6 +1,7 @@
 import React from 'react'
 import type { FunctionComponent } from 'react'
 import useNavigateTo from '../hooks/useNavigateTo'
+import CountBadge from './CountBadge'
 
 type SidebarButtonProps = {
     text: string;
@@ -25,11 +26,7 @@ const SidebarButton: FunctionComponent<SidebarButtonProps> = ({ text, iconOutlin
       }`}>
         {isSelected ? iconFilled : iconOutline}
         <span>{text}</span>
-        {badge && (
-          <span className='ml-auto min-w-6 px-2 py-0.5 rounded-full bg-blue-500 text-white text-xs font-bold text-center'>
-            {badge}
-          </span>
-        )}
+        <CountBadge value={badge} className='ml-auto' />
     </button>
   )
 }
